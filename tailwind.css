@@ -12,7 +12,7 @@
     @apply overflow-auto min-w-full h-full font-sans font-regular;
   }
   input {
-    @apply px-4 py-2 rounded-md bg-primary-50 text-primary-900;
+    @apply px-4 py-2 rounded-sm bg-primary-50 text-primary-900;
   }
   h1 {
     @apply py-2 text-4xl font-black font-title;

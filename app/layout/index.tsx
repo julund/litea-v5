@@ -5,7 +5,7 @@ export const MinimalLayout = ({ children }: { children: ReactNode }) => {
     return (
         <div className="flex flex-col justify-center items-center min-h-full bg-base-50">
             <Logo to="/"/>
-            <div className="p-8 mx-auto max-w-2xl">
+            <div className="p-8 mx-auto max-w-4xl">
                 {children}
             </div>
         </div>
