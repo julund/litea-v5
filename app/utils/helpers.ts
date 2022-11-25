@@ -254,3 +254,7 @@ export const toCSV = (array: Array<any>) => {
         }
     }
 };
+
+export const lowerCase = (value: string) => {
+    return typeof value == "string" ? value.toLowerCase() : value;
+};

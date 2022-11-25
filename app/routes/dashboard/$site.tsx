@@ -9,6 +9,10 @@ import { Message } from "~/components/message";
 import Panel from "~/components/panel";
 import { IconDownload } from "~/components/icons";
 import HorizontalBarChart from "~/components/charts/horizontalBarChart";
+import Tab from "~/components/ui/tab";
+import VerticalBarChart from "~/components/charts/verticalBarChart";
+import { countryNameFromCode } from "~/utils/countries";
+// import Map from "~/components/charts/mapChart";
 
 export const handle = { title: "Site" };
 
@@ -26,7 +30,7 @@ export const loader: LoaderFunction = async ({ request, params }: { request: Req
 
     const url = new URL(request.url);
     const period = url.searchParams.get("period") || "week";
-    const index = Number(url.searchParams.get("index")) || 0;
+    const index = period === "realtime" ? 0 : Number(url.searchParams.get("index")) || 0;
 
     const stats = site.data?.id ? await getSiteStats(request, site.data?.id, period, index) : { data: null, error: null };
 
@@ -54,46 +58,37 @@ export default function SitePage() {
                 <Panel title="" stats={stats.data.aggregates} />
                 {/* { JSON.stringify(stats.data)} */}
                 <HorizontalBarChart data={isRealtime ? stats.data?.graph && stats.data?.graph.slice(30, 60) : stats.data?.graph} />
-
                 {/* <LineChart data={isRealtime ? stats?.graph && stats?.graph.slice(30, 60) : stats?.graph} /> */}
-
-
-                {/* <div className="grid grid-flow-row grid-cols-1 m-4 bg-gray-50 md:grid-cols-3 md:grid-flow-col">
-                    <Map className="col-span-2 p-4" data={stats.data?.countries} />
-                    <Tab className="col-span-1 p-4" chevronStyle={true} titles={["Countries"]}>
-                        <VerticalBarChart title="Countries" data={stats.data?.countries?.map(country => ({ ...country, countryCode: country.name, name: countryNameFromCode(country.name) }))} />
-                    </Tab>
-                </div>
-                <div className="grid grid-cols-1 m-2 sm:grid-cols-2">
-                    <Tab chevronStyle={true} title="Device" titles={["Browsers", "Systems", "Platforms"]}>
-                        <VerticalBarChart title="Browsers" data={stats.data?.browsers} />
-                        <VerticalBarChart title="Systems" data={stats.data?.systems} />
-                        <VerticalBarChart title="Platforms" data={stats.data?.platforms} />
-                    </Tab>
-                    <Tab chevronStyle={true} title="Sources" titles={["All Pages", "Entry Pages", "Exit Pages"]}>
-                        <VerticalBarChart title="All pages" data={stats.data?.pages?.all} />
-                        <VerticalBarChart title="Entry pages" data={stats.data?.pages?.entry} />
-                        <VerticalBarChart title="Exit pages" data={stats.data?.pages?.exit} />
-                    </Tab>
-                </div>
-                <div className="grid grid-cols-1 m-2 sm:grid-cols-2">
-                    <Tab chevronStyle={true} title="UTMs" titles={["Source", "Campaign", "Content", "Term"]}>
-                        <VerticalBarChart title="Source" data={stats.data?.utms?.sources.filter(e => e.name !== "")} />
-                        <VerticalBarChart title="Campaign" data={stats.data?.utms?.campaigns.filter(e => e.name !== "")} />
-                        <VerticalBarChart title="Content" data={stats.data?.utms?.contents.filter(e => e.name !== "")} />
-                        <VerticalBarChart title="Terms" data={stats.data?.utms?.terms.filter(e => e.name !== "")} />
-                    </Tab>
-                    <Tab chevronStyle={true} title="Sources" titles={["Queries", "Hashes", "Referrers"]}>
-                        <VerticalBarChart title="Queries" data={stats.data?.queries} />
-                        <VerticalBarChart title="Hashes" data={stats.data?.hashes} />
-                        <VerticalBarChart title="Referrers" data={stats.data?.referrers} />
-                    </Tab>
-                </div> */}
-                {!isRealtime && <span className="flex flex-row flex-wrap items-center justify-center flex-shrink gap-2">
+                {/* <Map className="col-span-2 p-4" data={stats.data?.countries} /> */}
+                <Tab className="col-span-1 p-4" chevronStyle={true} titles={["Countries"]}>
+                    <VerticalBarChart title="Countries" data={stats.data?.countries?.map((country: any) => ({ ...country, countryCode: country.name, name: countryNameFromCode(country.name) }))} />
+                </Tab>
+                <Tab chevronStyle={true} title="Device" titles={["Browsers", "Systems", "Platforms"]}>
+                    <VerticalBarChart title="Browsers" data={stats.data?.browsers} />
+                    <VerticalBarChart title="Systems" data={stats.data?.systems} />
+                    <VerticalBarChart title="Platforms" data={stats.data?.platforms} />
+                </Tab>
+                <Tab chevronStyle={true} title="Sources" titles={["All Pages", "Entry Pages", "Exit Pages"]}>
+                    <VerticalBarChart title="All pages" data={stats.data?.pages?.all} />
+                    <VerticalBarChart title="Entry pages" data={stats.data?.pages?.entry} />
+                    <VerticalBarChart title="Exit pages" data={stats.data?.pages?.exit} />
+                </Tab>
+                <Tab chevronStyle={true} title="UTMs" titles={["Source", "Campaign", "Content", "Term"]}>
+                    <VerticalBarChart title="Source" data={stats.data?.utms?.sources.filter((e: any) => e.name !== "")} />
+                    <VerticalBarChart title="Campaign" data={stats.data?.utms?.campaigns.filter((e: any) => e.name !== "")} />
+                    <VerticalBarChart title="Content" data={stats.data?.utms?.contents.filter((e: any) => e.name !== "")} />
+                    <VerticalBarChart title="Terms" data={stats.data?.utms?.terms.filter((e: any) => e.name !== "")} />
+                </Tab>
+                <Tab chevronStyle={true} title="Sources" titles={["Queries", "Hashes", "Referrers"]}>
+                    <VerticalBarChart title="Queries" data={stats.data?.queries} />
+                    <VerticalBarChart title="Hashes" data={stats.data?.hashes} />
+                    <VerticalBarChart title="Referrers" data={stats.data?.referrers} />
+                </Tab>
+                {!isRealtime && <span className="flex flex-row justify-center items-center flex-shrink gap-2">
                     <IconDownload />
-                    <p className="text-sm text-gray-700 text-bold">Export:</p>
-                    <Link to={`export?${searchParams.toString()}&filetype=json`} reloadDocument>JSON</Link>
-                    <Link to={`export?${searchParams.toString()}&filetype=csv`} reloadDocument>CSV</Link>
+                    <p className="text-sm text-gray-700 text-bold">Download:</p>
+                    <Link to={`export?${searchParams.toString()}&filetype=json`} className="button button-ghost" reloadDocument>.json</Link>
+                    <Link to={`export?${searchParams.toString()}&filetype=csv`} className="button button-ghost" reloadDocument>.csv</Link>
                 </span>}
             </div>
         </Container>
