@@ -1,5 +1,6 @@
 import Pricingslider from "~/components/pricingslider";
 import { IconCheck } from "~/components/icons";
+import Page from "~/layout/website/page";
 
 const ListItem = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -9,7 +10,7 @@ const ListItem = ({ children }: { children: React.ReactNode }) => {
 
 export default function PricingPage() {
     return (
-        <div className="p-10">
+        <Page>
             <h1>Pricing</h1>
             <p className="py-4">
                 Autem esse quia quis et quia. Qui est facilis consequuntur
@@ -36,6 +37,6 @@ export default function PricingPage() {
             <p className="text-sm text-base-600">
                 All pricing is in USD and renews automatically unless cancelled.
             </p>
-        </div>
+        </Page>
     );
 };
