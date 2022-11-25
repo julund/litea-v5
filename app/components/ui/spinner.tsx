@@ -1,8 +1,8 @@
-import { BiLoaderAlt } from "react-icons/bi";
+import { IconLoader } from "../icons";
 
-const Spinner = ({ size = 22, ...props }) => {
+const Spinner = ({ size = 18, ...props }) => {
     return (
-        <BiLoaderAlt className="fill-current animate-spin text-primary-500" size={size} {...props} />
+        <IconLoader className="fill-current items-center animate-spin text-base-600" size={size} {...props} />
     );
 };
 

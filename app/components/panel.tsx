@@ -37,7 +37,7 @@ const Panel = ({ title, stats }: { title: string; stats: any }) => {
 
     return (
         <div className="flex flex-col p-4">
-            {title && <div className="px-4 py-1 mb-1 text-sm font-bold">{title}</div>}
+            <div className="px-4 py-1 mb-1 text-sm font-bold">{title}</div>
             <div className="grid grid-cols-2 gap-4 text-center md:grid-cols-4">
                 <PanelItem>
                     <Counter value={stats?.pageViews.count} callback={(value: number) => count(value)} />

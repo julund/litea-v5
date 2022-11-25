@@ -31,3 +31,4 @@ export const IconCircleDotted = ({ ...props }: IconProps) => icon.TbCircleDotted
 export const IconRefresh = ({ ...props }: IconProps) => icon.TbRefresh({ ...defaultIconProps, ...props });
 export const IconExternalLink = ({ ...props }: IconProps) => icon.TbExternalLink({ ...defaultIconProps, ...props });
 export const IconDownload = ({ ...props }: IconProps) => icon.TbDownload({ ...defaultIconProps, ...props });
+export const IconLoader = ({ ...props }: IconProps) => icon.TbLoader({ ...defaultIconProps, ...props });

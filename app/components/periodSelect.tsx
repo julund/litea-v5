@@ -1,6 +1,7 @@
 import { useSubmit, useSearchParams, useTransition, Form } from "@remix-run/react";
 import { IconChevronDown, IconChevronLeft, IconChevronRight } from "./icons";
 import { periods, getPeriodDates } from "~/utils/helpers";
+import Spinner from "~/components/ui/spinner";
 
 export default function PeriodSelect() {
 
@@ -29,8 +30,8 @@ export default function PeriodSelect() {
                 <div className="text-base-600">{description}</div>
                 <div className="font-bold text-base-800">{title}</div>
             </div>
-            {isLoading && <div className="text-sm text-base-600 shrink animate-pulse">
-                Loading...
+            {isLoading && <div className="text-sm flex gap-1 text-base-600 shrink animate-pulse">
+                Loading... <Spinner/>
             </div>}
             <div className="flex items-center justify-center gap-2 text-sm shrink">
                 <input

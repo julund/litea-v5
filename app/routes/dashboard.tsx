@@ -27,7 +27,6 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout>
-
       <nav className="flex flex-col gap-2 px-6 py-4 w-72 bg-base-100 shrink">
         <Logo to="/" />
         <NavLink to="/dashboard" className="button button-ghost">Sites</NavLink>
@@ -36,7 +35,6 @@ export default function Dashboard() {
           <div className="flex gap-2 py-2 items-centerpx-4 text-base-500"><IconUser />{data?.handle}</div>
           <Link to="/logout" className="button button-primary"><IconLogout />Log out</Link>
         </div>
-
       </nav>
       <main className="grow">
         {/* <nav className="flex gap-4 justify-end items-center px-6 py-4 w-full border-b-2 bg-white/50 border-base-100">
