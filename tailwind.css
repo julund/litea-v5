@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600;800&family=League+Spartan:wght@400;500;600;800&family=Sora:wght@300;400;600;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+   body {
+    overflow: overlay;
+  }
+  html,
+  body {
+    @apply overflow-auto min-w-full h-full font-sans font-regular;
+  }
+  input {
+    @apply px-4 py-2 rounded-md bg-primary-50 text-primary-900;
+  }
+  h1 {
+    @apply py-2 text-4xl font-black font-title;
+  }
+  h2 {
+    @apply py-2 text-2xl font-semibold font-title;
+  }
+  b {
+    @apply font-semibold;
+  }
+}
+
+@layer components {
+  .button {
+    @apply inline-flex gap-1 justify-center items-center px-4 py-2 text-lg font-medium text-center rounded-sm transition-all duration-300 font-title;
+  }
+  .button-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-primary-50;
+  }
+  .button-base {
+    @apply bg-base-600 text-base-50;
+  }
+  .button-base-light {
+    @apply bg-base-200 hover:bg-base-300 text-base-600 hover:text-base-700;
+  }
+  .button-ghost {
+    @apply bg-transparent hover:bg-base-200 text-base-800;
+  }
+  .message {
+    @apply px-6 py-4;
+  }
+  .message-info {
+    @apply text-sky-700 bg-sky-50;
+  }
+  .message-success {
+    @apply text-green-700 bg-green-50;
+  }
+  .message-warning {
+    @apply text-amber-700 bg-amber-50;
+  }
+  .message-error {
+    @apply text-red-700 bg-red-50;
+  }
+  .bg-map {
+    background-color: white;
+    background-image: url('/map.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .bg-map > div {
+    backdrop-filter: blur(5px) brightness(1.05);
+  }
+  .slider {
+    @apply p-0 m-0 w-full h-4 rounded-sm opacity-80 appearance-none outline-none bg-base-300 hover:opacity-100;
+    transition: opacity 0.2s;
+  }
+  .slider::-webkit-slider-thumb {
+    @apply w-4 h-6 bg-blue-600 bg-center bg-no-repeat rounded-sm appearance-none cursor-pointer;
+    /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 7'%3E%3Cpath d='M3 3.5L7 1v5L3 3.5zM15 3.5L11 6V1l4 2.5z' fill='%23fff'/%3E%3C/svg%3E"); */
+  }
+  .slider::-moz-range-thumb {
+    @apply w-4 h-6 bg-blue-600 bg-center bg-no-repeat rounded-sm appearance-none cursor-pointer;
+    /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 7'%3E%3Cpath d='M3 3.5L7 1v5L3 3.5zM15 3.5L11 6V1l4 2.5z' fill='%23fff'/%3E%3C/svg%3E"); */
+  }
+  .slider::-ms-thumb {
+    @apply w-4 h-6 bg-blue-600 bg-center bg-no-repeat rounded-sm appearance-none cursor-pointer;
+    /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 7'%3E%3Cpath d='M3 3.5L7 1v5L3 3.5zM15 3.5L11 6V1l4 2.5z' fill='%23fff'/%3E%3C/svg%3E"); */
+  }
+  .select {
+    @apply py-1 pr-8 pl-2 text-base-800 bg-base-200 rounded-sm border-4 border-base-200 appearance-none;
+  }
+  /* Hide arrow icon in IE browsers */
+  .select::-ms-expand {
+    @apply hidden;
+  }
+  .select:hover {
+    @apply text-base-800 bg-base-300 border-base-300;
+  }
+  .select:focus-visible {
+    @apply text-base-600 outline-none;
+  }
+}
