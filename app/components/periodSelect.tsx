@@ -41,10 +41,10 @@ export default function PeriodSelect() {
                     className="hidden"
                     onChange={({ target: { value } }) => value && submit({ period, index: value })}
                 />
-                <button onClick={incrementIndex} className="py-1 rounded-sm px2- bg-base-100 hover:bg-base-200 disabled:opacity-25">
+                <button onClick={incrementIndex} className="py-1 rounded-sm px2- bg-base-100 hover:bg-base-200 disabled:opacity-25" disabled={period === "realtime"}>
                     <IconChevronLeft size={28} />
                 </button>
-                <button onClick={decrementIndex} className="py-1 rounded-sm px2- bg-base-100 hover:bg-base-200 disabled:opacity-25" disabled={index <= 0} >
+                <button onClick={decrementIndex} className="py-1 rounded-sm px2- bg-base-100 hover:bg-base-200 disabled:opacity-25" disabled={index <= 0 || period === "realtime"} >
                     <IconChevronRight size={28} />
                 </button>
             </div>
