@@ -39,10 +39,9 @@ export default function Dashboard() {
 
       </nav>
       <main className="grow">
-
-        <nav className="flex gap-4 justify-end items-center px-6 py-4 w-full border-b-2 bg-white/50 border-base-100">
+        {/* <nav className="flex gap-4 justify-end items-center px-6 py-4 w-full border-b-2 bg-white/50 border-base-100">
           <Breadcrumbs />
-        </nav>
+        </nav> */}
         {/* <Message message={{ type: "info", text: "Optio molestiae at minima architecto aut temporibus accusantium eaque id iure saepe." }} duration={5000} /> */}
         {message && <Message message={message} />}
         <Outlet />

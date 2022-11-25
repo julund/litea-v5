@@ -12,6 +12,7 @@ import HorizontalBarChart from "~/components/charts/horizontalBarChart";
 import Tab from "~/components/ui/tab";
 import VerticalBarChart from "~/components/charts/verticalBarChart";
 import { countryNameFromCode } from "~/utils/countries";
+import Breadcrumbs from "~/components/breadcrumbs";
 // import Map from "~/components/charts/mapChart";
 
 export const handle = { title: "Site" };
@@ -47,6 +48,10 @@ export default function SitePage() {
     if (!site.data || !stats.data) return null;
 
     return (
+        <>
+            <nav className="flex gap-4 justify-end items-center px-6 py-4 w-full border-b-2 bg-white/50 border-base-100">
+          <Breadcrumbs current={site?.data?.title} />
+        </nav>
         <Container>
             <div className="flex flex-col gap-2">
                 <h1>{site?.data?.title}</h1>
@@ -92,6 +97,7 @@ export default function SitePage() {
                 </span>}
             </div>
         </Container>
+        </>
     )
 }
 
