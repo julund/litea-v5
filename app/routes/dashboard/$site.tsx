@@ -49,54 +49,55 @@ export default function SitePage() {
 
     return (
         <>
-            <nav className="flex gap-4 justify-end items-center px-6 py-4 w-full border-b-2 bg-white/50 border-base-100">
-          <Breadcrumbs current={site?.data?.title} />
-        </nav>
-        <Container>
-            <div className="flex flex-col gap-2">
-                <h1>{site?.data?.title}</h1>
-                <div className="text-base-500">
-                    <ExternalLink to={site.data.url} title="Open site in new tab">{site?.data?.url}</ExternalLink>
+            <nav className="flex items-center justify-end w-full gap-4 px-6 py-4 border-b-2 bg-white/50 border-base-100">
+                <Breadcrumbs current={site?.data?.title} />
+                <ExternalLink to={site.data.url} className="text-base-500" title="Open site in new tab">{site?.data?.url}</ExternalLink>
+            </nav>
+            <Container>
+                <div className="flex flex-col gap-2">
+                    {/* <h1>{site?.data?.title}</h1> */}
+                    <PeriodSelect />
+                    {site?.error && <Message message={{ type: "error", text: site?.error.message }} />}
+                    <Panel title="" stats={stats.data.aggregates} />
+                    {/* { JSON.stringify(stats.data)} */}
+                    <HorizontalBarChart data={isRealtime ? stats.data?.graph && stats.data?.graph.slice(30, 60) : stats.data?.graph} />
+                    {/* <LineChart data={isRealtime ? stats?.graph && stats?.graph.slice(30, 60) : stats?.graph} /> */}
+                    {/* <Map className="col-span-2 p-4" data={stats.data?.countries} /> */}
+                    <div className="grid items-stretch justify-center grid-cols-2 gap-2">
+                        <Tab className="col-span-1 p-4" chevronStyle={false} title="Countries" titles={["Countries"]}>
+                            <VerticalBarChart title="Countries" data={stats.data?.countries?.map((country: any) => ({ ...country, countryCode: country.name, name: countryNameFromCode(country.name) }))} />
+                        </Tab>
+                        <Tab chevronStyle={false} title="Device" titles={["Browsers", "Systems", "Platforms"]}>
+                            <VerticalBarChart title="Browsers" data={stats.data?.browsers} />
+                            <VerticalBarChart title="Systems" data={stats.data?.systems} />
+                            <VerticalBarChart title="Platforms" data={stats.data?.platforms} />
+                        </Tab>
+                        <Tab chevronStyle={false} title="Sources" titles={["All Pages", "Entry Pages", "Exit Pages"]}>
+                            <VerticalBarChart title="All pages" data={stats.data?.pages?.all} />
+                            <VerticalBarChart title="Entry pages" data={stats.data?.pages?.entry} />
+                            <VerticalBarChart title="Exit pages" data={stats.data?.pages?.exit} />
+                        </Tab>
+                        <Tab chevronStyle={false} title="UTMs" titles={["Source", "Campaign", "Content", "Term"]}>
+                            <VerticalBarChart title="Source" data={stats.data?.utms?.sources.filter((e: any) => e.name !== "")} />
+                            <VerticalBarChart title="Campaign" data={stats.data?.utms?.campaigns.filter((e: any) => e.name !== "")} />
+                            <VerticalBarChart title="Content" data={stats.data?.utms?.contents.filter((e: any) => e.name !== "")} />
+                            <VerticalBarChart title="Terms" data={stats.data?.utms?.terms.filter((e: any) => e.name !== "")} />
+                        </Tab>
+                        <Tab chevronStyle={false} title="Sources" titles={["Queries", "Hashes", "Referrers"]}>
+                            <VerticalBarChart title="Queries" data={stats.data?.queries} />
+                            <VerticalBarChart title="Hashes" data={stats.data?.hashes} />
+                            <VerticalBarChart title="Referrers" data={stats.data?.referrers} />
+                        </Tab>
+                    </div>
+
+                    {!isRealtime && <span className="flex flex-row items-center justify-center flex-shrink gap-2">
+                        <IconDownload />
+                        <p className="text-sm text-gray-700 text-bold">Download:</p>
+                        <Link to={`export?${searchParams.toString()}&filetype=json`} className="button button-ghost" reloadDocument>.json</Link>
+                        <Link to={`export?${searchParams.toString()}&filetype=csv`} className="button button-ghost" reloadDocument>.csv</Link>
+                    </span>}
                 </div>
-                <PeriodSelect />
-                {site?.error && <Message message={{ type: "error", text: site?.error.message }} />}
-                <Panel title="" stats={stats.data.aggregates} />
-                {/* { JSON.stringify(stats.data)} */}
-                <HorizontalBarChart data={isRealtime ? stats.data?.graph && stats.data?.graph.slice(30, 60) : stats.data?.graph} />
-                {/* <LineChart data={isRealtime ? stats?.graph && stats?.graph.slice(30, 60) : stats?.graph} /> */}
-                {/* <Map className="col-span-2 p-4" data={stats.data?.countries} /> */}
-                <Tab className="col-span-1 p-4" chevronStyle={true} titles={["Countries"]}>
-                    <VerticalBarChart title="Countries" data={stats.data?.countries?.map((country: any) => ({ ...country, countryCode: country.name, name: countryNameFromCode(country.name) }))} />
-                </Tab>
-                <Tab chevronStyle={true} title="Device" titles={["Browsers", "Systems", "Platforms"]}>
-                    <VerticalBarChart title="Browsers" data={stats.data?.browsers} />
-                    <VerticalBarChart title="Systems" data={stats.data?.systems} />
-                    <VerticalBarChart title="Platforms" data={stats.data?.platforms} />
-                </Tab>
-                <Tab chevronStyle={true} title="Sources" titles={["All Pages", "Entry Pages", "Exit Pages"]}>
-                    <VerticalBarChart title="All pages" data={stats.data?.pages?.all} />
-                    <VerticalBarChart title="Entry pages" data={stats.data?.pages?.entry} />
-                    <VerticalBarChart title="Exit pages" data={stats.data?.pages?.exit} />
-                </Tab>
-                <Tab chevronStyle={true} title="UTMs" titles={["Source", "Campaign", "Content", "Term"]}>
-                    <VerticalBarChart title="Source" data={stats.data?.utms?.sources.filter((e: any) => e.name !== "")} />
-                    <VerticalBarChart title="Campaign" data={stats.data?.utms?.campaigns.filter((e: any) => e.name !== "")} />
-                    <VerticalBarChart title="Content" data={stats.data?.utms?.contents.filter((e: any) => e.name !== "")} />
-                    <VerticalBarChart title="Terms" data={stats.data?.utms?.terms.filter((e: any) => e.name !== "")} />
-                </Tab>
-                <Tab chevronStyle={true} title="Sources" titles={["Queries", "Hashes", "Referrers"]}>
-                    <VerticalBarChart title="Queries" data={stats.data?.queries} />
-                    <VerticalBarChart title="Hashes" data={stats.data?.hashes} />
-                    <VerticalBarChart title="Referrers" data={stats.data?.referrers} />
-                </Tab>
-                {!isRealtime && <span className="flex flex-row justify-center items-center flex-shrink gap-2">
-                    <IconDownload />
-                    <p className="text-sm text-gray-700 text-bold">Download:</p>
-                    <Link to={`export?${searchParams.toString()}&filetype=json`} className="button button-ghost" reloadDocument>.json</Link>
-                    <Link to={`export?${searchParams.toString()}&filetype=csv`} className="button button-ghost" reloadDocument>.csv</Link>
-                </span>}
-            </div>
-        </Container>
+            </Container>
         </>
     )
 }

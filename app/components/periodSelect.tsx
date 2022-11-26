@@ -30,7 +30,7 @@ export default function PeriodSelect() {
                 <div className="text-base-600">{description}</div>
                 <div className="font-bold text-base-800">{title}</div>
             </div>
-            {isLoading && <div className="text-sm flex gap-1 text-base-600 shrink animate-pulse">
+            {isLoading && <div className="flex gap-1 text-sm text-base-600 shrink animate-pulse">
                 Loading... <Spinner/>
             </div>}
             <div className="flex items-center justify-center gap-2 text-sm shrink">
@@ -57,7 +57,7 @@ export default function PeriodSelect() {
                     name="period"
                     defaultValue={period}
                     className="select"
-                    onChange={({ target: { value } }) => submit({ period: value, index: index.toString() })}
+                    onChange={({ target: { value } }) => submit({ period: value, index: "0" })}
                 >
                     {periods?.map(({ id, title }) => <option key={id} value={id}>{title}</option>)}
                 </select>
