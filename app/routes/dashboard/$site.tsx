@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ request, params }: { request: Req
     if (site.error) throw new Response("Not Found", { status: 404 });
 
     const url = new URL(request.url);
-    const period = url.searchParams.get("period") || "week";
+    const period = url.searchParams.get("period") || "realtime";
     const index = period === "realtime" ? 0 : Number(url.searchParams.get("index")) || 0;
 
     const stats = site.data?.id ? await getSiteStats(request, site.data?.id, period, index) : { data: null, error: null };

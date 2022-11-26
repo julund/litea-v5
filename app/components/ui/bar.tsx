@@ -11,8 +11,8 @@ const Bar = ({ value, inPercent = false, max = 100, horizontal = true, ...props 
 
     const [ref, { width, height }] = useMeasure<HTMLDivElement>();
     const currentValue = Math.min(inPercent ? value * (horizontal ? width : height) : value * (horizontal ? width : height) / max, (horizontal ? width : height)) || 0;
-    const horizontalStyles = useSpring({ to: { width: currentValue }, from: { width: 0 }, config: config.wobbly });
-    const verticalStyles = useSpring({ to: { height: currentValue }, from: { height: 0 }, config: config.wobbly });
+    const horizontalStyles = useSpring({ to: { width: currentValue }, from: { width: 0 }, config: config.default });
+    const verticalStyles = useSpring({ to: { height: currentValue }, from: { height: 0 }, config: config.default });
 
     if (horizontal) return (
         <div className="relative flex-grow h-4 overflow-hidden rounded-sm">
