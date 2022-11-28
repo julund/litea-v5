@@ -2,6 +2,7 @@ import { useSubmit, useSearchParams, useTransition, Form } from "@remix-run/reac
 import { IconChevronDown, IconChevronLeft, IconChevronRight } from "./icons";
 import { periods, getPeriodDates } from "~/utils/helpers";
 import Spinner from "~/components/ui/spinner";
+import { useEffect } from "react";
 
 export default function PeriodSelect() {
 
@@ -14,6 +15,15 @@ export default function PeriodSelect() {
     const { title, description } = getPeriodDates(period, index);
 
     const isLoading = state !== "idle";
+
+    useEffect( () => {
+        if(period === "realtime") {
+            const interval = setInterval( () => {
+                submit({ period, index: "0" })
+            }, 60000)
+            return () => clearInterval(interval);
+        }
+    },[period, submit])
 
     const incrementIndex = () => {
         const e = document?.querySelector('input[type=number]') as HTMLInputElement;

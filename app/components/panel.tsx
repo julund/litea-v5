@@ -36,7 +36,7 @@ const PanelItem = ({ children }: { children: React.ReactNode }) => {
 const Panel = ({ title, stats }: { title: string; stats: any }) => {
 
     return (
-        <div className="flex flex-col p-4">
+        <div className="flex flex-col">
             <div className="px-4 py-1 mb-1 text-sm font-bold">{title}</div>
             <div className="grid grid-cols-2 gap-4 text-center md:grid-cols-4">
                 <PanelItem>
