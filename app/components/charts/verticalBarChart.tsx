@@ -4,6 +4,7 @@ import { lowerCase } from "~/utils/helpers";
 import Bar from "../ui/bar";
 // import Iconify from "../ui/iconify";
 import { CircleFlag } from "react-circle-flags";
+import FavIcon from "../favicon";
 
 const countFormat = {
     average: true,
@@ -80,6 +81,7 @@ const VerticalBarChart = ({ title, data }: { title: string; data: Array<any> }) 
                                 <span className="flex items-center gap-1">
                                     {/* <Iconify category={title}>{item.name || "(blank)"}</Iconify> */}
                                     { item?.countryCode && <CircleFlag className="h-4" countryCode={item.countryCode.toLowerCase()} width="16" height="16" />}
+                                    { item?.domain && <FavIcon className="h-4" alt={item.domain.toLowerCase()} domain={item.domain.toLowerCase()} />}
                                     {item.name || "(blank)"}
                                 </span>
                                 <span>
