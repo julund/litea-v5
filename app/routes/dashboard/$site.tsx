@@ -53,7 +53,7 @@ export default function SitePage() {
 
     return (
         <>
-            <nav className="flex items-center justify-end w-full gap-4 px-6 py-4 border-b-2 bg-white/50 border-base-100">
+            <nav className="sticky top-0 z-20 flex items-center justify-end w-full gap-4 px-6 py-4 bg-white border-b-2 border-base-100">
                 <Breadcrumbs current={site?.data?.title} />
                 <ExternalLink to={site.data.url} className="text-base-500" title="Open site in new tab">{site?.data?.url}</ExternalLink>
             </nav>
@@ -68,12 +68,12 @@ export default function SitePage() {
                     {/* <HorizontalBarChart data={isRealtime ? stats.data?.graph && stats.data?.graph.slice(30, 60) : stats.data?.graph} /> */}
                     
                     {isRealtime ?
-                        <div className="h-40 m-4 p-4 bg-white bg-opacity-50 rounded-sm flex flex-wrap gap-2">
+                        <div className="flex flex-wrap h-40 gap-2 p-4 m-4 bg-white bg-opacity-50 rounded-sm">
                             { visitors && visitors.data?.map( visitor => {
                                 return(
-                                    <div className="flex flex-col flex-wrap gap-1 rounded-sm p-4 bg-base-100 text-base-600" key={visitor.id}>
+                                    <div className="flex flex-col flex-wrap gap-1 p-4 rounded-sm bg-base-100 text-base-600" key={visitor.id}>
                                         
-                                        <span className="flex gap-1 items-center text-base" title={visitor.id}>
+                                        <span className="flex items-center gap-1 text-base" title={visitor.id}>
                                             <span><IconUser/></span>
                                             <span>{ "..." + visitor.id.slice(visitor.id.length - 10)}</span>
                                         </span>
