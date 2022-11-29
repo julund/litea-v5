@@ -1,6 +1,6 @@
 import { Children, cloneElement } from "react";
 import { useCounter } from "react-use";
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { IconChevronLeft, IconChevronRight } from "~/components/icons";
 
 const Tab = ({ title, titles, children, chevronStyle = false, ...props }: { title?: string; titles?: string[], children: React.ReactNode, chevronStyle?: boolean, props?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> }) => {
 
@@ -12,7 +12,7 @@ const Tab = ({ title, titles, children, chevronStyle = false, ...props }: { titl
     const [current, { inc, dec, set }] = useCounter(min, max, min);
 
     return (
-        <div className="p-4 bg-white" {...props}>
+        <div className="min-h-[12rem] p-4 bg-white" {...props}>
             {title && <h3 className="pb-2 text-base text-base-500">{title}</h3>}
             <span className="flex flex-row items-center mb-2">
                 {!chevronStyle ?
@@ -33,11 +33,11 @@ const Tab = ({ title, titles, children, chevronStyle = false, ...props }: { titl
                         {max > 1 &&
                             <span className="flex flex-row flex-shrink select-none">
                                 {current > min ?
-                                    <button className="select-none active:scale-90 active:text-primary-900" onClick={() => dec()}><HiChevronLeft size={30} /></button> :
-                                    <HiChevronLeft className="text-base-400" size={30} />}
+                                    <button className="select-none active:scale-90 active:text-primary-900" onClick={() => dec()}><IconChevronLeft size={26} /></button> :
+                                    <IconChevronLeft className="text-base-400" size={26} />}
                                 {current < max ?
-                                    <button className="select-none active:scale-90 active:text-primary-900" onClick={() => inc()}><HiChevronRight size={30} /></button> :
-                                    <HiChevronRight className="text-base-400" size={30} />}
+                                    <button className="select-none active:scale-90 active:text-primary-900" onClick={() => inc()}><IconChevronRight size={26} /></button> :
+                                    <IconChevronRight className="text-base-400" size={26} />}
                             </span>
                         }
                     </>}

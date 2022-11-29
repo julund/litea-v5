@@ -19,7 +19,7 @@ export default function Counter({ value, callback, config, ...props }: { value: 
     }) as any;
 
     return (
-        <a.span className="text-4xl font-black font-title" style={styles} {...props}>
+        <a.span className="text-4xl font-black tracking-wider tabular-nums font-title" style={styles} {...props}>
             {callback(current)}
         </a.span>
     );

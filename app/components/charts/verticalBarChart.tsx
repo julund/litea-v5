@@ -13,9 +13,9 @@ const percentFormat: numbro.Format = {
     mantissa: 0
 };
 
-const BarChartItem = ({ key, className, item, unknownTitle, iconCategory }: { key?: React.Key | null; className?: string; item: any; unknownTitle: string; iconCategory: string; }) => {
+const BarChartItem = ({ className, item, unknownTitle, iconCategory }: { className?: string; item: any; unknownTitle: string; iconCategory: string; }) => {
     return (
-        <div key={key} className={className}>
+        <div className={className}>
             <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
                 <span className="flex items-center gap-1">
                     <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} />
