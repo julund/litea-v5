@@ -27,7 +27,7 @@
 
 @layer components {
   .button {
-    @apply inline-flex gap-1 justify-center items-center px-4 py-2 text-lg font-medium text-center rounded-sm transition-all duration-300 font-title;
+    @apply inline-flex gap-2 items-center px-4 py-3 text-lg font-medium rounded-sm transition-all duration-300 font-title leading-4;
   }
   .button-primary {
     @apply bg-primary-600 hover:bg-primary-700 text-primary-50;
@@ -94,5 +94,8 @@
   }
   .select:focus-visible {
     @apply text-base-600 outline-none;
+  }
+  .bar {
+    @apply max-w-[2.5rem] min-w-[1rem] w-6;
   }
 }

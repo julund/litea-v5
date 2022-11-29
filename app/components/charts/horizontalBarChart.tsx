@@ -11,7 +11,7 @@ const HorizontalBarChart = ({ data }: { data: Array<any> }) => {
     const modifiedData = dataWithPercent;
 
     return (
-        <div className="h-40 m-4 bg-white bg-opacity-50 rounded-md select-none">
+        <div className="h-40 m-4 bg-white bg-opacity-50 rounded-sm select-none">
             <div className="flex flex-row w-full h-full gap-1 p-4 justify-evenly">
                 {!modifiedData && <div className="flex items-center"> <Spinner size={64} /> </div>}
                 {modifiedData && modifiedData.map((item, i) => {

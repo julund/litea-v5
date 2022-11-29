@@ -32,21 +32,21 @@ export default function SitesPage() {
                 {error && <Message message={{ type: "error", text: error.message }} allowClose={false} />}
                 {data && data.map(({ id, title, url, created_at }) => {
                     return (
-                        <div key={id} className="flex flex-row items-center gap-4 px-8 py-4 transition-all rounded-md group hover:bg-base-100">
+                        <div key={id} className="flex flex-row items-center gap-4 px-8 py-4 transition-all rounded-sm group hover:bg-base-100">
                             <span className="flex flex-col">
                                 {title === "Text-let (test)" ?
                                     <IconCircleDotted className="text-gray-400 cursor-pointer fill-current stroke-2" /> :
                                     <IconCircle className="text-green-400 cursor-pointer fill-current" />
                                 }
                             </span>
-                            <Link prefetch="intent" className="flex flex-col flex-grow p-2 break-words rounded-md text-base-800 hover:text-primary-800" to={"./" + url}>
+                            <Link prefetch="intent" className="flex flex-col flex-grow p-2 break-words rounded-sm text-base-800 hover:text-primary-800" to={"./" + url}>
                                 <span className="text-xl font-semibold font-title">{title ?? url}</span>
                                 <span className="font-sans text-title text-base-600">{url}</span>
                             </Link>
                             <span className="flex flex-col">
                                 <span className="text-base font-title text-base-600">{formatTime(created_at)}</span>
                             </span>
-                            <button className="flex flex-col invisible p-2 rounded-md group-hover:visible hover:bg-base-100 hover:bg-opacity-60">
+                            <button className="flex flex-col invisible p-2 rounded-sm group-hover:visible hover:bg-base-100 hover:bg-opacity-60">
                                 ...
                             </button>
                         </div>

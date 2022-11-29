@@ -2,7 +2,7 @@ import numbro from "numbro";
 import { lowerCase } from "~/utils/helpers";
 // import { useSpring, useTransition, animated, config, useTrail } from "react-spring";
 import Bar from "../ui/bar";
-// import Iconify from "../ui/iconify";
+import Icon from "../icon";
 import { CircleFlag } from "react-circle-flags";
 import FavIcon from "../favicon";
 
@@ -48,7 +48,7 @@ const VerticalBarChart = ({ title, data }: { title: string; data: Array<any> }) 
 
     return (
         <div className="flex flex-col py-2">
-            {/* <div className="px-4 py-1 mb-1 font-bold text-sm">{title}</div> */}
+            <div className="px-4 py-1 mb-1 font-bold text-sm">{title}</div>
             <div className="flex-auto">
                 {isEmpty &&
                     <div className="mb-2">
@@ -79,10 +79,10 @@ const VerticalBarChart = ({ title, data }: { title: string; data: Array<any> }) 
                         <div key={i} className="mb-2">
                             <div className="flex flex-row mb-1 justify-between items-center text-sm break-all">
                                 <span className="flex items-center gap-1">
-                                    {/* <Iconify category={title}>{item.name || "(blank)"}</Iconify> */}
-                                    { item?.countryCode && <CircleFlag className="h-4" countryCode={item.countryCode.toLowerCase()} width="16" height="16" />}
-                                    { item?.domain && <FavIcon className="h-4" alt={item.domain.toLowerCase()} domain={item.domain.toLowerCase()} />}
+                                    <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={title}/>
                                     {item.name || "(blank)"}
+                                    {/* { item?.countryCode && <CircleFlag className="h-4" countryCode={item.countryCode.toLowerCase()} width="16" height="16" />}
+                                    { item?.domain && <FavIcon className="h-4" alt={item.domain.toLowerCase()} domain={item.domain.toLowerCase()} />} */}
                                 </span>
                                 <span>
                                     {numbro(item.count).format(countFormat)} <small>({item.percent ? numbro(item.percent).format(percentFormat) : "∞ %"})</small>
@@ -92,21 +92,6 @@ const VerticalBarChart = ({ title, data }: { title: string; data: Array<any> }) 
                         </div>
                     );
                 })}
-
-                {/* {fade.map((styles, index) => {
-                    const item = modifiedData[index];
-                    return (
-                        <animated.div style={styles}>
-                            <div className="flex flex-row mb-2 justify-between items-center text-base break-all">
-                                <span className="flex items-center gap-2"><Iconify category={title}>{item.name || "(blank)"}</Iconify></span>
-                                <span>
-                                    {numbro(item.count).format(countFormat)} <small>({item.percent ? numbro(item.percent).format(percentFormat) : "∞ %"})</small>
-                                </span>
-                            </div>
-                            <Bar value={item.percent} inPercent={true} />
-                        </animated.div>)
-                })} */}
-
             </div>
         </div>
     );

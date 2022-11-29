@@ -17,7 +17,7 @@ export const NavLink = ({ children, ...props }: { children: ReactNode } & NavLin
     const activeClassName = "px-4 py-2 text-xl text-base-500 bg-base-200 font-title rounded-sm transition-all duration-500";
     const inactiveClassName = "px-4 py-2 text-xl text-base-600 hover:bg-base-200 font-title rounded-sm transition-all duration-500";
     return (
-        <RemixNavLink {...props} prefetch="intent" className={({ isActive }) => isActive ? activeClassName : inactiveClassName}>
+        <RemixNavLink {...props} prefetch="intent" className={({ isActive }) => (isActive ? activeClassName : inactiveClassName) + " " + props.className}>
             {children}
         </RemixNavLink>
     );

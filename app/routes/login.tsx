@@ -5,6 +5,7 @@ import { check, signIn } from "~/lib/auth.server";
 import { Message } from "~/components/message";
 import { type ISession } from "~/lib/session.server";
 import { MinimalLayout } from "~/layout";
+import { IconLogin } from "~/components/icons";
 
 export const loader: LoaderFunction = async ({ request }: { request: Request }) => {
   const { data, message, headers } = await check(request);
@@ -32,7 +33,7 @@ export default function Index() {
           <input className="" id="Email" type="email" name="email" placeholder="email@example.com" autoComplete="email" />
           <input className="" id="Password" type="password" name="password" autoComplete="password" />
           <p className="px-2 text-sm text-base-500">Forgot password?</p>
-          <button className="button button-primary disabled:opacity-40" type="submit" disabled={state == "submitting"}>{state == "submitting" ? "Logging in..." : "Log in"}</button>
+          <button className="button button-primary justify-center disabled:opacity-40" type="submit" disabled={state == "submitting"}><IconLogin size={22}/>{state == "submitting" ? "Logging in..." : "Log in"}</button>
         </Form>}
         {data?.handle && <>
           <h1 className="py-2 text-2xl font-semibold font-title">You're allready logged in</h1>

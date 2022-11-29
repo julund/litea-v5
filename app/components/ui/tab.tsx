@@ -20,8 +20,8 @@ const Tab = ({ title, titles, children, className, chevronStyle = false, ...prop
                         {titles && titles.map((title, index) =>
                             <span key={index} className="text-xs">
                                 {(current - 1) == index ?
-                                    <div className="px-2 py-1 rounded-md select-none text-base-200 bg-base-600">{title} </div> :
-                                    <button className="px-2 py-1 transition-all duration-300 rounded-md select-none text-base-900 bg-base-200 hover:bg-base-300 hover:text-base-800" onClick={() => set(index + 1)}>{title}</button>
+                                    <div className="px-2 py-1 rounded-sm select-none text-base-200 bg-base-600">{title} </div> :
+                                    <button className="px-2 py-1 transition-all duration-300 rounded-sm select-none text-base-900 bg-base-200 hover:bg-base-300 hover:text-base-800" onClick={() => set(index + 1)}>{title}</button>
                                 }
                             </span>
                         )}

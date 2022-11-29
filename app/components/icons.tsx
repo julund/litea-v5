@@ -32,3 +32,21 @@ export const IconRefresh = ({ ...props }: IconProps) => icon.TbRefresh({ ...defa
 export const IconExternalLink = ({ ...props }: IconProps) => icon.TbExternalLink({ ...defaultIconProps, ...props });
 export const IconDownload = ({ ...props }: IconProps) => icon.TbDownload({ ...defaultIconProps, ...props });
 export const IconLoader = ({ ...props }: IconProps) => icon.TbLoader({ ...defaultIconProps, ...props });
+export const IconSettings = ({ ...props }: IconProps) => icon.TbSettings({ ...defaultIconProps, ...props });
+
+export const IconBrandChrome = ({ ...props }: IconProps) => icon.TbBrandChrome({ ...defaultIconProps, ...props });
+export const IconBrandAndroid = ({ ...props }: IconProps) => icon.TbBrandAndroid({ ...defaultIconProps, ...props });
+export const IconBrandWindows = ({ ...props }: IconProps) => icon.TbBrandWindows({ ...defaultIconProps, ...props });
+export const IconBrandApple = ({ ...props }: IconProps) => icon.TbBrandApple({ ...defaultIconProps, ...props });
+export const IconBrandEdge = ({ ...props }: IconProps) => icon.TbBrandEdge({ ...defaultIconProps, ...props });
+export const IconBrandFirefox = ({ ...props }: IconProps) => icon.TbBrandFirefox({ ...defaultIconProps, ...props });
+
+export const IconDeviceTv = ({ ...props }: IconProps) => icon.TbDeviceTv({ ...defaultIconProps, ...props });
+export const IconDeviceDesktop = ({ ...props }: IconProps) => icon.TbDeviceDesktop({ ...defaultIconProps, ...props });
+export const IconDeviceMobile = ({ ...props }: IconProps) => icon.TbDeviceMobile({ ...defaultIconProps, ...props });
+export const IconDeviceTablet = ({ ...props }: IconProps) => icon.TbDeviceTablet({ ...defaultIconProps, ...props });
+
+export const IconEngine = ({ ...props }: IconProps) => icon.TbEngine({ ...defaultIconProps, ...props });
+
+export const IconLink = ({ ...props }: IconProps) => icon.TbLink({ ...defaultIconProps, ...props });
+export const IconFileText = ({ ...props }: IconProps) => icon.TbFileText({ ...defaultIconProps, ...props });
