@@ -3,8 +3,6 @@ import { lowerCase } from "~/utils/helpers";
 // import { useSpring, useTransition, animated, config, useTrail } from "react-spring";
 import Bar from "../ui/bar";
 import Icon from "../icon";
-import { CircleFlag } from "react-circle-flags";
-import FavIcon from "../favicon";
 
 const countFormat = {
     average: true,
@@ -48,12 +46,12 @@ const VerticalBarChart = ({ title, data }: { title: string; data: Array<any> }) 
 
     return (
         <div className="flex flex-col py-2">
-            <div className="px-4 py-1 mb-1 font-bold text-sm">{title}</div>
+            {/* <div className="font-bold text-sm">{title}</div> */}
             <div className="flex-auto">
                 {isEmpty &&
                     <div className="mb-2">
-                        <div className="flex flex-row mb-1 justify-between items-center text-base break-all">
-                            <span className="flex items-center gap-2">(none)</span>
+                        <div className="flex flex-row mb-1 justify-between items-center text-sm break-all">
+                            <span className="flex items-center gap-1">(none)</span>
                             <span>
                                 0 <small>({numbro(1).format(percentFormat)})</small>
                             </span>
@@ -61,19 +59,6 @@ const VerticalBarChart = ({ title, data }: { title: string; data: Array<any> }) 
                         <Bar value={0} inPercent={true}/>
                     </div>
                 }
-                {/* {transitions((styles, item) => (
-                    item && (
-                    <animated.div style={styles}>
-                        <div className="flex flex-row mb-2 justify-between items-center text-base break-all">
-                            <span className="flex items-center gap-2"><Iconify category={title}>{item.name || "(blank)"}</Iconify></span>
-                            <span>
-                                {numbro(item.count).format(countFormat)} <small>({item.percent ? numbro(item.percent).format(percentFormat) : "∞ %"})</small>
-                            </span>
-                        </div>
-                        <Bar value={item.percent} inPercent={true} />
-                    </animated.div>)
-                ))} */}
-
                 {modifiedData && modifiedData.map((item, i) => {
                     return (
                         <div key={i} className="mb-2">
@@ -81,8 +66,6 @@ const VerticalBarChart = ({ title, data }: { title: string; data: Array<any> }) 
                                 <span className="flex items-center gap-1">
                                     <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={title}/>
                                     {item.name || "(blank)"}
-                                    {/* { item?.countryCode && <CircleFlag className="h-4" countryCode={item.countryCode.toLowerCase()} width="16" height="16" />}
-                                    { item?.domain && <FavIcon className="h-4" alt={item.domain.toLowerCase()} domain={item.domain.toLowerCase()} />} */}
                                 </span>
                                 <span>
                                     {numbro(item.count).format(countFormat)} <small>({item.percent ? numbro(item.percent).format(percentFormat) : "∞ %"})</small>

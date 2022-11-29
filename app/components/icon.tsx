@@ -10,7 +10,8 @@ import {
 
 export default function Icon({ title, category, ...props }: { title: string; category: string; props?: IconProps }) {
     
-    if (!title) return <IconCircle />;
+    const DefaultIcon = <IconCircle className="text-base-500" />
+    if (!title) return DefaultIcon;
     const i = title.toLowerCase();
     const c = category?.toLowerCase();
     console.log(i,category)
@@ -49,5 +50,5 @@ export default function Icon({ title, category, ...props }: { title: string; cat
 
     if (i.includes("://")) return <IconLink />;
 
-    return <IconCircle />;
+    return DefaultIcon;
 };

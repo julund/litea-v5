@@ -58,7 +58,7 @@ export default function SitePage() {
                 <ExternalLink to={site.data.url} className="text-base-500" title="Open site in new tab">{site?.data?.url}</ExternalLink>
             </nav>
             <Container>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4">
                     {/* <h1>{site?.data?.title}</h1> */}
                     <PeriodSelect />
                     {site?.error && <Message message={{ type: "error", text: site?.error.message }} />}
@@ -93,7 +93,7 @@ export default function SitePage() {
 
                     {/* <LineChart data={isRealtime ? stats?.graph && stats?.graph.slice(30, 60) : stats?.graph} /> */}
                     {/* <Map className="col-span-2 p-4" data={stats.data?.countries} /> */}
-                    <div className="grid items-stretch justify-center grid-cols-2 gap-2">
+                    <div className="grid items-stretch justify-center grid-cols-2 gap-4">
                         <Tab className="col-span-1 p-4" chevronStyle={false} title="Countries">
                             <VerticalBarChart title="Countries" data={stats.data?.countries?.map((country: any) => ({ ...country, countryCode: country.name, name: countryNameFromCode(country.name) }))} />
                         </Tab>
@@ -101,7 +101,7 @@ export default function SitePage() {
                             <VerticalBarChart title="Referrers" data={stats.data?.referrers?.map((referrer: any) => ({ ...referrer, domain: referrer.name }))} />
                         </Tab>
                     </div>
-                    <div className="grid items-stretch justify-center grid-cols-3 gap-2">
+                    <div className="grid items-stretch justify-center grid-cols-3 gap-4">
                         <Tab chevronStyle={false} title="Device" titles={["Browsers", "Systems", "Platforms"]}>
                             <VerticalBarChart title="Browsers" data={stats.data?.browsers} />
                             <VerticalBarChart title="Systems" data={stats.data?.systems} />
