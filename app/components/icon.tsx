@@ -5,7 +5,9 @@ import {
     IconBrandAndroid, IconBrandChrome, IconBrandWindows, IconBrandApple, IconBrandEdge, IconBrandFirefox, 
     IconDeviceTv, IconDeviceDesktop, IconDeviceMobile, IconDeviceTablet, 
     IconLink, IconFileHorizontal, IconEngine, 
-    type IconProps
+    type IconProps,
+    IconBrandOpera,
+    IconBrandOpenSource
  } from "./icons";
 
 export default function Icon({ title, category, ...props }: { title: string; category: string; props?: IconProps }) {
@@ -25,13 +27,15 @@ export default function Icon({ title, category, ...props }: { title: string; cat
     if (i.includes("chromium")) return <IconBrandChrome {...iconProps} />;
     if (i.includes("microsoft edge")) return <IconBrandEdge {...iconProps} />;
     if (i.includes("firefox")) return <IconBrandFirefox {...iconProps} />;
+    if (i.includes("safari")) return <IconBrandApple {...iconProps} />;
+    if (i.includes("opera")) return <IconBrandOpera {...iconProps} />;
 
     if (i.includes("windows phone")) return <IconBrandWindows {...iconProps} />;
     if (i.includes("windows")) return <IconBrandWindows {...iconProps} />;
     if (i.includes("macos")) return <IconBrandApple {...iconProps} />;
     if (i.includes("ios")) return <IconBrandApple {...iconProps} />;
     if (i.includes("android")) return <IconBrandAndroid {...iconProps} />;
-    if (i.includes("linux")) return <IconDeviceDesktop {...iconProps} />;
+    if (i.includes("linux")) return <IconBrandOpenSource {...iconProps} />;
     if (i.includes("chrome os")) return <IconBrandChrome {...iconProps} />;
 
     if (i == "desktop") return <IconDeviceDesktop {...iconProps} />;

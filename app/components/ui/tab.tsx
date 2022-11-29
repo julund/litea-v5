@@ -2,7 +2,7 @@ import { Children, cloneElement } from "react";
 import { useCounter } from "react-use";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
-const Tab = ({ title, titles, children, className, chevronStyle = false, ...props }: { title?: string; titles?: string[], className?: string; children: React.ReactNode, chevronStyle?: boolean, props?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> }) => {
+const Tab = ({ title, titles, children, chevronStyle = false, ...props }: { title?: string; titles?: string[], children: React.ReactNode, chevronStyle?: boolean, props?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> }) => {
 
     const items = Children.toArray(children).filter(e=> typeof e === "object") as React.ReactElement[];
 
@@ -13,7 +13,7 @@ const Tab = ({ title, titles, children, className, chevronStyle = false, ...prop
 
     return (
         <div className="p-4 bg-white" {...props}>
-            {title && <h3 className="text-base text-base-500 pb-2">{title}</h3>}
+            {title && <h3 className="pb-2 text-base text-base-500">{title}</h3>}
             <span className="flex flex-row items-center mb-2">
                 {!chevronStyle ?
                     <span className="flex flex-row flex-wrap flex-shrink gap-1">

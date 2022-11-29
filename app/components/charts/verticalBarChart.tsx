@@ -1,6 +1,5 @@
 import numbro from "numbro";
 import { lowerCase } from "~/utils/helpers";
-// import { useSpring, useTransition, animated, config, useTrail } from "react-spring";
 import Bar from "../ui/bar";
 import Icon from "../icon";
 
@@ -14,7 +13,24 @@ const percentFormat: numbro.Format = {
     mantissa: 0
 };
 
-const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none", data }: { title: string; unknownTitle?: string; emptyTitle?: string;data: Array<any> }) => {
+const BarChartItem = ({ key, className, item, unknownTitle, iconCategory }: { key?: React.Key | null; className?: string; item: any; unknownTitle: string; iconCategory: string; }) => {
+    return (
+        <div key={key} className={className}>
+            <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
+                <span className="flex items-center gap-1">
+                    <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} />
+                    {item.name || unknownTitle}
+                </span>
+                <span>
+                    {numbro(item.count).format(countFormat)} <small>({item.percent ? numbro(item.percent).format(percentFormat) : "100 %"})</small>
+                </span>
+            </div>
+            <Bar value={item.percent} inPercent={true} />
+        </div>
+    )
+}
+
+const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none", data }: { title: string; unknownTitle?: string; emptyTitle?: string; data: Array<any> }) => {
 
     const sumAll = data && data?.reduce((total, item) => total + item.count, 0);
     const dataWithPercent = data && data?.map(item => {
@@ -25,56 +41,26 @@ const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none"
     const top = (dataWithPercent && dataWithPercent?.filter((_, i) => i <= (numItemsTop - 1))) || undefined;
     const rest = dataWithPercent && dataWithPercent?.filter((_, i) => i >= numItemsTop);
     const sumRest = rest && rest?.reduce((total, item) => total + item.count, 0);
-    const restItem = { name: `(${rest?.length} other ${lowerCase(title)})`, count: sumRest, percent: (sumRest / sumAll) };
-    let modifiedData = sumRest > 1 ? top && [...top, restItem] : top && [...top, ...rest];
-    const isEmpty = modifiedData && modifiedData.length == 0;
-
-    // const transitions = useTransition(modifiedData, {
-    //     keys: item => item.key,
-    //     from: { opacity: 0 },
-    //     enter: { opacity: 1 },
-    //     leave: { opacity: 0 },
-    //     config: config.molasses,
-    // });
-
-    // const fade = useTrail(modifiedData?.length || 0, {
-    //     delay: 200,
-    //     from: { opacity: 0, scale: 0 },
-    //     to: { opacity: 1, scale: 1 },
-    //     config: config.default,
-    // });
+    const modifiedData = sumRest > 1 ? top && [...top] : top && [...top, ...rest];
+    const modifiedRest = sumRest > 1 ? [...rest] : null;
+    const restItem = sumRest > 1 ? { name: `(${rest?.length} other ${lowerCase(title)})`, count: sumRest, percent: (sumRest / sumAll) } : null;
+    const emptyItem = modifiedData?.length == 0 ? { name: emptyTitle, count: 0, percent: 0 } : null;
 
     return (
         <div className="flex flex-col py-2">
             {/* <div className="text-sm font-bold">{title}</div> */}
-            <div className="flex flex-col flex-auto gap-4">
-                {isEmpty &&
-                    <div className="">
-                        <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
-                            <span className="flex items-center gap-1">{emptyTitle}</span>
-                            <span>
-                                0 <small>({numbro(1).format(percentFormat)})</small>
-                            </span>
-                        </div>
-                        <Bar value={0} inPercent={true}/>
-                    </div>
+            <div className="flex flex-col gap-4">
+                {/* {emptyItem && <div className="text-lg font-medium text-base-400 font-title">No data.</div>} */}
+                {emptyItem && <BarChartItem item={emptyItem} iconCategory={title} unknownTitle={unknownTitle} />}
+                {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
+                {restItem &&
+                    <details className="">
+                        <summary className="mb-4 cursor-pointer hover:font-semibold">
+                            <BarChartItem item={restItem} iconCategory={title} unknownTitle={unknownTitle} />
+                        </summary>
+                        {modifiedRest && modifiedRest.map((item, i) => <BarChartItem key={i} className="mb-4 scale-90" item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
+                    </details>
                 }
-                {modifiedData && modifiedData.map((item, i) => {
-                    return (
-                        <div key={i} className="">
-                            <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
-                                <span className="flex items-center gap-1">
-                                    <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={title}/>
-                                    {item.name || unknownTitle}
-                                </span>
-                                <span>
-                                    {numbro(item.count).format(countFormat)} <small>({item.percent ? numbro(item.percent).format(percentFormat) : "∞ %"})</small>
-                                </span>
-                            </div>
-                            <Bar value={item.percent} inPercent={true}/>
-                        </div>
-                    );
-                })}
             </div>
         </div>
     );

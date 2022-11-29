@@ -40,6 +40,8 @@ export const IconBrandWindows = ({ ...props }: IconProps) => icon.TbBrandWindows
 export const IconBrandApple = ({ ...props }: IconProps) => icon.TbBrandApple({ ...defaultIconProps, ...props });
 export const IconBrandEdge = ({ ...props }: IconProps) => icon.TbBrandEdge({ ...defaultIconProps, ...props });
 export const IconBrandFirefox = ({ ...props }: IconProps) => icon.TbBrandFirefox({ ...defaultIconProps, ...props });
+export const IconBrandOpera = ({ ...props }: IconProps) => icon.TbBrandOpera({ ...defaultIconProps, ...props });
+export const IconBrandOpenSource = ({ ...props }: IconProps) => icon.TbBrandOpenSource({ ...defaultIconProps, ...props });
 
 export const IconDeviceTv = ({ ...props }: IconProps) => icon.TbDeviceTv({ ...defaultIconProps, ...props });
 export const IconDeviceDesktop = ({ ...props }: IconProps) => icon.TbDeviceDesktop({ ...defaultIconProps, ...props });

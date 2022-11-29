@@ -100,7 +100,7 @@ export default function SitePage() {
                     {/* <LineChart data={isRealtime ? stats?.graph && stats?.graph.slice(30, 60) : stats?.graph} /> */}
                     {/* <Map className="col-span-2 p-4" data={stats.data?.countries} /> */}
                     <div className="grid items-stretch justify-center grid-cols-2 gap-4">
-                        <Tab className="col-span-1 p-4" chevronStyle={false} title="Countries">
+                        <Tab chevronStyle={false} title="Countries">
                             <VerticalBarChart title="Countries" data={stats.data?.countries?.map((country: any) => ({ ...country, countryCode: country.name, name: countryNameFromCode(country.name) }))} />
                         </Tab>
                         <Tab chevronStyle={false} title="Referrers">
@@ -108,7 +108,7 @@ export default function SitePage() {
                         </Tab>
                     </div>
                     <div className="grid items-stretch justify-center grid-cols-3 gap-4">
-                        <Tab chevronStyle={false} title="Device" titles={["Browsers", "Systems", "Platforms"]}>
+                        <Tab chevronStyle={false} title="Device" titles={["Browsers", "Systems", "Platforms"]} >
                             <VerticalBarChart title="Browsers" data={stats.data?.browsers} />
                             <VerticalBarChart title="Systems" data={stats.data?.systems} />
                             <VerticalBarChart title="Platforms" data={stats.data?.platforms} />
