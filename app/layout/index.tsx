@@ -3,9 +3,9 @@ import Logo from "~/components/logo";
 
 export const MinimalLayout = ({ children }: { children: ReactNode }) => {
     return (
-        <div className="flex flex-col justify-center items-center min-h-full bg-base-50">
+        <div className="flex flex-col items-center justify-center min-h-full bg-base-50">
             <Logo to="/"/>
-            <div className="p-8 mx-auto max-w-4xl">
+            <div className="max-w-4xl p-8 mx-auto">
                 {children}
             </div>
         </div>
@@ -23,7 +23,7 @@ export const WebsiteLayout = ({ children }: { children: ReactNode }) => {
 export const DashboardLayout = ({ children }: { children: ReactNode }) => {
 
     return (
-        <div className="flex w-full min-h-full bg-base-50">
+        <div className="flex flex-col w-full min-h-full bg-base-50">
             {children}
         </div>
     );

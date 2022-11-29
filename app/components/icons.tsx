@@ -49,4 +49,6 @@ export const IconDeviceTablet = ({ ...props }: IconProps) => icon.TbDeviceTablet
 export const IconEngine = ({ ...props }: IconProps) => icon.TbEngine({ ...defaultIconProps, ...props });
 
 export const IconLink = ({ ...props }: IconProps) => icon.TbLink({ ...defaultIconProps, ...props });
-export const IconFileText = ({ ...props }: IconProps) => icon.TbFileText({ ...defaultIconProps, ...props });
+export const IconFileHorizontal = ({ ...props }: IconProps) => icon.TbFileHorizontal({ ...defaultIconProps, ...props });
+export const IconMarquee = ({ ...props }: IconProps) => icon.TbMarquee2({ ...defaultIconProps, ...props });
+export const IconQuestionMark = ({ ...props }: IconProps) => icon.TbQuestionMark({ ...defaultIconProps, ...props });

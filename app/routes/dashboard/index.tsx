@@ -26,7 +26,7 @@ export default function SitesPage() {
 
     return (
         <Container>
-            <h1>Sites</h1>
+            <h1>Dashboard</h1>
             <p className="text-base-500">Manage your sites and view analytics.</p>
             <div className="flex flex-col items-stretch py-2 divide-y rounded-sm divide-dashed">
                 {error && <Message message={{ type: "error", text: error.message }} allowClose={false} />}

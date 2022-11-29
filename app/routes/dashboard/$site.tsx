@@ -53,7 +53,7 @@ export default function SitePage() {
 
     return (
         <>
-            <nav className="sticky top-0 z-20 flex items-center justify-end w-full gap-4 px-6 py-4 bg-white border-b-2 border-base-100">
+            <nav className="sticky top-0 z-20 flex items-center justify-end w-full gap-4 px-6 py-4 bg-base-50">
                 <Breadcrumbs current={site?.data?.title} />
                 <ExternalLink to={site.data.url} className="text-base-500" title="Open site in new tab">{site?.data?.url}</ExternalLink>
             </nav>
@@ -98,7 +98,7 @@ export default function SitePage() {
                             <VerticalBarChart title="Countries" data={stats.data?.countries?.map((country: any) => ({ ...country, countryCode: country.name, name: countryNameFromCode(country.name) }))} />
                         </Tab>
                         <Tab chevronStyle={false} title="Referrers">
-                            <VerticalBarChart title="Referrers" data={stats.data?.referrers?.map((referrer: any) => ({ ...referrer, domain: referrer.name }))} />
+                            <VerticalBarChart title="Referrers" unknownTitle="direct/none" data={stats.data?.referrers?.map((referrer: any) => ({ ...referrer, domain: referrer.name }))} />
                         </Tab>
                     </div>
                     <div className="grid items-stretch justify-center grid-cols-3 gap-4">

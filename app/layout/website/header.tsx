@@ -6,7 +6,7 @@ import { type IData } from './../../lib/session.server';
 const Header = ({ data }: { data: IData | null }) => {
     return (
         <header className="sticky top-0 z-10 flex-grow-0 w-full bg-base-50">
-            <nav className="flex gap-2 items-center px-4 py-8 w-full shrink">
+            <nav className="flex items-center w-full gap-2 p-8 shrink">
                 <div className="flex items-center grow">
                     <Logo to="/" />
                 </div>
@@ -14,9 +14,8 @@ const Header = ({ data }: { data: IData | null }) => {
                     <SiteNavLink to="/features" className="nav-link">Features</SiteNavLink>
                     <SiteNavLink to="/pricing" className="nav-link">Pricing</SiteNavLink>
                     <SiteNavLink to="/docs" className="nav-link">Docs</SiteNavLink>
-                   
                 </div>
-                <div className="flex gap-2 items-center shrink">
+                <div className="flex items-center gap-2 shrink">
                      {data ?
                         <Link to="/dashboard" className="button button-ghost"><IconDashboard className="text-base-400"/>Dashboard</Link> :
                        <>

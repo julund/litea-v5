@@ -14,7 +14,7 @@ const percentFormat: numbro.Format = {
     mantissa: 0
 };
 
-const VerticalBarChart = ({ title, data }: { title: string; data: Array<any> }) => {
+const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none", data }: { title: string; unknownTitle?: string; emptyTitle?: string;data: Array<any> }) => {
 
     const sumAll = data && data?.reduce((total, item) => total + item.count, 0);
     const dataWithPercent = data && data?.map(item => {
@@ -46,12 +46,12 @@ const VerticalBarChart = ({ title, data }: { title: string; data: Array<any> }) 
 
     return (
         <div className="flex flex-col py-2">
-            {/* <div className="font-bold text-sm">{title}</div> */}
+            {/* <div className="text-sm font-bold">{title}</div> */}
             <div className="flex-auto">
                 {isEmpty &&
                     <div className="mb-2">
-                        <div className="flex flex-row mb-1 justify-between items-center text-sm break-all">
-                            <span className="flex items-center gap-1">(none)</span>
+                        <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
+                            <span className="flex items-center gap-1">{emptyTitle}</span>
                             <span>
                                 0 <small>({numbro(1).format(percentFormat)})</small>
                             </span>
@@ -62,10 +62,10 @@ const VerticalBarChart = ({ title, data }: { title: string; data: Array<any> }) 
                 {modifiedData && modifiedData.map((item, i) => {
                     return (
                         <div key={i} className="mb-2">
-                            <div className="flex flex-row mb-1 justify-between items-center text-sm break-all">
+                            <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
                                 <span className="flex items-center gap-1">
                                     <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={title}/>
-                                    {item.name || "(blank)"}
+                                    {item.name || unknownTitle}
                                 </span>
                                 <span>
                                     {numbro(item.count).format(countFormat)} <small>({item.percent ? numbro(item.percent).format(percentFormat) : "∞ %"})</small>

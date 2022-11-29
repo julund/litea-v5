@@ -9,7 +9,7 @@
   }
   html,
   body {
-    @apply overflow-auto min-w-full h-full font-sans font-regular;
+    @apply h-full min-w-full overflow-auto font-sans font-regular;
   }
   input {
     @apply px-4 py-2 rounded-sm bg-primary-50 text-primary-900;
@@ -27,7 +27,7 @@
 
 @layer components {
   .button {
-    @apply inline-flex gap-2 items-center px-4 py-3 text-lg font-medium rounded-sm transition-all duration-300 font-title leading-4;
+    @apply inline-flex items-center gap-2 px-4 py-3 text-lg font-medium leading-4 transition-all duration-300 rounded-sm font-title;
   }
   .button-primary {
     @apply bg-primary-600 hover:bg-primary-700 text-primary-50;
@@ -45,16 +45,16 @@
     @apply px-6 py-4;
   }
   .message-info {
-    @apply text-sky-700 bg-sky-50;
+    @apply text-sky-700 bg-sky-100;
   }
   .message-success {
-    @apply text-green-700 bg-green-50;
+    @apply text-green-700 bg-green-100;
   }
   .message-warning {
-    @apply text-amber-700 bg-amber-50;
+    @apply text-amber-700 bg-amber-100;
   }
   .message-error {
-    @apply text-red-700 bg-red-50;
+    @apply text-red-700 bg-red-100;
   }
   .bg-map {
     background-color: white;
@@ -67,23 +67,23 @@
     backdrop-filter: blur(5px) brightness(1.05);
   }
   .slider {
-    @apply p-0 m-0 w-full h-4 rounded-sm opacity-80 appearance-none outline-none bg-base-300 hover:opacity-100;
+    @apply w-full h-4 p-0 m-0 rounded-sm outline-none appearance-none opacity-80 bg-base-300 hover:opacity-100;
     transition: opacity 0.2s;
   }
   .slider::-webkit-slider-thumb {
-    @apply w-4 h-6 bg-primary-600 bg-center bg-no-repeat rounded-sm appearance-none cursor-pointer;
+    @apply w-4 h-6 bg-center bg-no-repeat rounded-sm appearance-none cursor-pointer bg-primary-600;
     /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 7'%3E%3Cpath d='M3 3.5L7 1v5L3 3.5zM15 3.5L11 6V1l4 2.5z' fill='%23fff'/%3E%3C/svg%3E"); */
   }
   .slider::-moz-range-thumb {
-    @apply w-4 h-6 bg-primary-600 bg-center bg-no-repeat rounded-sm appearance-none cursor-pointer;
+    @apply w-4 h-6 bg-center bg-no-repeat rounded-sm appearance-none cursor-pointer bg-primary-600;
     /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 7'%3E%3Cpath d='M3 3.5L7 1v5L3 3.5zM15 3.5L11 6V1l4 2.5z' fill='%23fff'/%3E%3C/svg%3E"); */
   }
   .slider::-ms-thumb {
-    @apply w-4 h-6 bg-primary-600 bg-center bg-no-repeat rounded-sm appearance-none cursor-pointer;
+    @apply w-4 h-6 bg-center bg-no-repeat rounded-sm appearance-none cursor-pointer bg-primary-600;
     /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 7'%3E%3Cpath d='M3 3.5L7 1v5L3 3.5zM15 3.5L11 6V1l4 2.5z' fill='%23fff'/%3E%3C/svg%3E"); */
   }
   .select {
-    @apply py-1 pr-8 pl-2 text-base-800 bg-base-200 rounded-sm border-4 border-base-200 appearance-none;
+    @apply py-1 pl-2 pr-8 border-4 rounded-sm appearance-none text-base-800 bg-base-200 border-base-200;
   }
   /* Hide arrow icon in IE browsers */
   .select::-ms-expand {
@@ -93,7 +93,7 @@
     @apply text-base-800 bg-base-300 border-base-300;
   }
   .select:focus-visible {
-    @apply text-base-600 outline-none;
+    @apply outline-none text-base-600;
   }
   .bar {
     @apply max-w-[2.5rem] min-w-[1rem] w-6;
