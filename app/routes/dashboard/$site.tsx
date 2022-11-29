@@ -38,7 +38,13 @@ export const loader: LoaderFunction = async ({ request, params }: { request: Req
     const stats = site.data?.id ? await getSiteStats(request, site.data?.id, period, index) : { data: null, error: null };
     const visitors = site.data?.id && period == "realtime" ? await getSiteVisitors(request, site.data?.id, period, index) : { data: null, error: null };
 
-    return json<LoaderData>({ site, stats, visitors });
+    return json<LoaderData>({ site, stats, visitors }, {
+        headers: { // cache data if it is not realtime data
+            "Cache-Control": index === 0 ? // or period === "realtime"
+                "max-age=3600, must-revalidate" : //
+                "max-age=3600, s-maxage=3600"
+        }
+    });
 
 };
 
@@ -66,20 +72,20 @@ export default function SitePage() {
                     {/* { JSON.stringify(stats.data)} */}
 
                     {/* <HorizontalBarChart data={isRealtime ? stats.data?.graph && stats.data?.graph.slice(30, 60) : stats.data?.graph} /> */}
-                    
+
                     {isRealtime ?
                         <div className="flex flex-wrap h-40 gap-2 p-4 m-4 bg-white bg-opacity-50 rounded-sm">
-                            { visitors && visitors.data?.map( visitor => {
-                                return(
+                            {visitors && visitors.data?.map(visitor => {
+                                return (
                                     <div className="flex flex-col flex-wrap gap-1 p-4 rounded-sm bg-base-100 text-base-600" key={visitor.id}>
-                                        
+
                                         <span className="flex items-center gap-1 text-base" title={visitor.id}>
-                                            <span><IconUser/></span>
-                                            <span>{ "..." + visitor.id.slice(visitor.id.length - 10)}</span>
+                                            <span><IconUser /></span>
+                                            <span>{"..." + visitor.id.slice(visitor.id.length - 10)}</span>
                                         </span>
                                         <span className="text-sm">from {visitor.country && countryNameFromCode(visitor.country)} on {visitor.browser && visitor.browser}</span>
                                         <span className="text-xs">
-                                            Last activity { visitor.lastActivityAt && <Time value={visitor.lastActivityAt}/>}
+                                            Last activity {visitor.lastActivityAt && <Time value={visitor.lastActivityAt} />}
                                             {/* Last activity { JSON.stringify(visitor.lastActivityAt)} */}
                                         </span>
                                         {/* {(visitor.visits && typeof visitor.visits === "object") && visitor.visits.join(" ")} */}
