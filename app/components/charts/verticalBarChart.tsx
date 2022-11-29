@@ -47,9 +47,9 @@ const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none"
     return (
         <div className="flex flex-col py-2">
             {/* <div className="text-sm font-bold">{title}</div> */}
-            <div className="flex-auto">
+            <div className="flex flex-col flex-auto gap-4">
                 {isEmpty &&
-                    <div className="mb-2">
+                    <div className="">
                         <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
                             <span className="flex items-center gap-1">{emptyTitle}</span>
                             <span>
@@ -61,7 +61,7 @@ const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none"
                 }
                 {modifiedData && modifiedData.map((item, i) => {
                     return (
-                        <div key={i} className="mb-2">
+                        <div key={i} className="">
                             <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
                                 <span className="flex items-center gap-1">
                                     <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={title}/>
