@@ -2,7 +2,8 @@ import { useSubmit, useSearchParams, useTransition, Form } from "@remix-run/reac
 import { IconChevronDown, IconChevronLeft, IconChevronRight } from "./icons";
 import { periods, getPeriodDates } from "~/utils/helpers";
 import Spinner from "~/components/ui/spinner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDebounce } from "react-use";
 
 export default function PeriodSelect() {
 
@@ -14,16 +15,18 @@ export default function PeriodSelect() {
     const index = Number(searchParams.get("index")) || 0;
     const { title, description } = getPeriodDates(period, index);
 
-    const isLoading = state !== "idle";
+    // const isLoading = state !== "idle";
+    const [isLoading, setIsLoading] = useState(false);
+    useDebounce(() => setIsLoading(state !== "idle"), 100, [state]);
 
-    useEffect( () => {
-        if(period === "realtime") {
-            const interval = setInterval( () => {
+    useEffect(() => {
+        if (period === "realtime") {
+            const interval = setInterval(() => {
                 submit({ period, index: "0" })
             }, 60000)
             return () => clearInterval(interval);
         }
-    },[period, submit])
+    }, [period, submit])
 
     const incrementIndex = () => {
         const e = document?.querySelector('input[type=number]') as HTMLInputElement;
@@ -41,7 +44,7 @@ export default function PeriodSelect() {
                 <div className="font-bold text-base-800">{title}</div>
             </div>
             {isLoading && <div className="flex gap-1 text-sm text-base-600 shrink animate-pulse">
-                Loading... <Spinner/>
+                Loading... <Spinner />
             </div>}
             <div className="flex items-center justify-center gap-2 text-sm shrink">
                 <input
