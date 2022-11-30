@@ -258,3 +258,11 @@ export const toCSV = (array: Array<any>) => {
 export const lowerCase = (value: string) => {
     return typeof value == "string" ? value.toLowerCase() : value;
 };
+
+export const  isValidDomain = (input: string) => {
+
+    if (!input) return false;
+    const regex = new RegExp(/^(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*\.[A-Za-z]{2,6}$/);
+    return !!(regex.test(input) == true);
+
+}
