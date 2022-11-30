@@ -5,10 +5,10 @@ export const Dialog = ({ children, button = "open dialog", ...props }: { childre
 
     const ref = useRef<HTMLDialogElement>(null)
     // const [ show, toggle ] = useToggle(false);
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         const dialog = ref?.current;
         if (dialog && typeof dialog.showModal === "function") {
-            // dialog.hidden ? dialog.showModal() : dialog.hidden = true;
+            // dialog.hidden ? dialog.showModal() : dialog.close();
             dialog.showModal()
             // console.log(dialog.hidden)
         } else {
@@ -21,19 +21,32 @@ export const Dialog = ({ children, button = "open dialog", ...props }: { childre
         //   }
     };
 
+    const handleModalClick = (e: React.MouseEvent<HTMLDialogElement, MouseEvent>) => {
+        
+        const dialog = ref?.current;
+        if (!dialog) return;
+        var rect = dialog.getBoundingClientRect();
+        var isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height
+            && rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+        if (!isInDialog) {
+            // console.log("clicked outside dialog")
+            dialog.close();
+        }
+    }
+
     const handleClose = (e: React.SyntheticEvent<HTMLDialogElement, Event>) => {
         const dialog = ref?.current;
         if (!dialog) return;
-        console.log(dialog.returnValue);
+        console.log(e.type, dialog.returnValue);
     }
 
     return (
         <>
-            <button onClick={handleClick}>{button}</button>
-            <dialog ref={ref} {...props} onClose={handleClose}>
+            <button onClick={handleButtonClick}>{button}</button>
+            <dialog ref={ref} {...props} onClose={handleClose} onClick={handleModalClick}>
                 {children}
-                <hr className="my-4"/>
-                <form method="dialog" className="flex gap-2 justify-end">
+                <hr className="my-4" />
+                <form method="dialog" className="flex justify-end gap-2">
                     <button value="confirm" className="button button-primary">OK</button>
                     <button value="cancel" className="button button-ghost">Cancel</button>
                 </form>

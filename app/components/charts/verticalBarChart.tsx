@@ -55,12 +55,12 @@ const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none"
                 {emptyItem && <BarChartItem item={emptyItem} iconCategory={title} unknownTitle={unknownTitle} />}
                 {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
 
-                {modifiedRest && <Dialog className="p-8 rounded-sm shadow-md transition-opacity duration-500 opacity-0 open:opacity-100" button={
-                    <BarChartItem item={restItem} iconCategory={title} unknownTitle={unknownTitle} />
+                {modifiedRest && <Dialog className="p-8 transition-opacity duration-500 rounded-sm shadow-md opacity-0 open:opacity-100" button={
+                    <BarChartItem item={restItem} iconCategory={title} unknownTitle={unknownTitle}  className="cursor-pointer hover:font-semibold"/>
                 }>
                     <div className="">
                         <h3>{title}</h3>
-                        {modifiedRest.map((item, i) => <BarChartItem key={i} className="mb-4 w-64" item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
+                        {modifiedRest.map((item, i) => <BarChartItem key={i} className="w-64 mb-4" item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
                     </div>
                 </Dialog>
                 }
