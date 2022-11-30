@@ -29,11 +29,12 @@
   }
   details > summary {
     /* display: initial; */
-    @apply list-none;
+    /* @apply list-none; */
+    @apply select-none;
   }
-  /* details[open] > summary {
+  details[open] > summary {
     @apply bg-base-300;
-  } */
+  }
 }
 
 @layer components {
