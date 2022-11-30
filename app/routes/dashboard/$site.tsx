@@ -74,7 +74,7 @@ export default function SitePage() {
                     {/* <HorizontalBarChart data={isRealtime ? stats.data?.graph && stats.data?.graph.slice(30, 60) : stats.data?.graph} /> */}
 
                     {isRealtime ?
-                        <div className="flex flex-wrap h-40 gap-2 p-4 m-4 bg-white bg-opacity-50 rounded-sm">
+                        <div className="flex flex-wrap h-40 gap-2 p-4 bg-white bg-opacity-50 rounded-sm">
                             {visitors && visitors.data?.map(visitor => {
                                 return (
                                     <div className="flex flex-col flex-wrap gap-1 p-4 rounded-sm bg-base-100 text-base-600" key={visitor.id}>
