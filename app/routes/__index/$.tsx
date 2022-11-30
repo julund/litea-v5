@@ -1,7 +1,10 @@
 import NotFound from "~/layout/notFound";
+import Page from "~/layout/website/page";
 
 export default function NotFoundPage() {
     return (
-        <NotFound/>
+        <Page>
+            <NotFound />
+        </Page>
     )
 }
