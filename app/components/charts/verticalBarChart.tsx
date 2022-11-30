@@ -2,6 +2,7 @@ import numbro from "numbro";
 import { lowerCase } from "~/utils/helpers";
 import Bar from "../ui/bar";
 import Icon from "../icon";
+import { Dialog } from "../dialog";
 
 const countFormat = {
     average: true,
@@ -53,14 +54,20 @@ const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none"
                 {/* {emptyItem && <div className="text-lg font-medium text-base-400 font-title">No data.</div>} */}
                 {emptyItem && <BarChartItem item={emptyItem} iconCategory={title} unknownTitle={unknownTitle} />}
                 {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
-                {restItem &&
+
+                {restItem && <BarChartItem item={restItem} iconCategory={title} unknownTitle={unknownTitle} />}
+                {modifiedRest && <Dialog>
+                    {modifiedRest.map((item, i) => <BarChartItem key={i} className="mb-4 scale-90" item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
+                </Dialog>
+                }
+                {/* {restItem &&
                     <details className="">
                         <summary className="mb-4 cursor-pointer hover:font-semibold">
                             <BarChartItem item={restItem} iconCategory={title} unknownTitle={unknownTitle} />
                         </summary>
                         {modifiedRest && modifiedRest.map((item, i) => <BarChartItem key={i} className="mb-4 scale-90" item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
                     </details>
-                }
+                } */}
             </div>
         </div>
     );
