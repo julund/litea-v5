@@ -1,7 +1,7 @@
 import { useRef } from "react";
 // import { useToggle } from "react-use";
 
-export const Dialog = ({ children, ...props }: { children: React.ReactNode } & React.DetailedHTMLProps<React.DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>) => {
+export const Dialog = ({ children, button = "open dialog", ...props }: { children: React.ReactNode; button?: React.ReactNode } & React.DetailedHTMLProps<React.DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>) => {
 
     const ref = useRef<HTMLDialogElement>(null)
     // const [ show, toggle ] = useToggle(false);
@@ -29,12 +29,13 @@ export const Dialog = ({ children, ...props }: { children: React.ReactNode } & R
 
     return (
         <>
-            <button onClick={handleClick}>open dialog</button>
+            <button onClick={handleClick}>{button}</button>
             <dialog ref={ref} {...props} onClose={handleClose}>
                 {children}
-                <form method="dialog">
-                    <button value="cancel">Cancel</button>
-                    <button value="confirm">Confirm</button>
+                <hr className="my-4"/>
+                <form method="dialog" className="flex gap-2 justify-end">
+                    <button value="confirm" className="button button-primary">OK</button>
+                    <button value="cancel" className="button button-ghost">Cancel</button>
                 </form>
             </dialog>
         </>

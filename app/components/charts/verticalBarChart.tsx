@@ -19,7 +19,7 @@ const BarChartItem = ({ className, item, unknownTitle, iconCategory }: { classNa
         <div className={className}>
             <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
                 <span className="flex items-center gap-1">
-                    <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} />
+                    <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} className="text-base-500" />
                     {item.name || unknownTitle}
                 </span>
                 <span>
@@ -44,7 +44,7 @@ const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none"
     const sumRest = rest && rest?.reduce((total, item) => total + item.count, 0);
     const modifiedData = sumRest > 1 ? top && [...top] : top && [...top, ...rest];
     const modifiedRest = sumRest > 1 ? [...rest] : null;
-    const restItem = sumRest > 1 ? { name: `(${rest?.length} other ${lowerCase(title)})`, count: sumRest, percent: (sumRest / sumAll) } : null;
+    const restItem = sumRest > 1 ? { name: `Other (${rest?.length} additional ${lowerCase(title)})`, count: sumRest, percent: (sumRest / sumAll) } : null;
     const emptyItem = modifiedData?.length == 0 ? { name: emptyTitle, count: 0, percent: 0 } : null;
 
     return (
@@ -55,9 +55,13 @@ const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none"
                 {emptyItem && <BarChartItem item={emptyItem} iconCategory={title} unknownTitle={unknownTitle} />}
                 {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
 
-                {restItem && <BarChartItem item={restItem} iconCategory={title} unknownTitle={unknownTitle} />}
-                {modifiedRest && <Dialog>
-                    {modifiedRest.map((item, i) => <BarChartItem key={i} className="mb-4 scale-90" item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
+                {modifiedRest && <Dialog className="p-8 rounded-sm shadow-md transition-opacity duration-500 opacity-0 open:opacity-100" button={
+                    <BarChartItem item={restItem} iconCategory={title} unknownTitle={unknownTitle} />
+                }>
+                    <div className="">
+                        <h3>{title}</h3>
+                        {modifiedRest.map((item, i) => <BarChartItem key={i} className="mb-4 w-64" item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
+                    </div>
                 </Dialog>
                 }
                 {/* {restItem &&
