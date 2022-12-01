@@ -1,20 +1,20 @@
-import { intervalToDuration, formatDuration } from "date-fns";
+// import { intervalToDuration, formatDuration } from "date-fns";
 import { format } from "numerable";
 import Counter from "./counter";
 
-const short: Locale = {
-    formatDistance: (token, count) => {
-        return token === "xSeconds" ? `${count}s` :
-            token === "xMinutes" ? `${count}m` :
-                `${count}h`; //"xHours"
-    }
-};
+// const short: Locale = {
+//     formatDistance: (token, count) => {
+//         return token === "xSeconds" ? `${count}s` :
+//             token === "xMinutes" ? `${count}m` :
+//                 `${count}h`; //"xHours"
+//     }
+// };
 
-const duration = (n: number, locale: Locale) => {
-    if (!n) return "0 s";
-    const duration = intervalToDuration({ start: 0, end: (n) || 0 });
-    return formatDuration(duration, { format: ["hours", "minutes", "seconds"], locale });
-};
+// const duration = (n: number, locale: Locale) => {
+//     if (!n) return "0 s";
+//     const duration = intervalToDuration({ start: 0, end: (n) || 0 });
+//     return formatDuration(duration, { format: ["hours", "minutes", "seconds"], locale });
+// };
 
 const PanelItem = ({ counterValue, counterCallback, counterConfig, title }: { counterValue: number; counterCallback: Function; counterConfig?: any; title: string }) => {
     return (
@@ -34,7 +34,10 @@ const Panel = ({ title, stats }: { title: string; stats: any }) => {
                 <PanelItem title="Total views" counterValue={stats?.pageViews.count} counterCallback={(n: number) => format(n, "0")} />
                 <PanelItem title="Unique visits" counterValue={stats?.uniqueVisits.count} counterCallback={(n: number) => format(n, "0")} />
                 <PanelItem title="Bounce rate" counterValue={stats?.bounceRate.count} counterCallback={(n: number) => format(n, "0.0 %")} />
-                <PanelItem title="Avg. visit duration" counterValue={stats?.avgVisitDuration.count} counterCallback={(n: number) => duration(n, short)} />
+                <PanelItem title="Avg. visit duration" counterValue={stats?.avgVisitDuration.count} counterCallback={
+                    // (n: number) => duration(n, short)
+                    (n: number) => format(n / 1000, "00:00:00")
+                    } />
             </div>
         </div>
     );
