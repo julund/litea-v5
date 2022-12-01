@@ -1,12 +1,18 @@
-import { useSpring, animated, config } from "react-spring";
+import { LazyMotion, motion } from "~/lib/motion";
+const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation)
 
-const Page = ({ children, ...props } : { children: React.ReactNode; props?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> }) => {
-    const fade = useSpring({ to: { opacity: 1, y: 0 }, from: { opacity: 0, y: -5 }, config: config.wobbly });
+export default function Page({ children, ...props }: { children: React.ReactNode; props?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> }) {
+
     return (
-        <animated.div className="p-10" {...props} style={fade}>
-            {children}
-        </animated.div>
+        <LazyMotion features={loadFeatures}>
+            <motion.div className="p-10" {...props}
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{  }}
+            >
+                {children}
+            </motion.div>
+        </LazyMotion>
     );
-};
 
-export default Page;
+};

@@ -1,30 +1,36 @@
-import { useSpring, animated, config } from "react-spring";
+import { LazyMotion, motion } from "~/lib/motion";
 import { useMeasure } from "react-use";
+import { classNames } from "~/utils/helpers";
+
+const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation)
 
 const Bar = ({ value, inPercent = false, max = 100, horizontal = true, ...props }: {
-        value: number;
-        inPercent?: boolean;
-        max?: number;
-        horizontal?: boolean;
-        props?: any;
-    }) => {
+    value: number;
+    inPercent?: boolean;
+    max?: number;
+    horizontal?: boolean;
+    props?: any;
+}) => {
 
     const [ref, { width, height }] = useMeasure<HTMLDivElement>();
-    const currentValue = Math.min(inPercent ? value * (horizontal ? width : height) : value * (horizontal ? width : height) / max, (horizontal ? width : height)) || 0;
-    const horizontalStyles = useSpring({ to: { width: currentValue }, from: { width: 0 }, config: config.default });
-    const verticalStyles = useSpring({ to: { height: currentValue }, from: { height: 0 }, config: config.default });
 
-    if (horizontal) return (
-        <div className="relative flex-grow h-4 overflow-hidden rounded-sm">
-            <div ref={ref} className="absolute w-full h-full bg-base-200"></div>
-            <animated.div style={horizontalStyles} className="relative h-full rounded-sm bg-primary-700 bg-opacity-80 group-hover:bg-opacity-100"></animated.div>
-        </div>
-    );
+    const currentValue = Math.min(inPercent ? value * (horizontal ? width : height) : value * (horizontal ? width : height) / max, (horizontal ? width : height)) || 0;
+
+    const parentClasses = classNames("relative flex-grow overflow-hidden rounded-sm", horizontal ? "h-4" : "h-24 flex items-end justify-center")
+    const childClasses = classNames("relative rounded-sm bg-primary-700 bg-opacity-80 group-hover:bg-opacity-100", horizontal ? "h-full" : "w-full")
+
     return (
-        <div className="relative flex items-end justify-center flex-grow h-24 overflow-hidden rounded-sm" {...props}>
+        <LazyMotion features={loadFeatures}>
+        <div className={parentClasses} {...props}>
             <div ref={ref} className="absolute w-full h-full bg-base-200"></div>
-            <animated.div style={verticalStyles} className="relative w-full rounded-sm bg-primary-700 bg-opacity-80 group-hover:bg-opacity-100"></animated.div>
+            <motion.div
+                initial={horizontal ? { width: 0 } : { height: 0 }}
+                animate={horizontal ? { width: currentValue } : { height: currentValue }}
+                transition={{ }}
+                className={childClasses}
+            ></motion.div>
         </div>
+        </LazyMotion>
     );
 };
 

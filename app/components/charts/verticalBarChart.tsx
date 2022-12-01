@@ -24,8 +24,8 @@ const BarChartItem = ({ className, item, unknownTitle, iconCategory }: { classNa
                     {item.name || unknownTitle}
                 </span>
                 <span className="flex items-end gap-2">
-                    <Counter className="text-sm" value={item.count} callback={(value: number) => numbro(value).format(countFormat)}/>
-                <Counter className="text-sm text-base-600 font-title" value={item.percent} callback={(value: number) => item.percent ? `(${numbro(value).format(percentFormat)})` : "(100 %)"}/>
+                    <Counter className="text-sm" value={item.count} callback={(value: number) => numbro(value).format(countFormat)} />
+                    <Counter className="text-sm text-base-600 font-title tabular-nums" value={item.percent} callback={(value: number) => item.percent ? `(${numbro(value).format(percentFormat)})` : "(100 %)"} />
                 </span>
             </div>
             <Bar value={item.percent} inPercent={true} />

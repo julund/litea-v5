@@ -1,26 +1,26 @@
 import { useEffect } from "react";
 import { useCounter, usePrevious } from "react-use";
-import { useSpring, a } from "react-spring";
+import { animate, useMotionValue, } from "framer-motion";
 
-export default function Counter({ value, callback, config, className }: { value: number, callback?: Function; config?: any; className?: string }) {
+export default function Counter({ value, callback, config, className }: { value: number, callback?: Function; config?: { duration?: number }; className?: string }) {
     if (!callback) callback = (value: number) => value;
     const [current, { set: setCurrent }] = useCounter(0);
     const [next, { set: setNext }] = useCounter(value);
-    const from = usePrevious(next);
+    const previous = usePrevious(next);
+    const from = useMotionValue(previous || 0)
+
+    useEffect(() => setNext(value), [value, setNext]);
+
     useEffect(() => {
-        // console.log({ value, next, from })
-        setNext(value);
-    }, [value, setNext]);
-    const styles = useSpring({
-        config: { ...config },
-        from: { count: from || 0 },
-        to: { count: value || 0 },
-        onChange: (val) => setCurrent(val.value.count) // ref.current.textContent = val.value.count.toFixed(0) || 0
-    }) as any;
+        animate(from, value || 0, {
+            onUpdate: val => { setCurrent(val) },
+            type: "tween", duration: config?.duration || undefined
+        })
+    }, [from, setCurrent, value, config])
 
     return (
-        <a.span className={className} style={styles}>
+        <span className={className}>
             {callback(current)}
-        </a.span>
+        </span>
     );
 }
