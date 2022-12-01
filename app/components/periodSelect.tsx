@@ -39,13 +39,11 @@ export default function PeriodSelect() {
 
     return (
         <Form method="get" className="flex items-center w-full gap-2">
-            <div className="flex gap-1 text-lg grow">
+            <div className="flex gap-1 text-xl grow">
                 <div className="text-base-600">{description}</div>
                 <div className="font-bold text-base-800">{title}</div>
             </div>
-            {isLoading && <div className="flex gap-1 text-sm text-base-600 shrink animate-pulse">
-                Loading... <Spinner />
-            </div>}
+            {isLoading && <div className="flex gap-1 text-sm text-base-600 shrink animate-pulse">Loading... <Spinner /></div>}
             <div className="flex items-center justify-center gap-2 text-sm shrink">
                 <input
                     name="index"

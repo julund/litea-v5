@@ -78,7 +78,6 @@ export default function SitePage() {
                             {visitors && visitors.data?.map(visitor => {
                                 return (
                                     <div className="flex flex-col flex-wrap gap-1 p-4 rounded-sm bg-base-100 text-base-600" key={visitor.id}>
-
                                         <span className="flex items-center gap-1 text-base" title={visitor.id}>
                                             <span><IconUser /></span>
                                             <span>{"..." + visitor.id.slice(visitor.id.length - 10)}</span>
@@ -99,7 +98,7 @@ export default function SitePage() {
 
                     {/* <LineChart data={isRealtime ? stats?.graph && stats?.graph.slice(30, 60) : stats?.graph} /> */}
                     {/* <Map className="col-span-2 p-4" data={stats.data?.countries} /> */}
-                    <div className="grid items-stretch justify-center grid-cols-2 gap-4">
+                    <div className="grid items-stretch justify-center grid-cols-1 gap-4 md:grid-cols-2">
                         <Tab chevronStyle={false} title="Countries">
                             <VerticalBarChart title="Countries" data={stats.data?.countries?.map((country: any) => ({ ...country, countryCode: country.name, name: countryNameFromCode(country.name) }))} />
                         </Tab>
@@ -107,7 +106,7 @@ export default function SitePage() {
                             <VerticalBarChart title="Referrers" unknownTitle="direct/none" data={stats.data?.referrers?.map((referrer: any) => ({ ...referrer, domain: referrer.name }))} />
                         </Tab>
                     </div>
-                    <div className="grid items-stretch justify-center grid-cols-3 gap-4">
+                    <div className="grid items-stretch justify-center grid-cols-1 gap-4 md:grid-cols-3">
                         <Tab chevronStyle={false} title="Device" titles={["Browsers", "Systems", "Platforms"]} >
                             <VerticalBarChart title="Browsers" data={stats.data?.browsers} />
                             <VerticalBarChart title="Systems" data={stats.data?.systems} />
