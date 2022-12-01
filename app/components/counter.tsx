@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useCounter, usePrevious } from "react-use";
 import { useSpring, a } from "react-spring";
 
-export default function Counter({ value, callback, config, ...props }: { value: number, callback?: Function; config?: any; props?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> }) {
+export default function Counter({ value, callback, config, className }: { value: number, callback?: Function; config?: any; className?: string }) {
     if (!callback) callback = (value: number) => value;
     const [current, { set: setCurrent }] = useCounter(0);
     const [next, { set: setNext }] = useCounter(value);
@@ -19,7 +19,7 @@ export default function Counter({ value, callback, config, ...props }: { value: 
     }) as any;
 
     return (
-        <a.span className="text-4xl font-black tracking-wider tabular-nums font-title" style={styles} {...props}>
+        <a.span className={className} style={styles}>
             {callback(current)}
         </a.span>
     );
