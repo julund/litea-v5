@@ -116,8 +116,8 @@ export default function SitePage() {
                             <VerticalBarChart title="All pages" data={stats.data?.pages?.all} />
                             <VerticalBarChart title="Entry pages" data={stats.data?.pages?.entry} />
                             <VerticalBarChart title="Exit pages" data={stats.data?.pages?.exit} />
-                            <VerticalBarChart title="Queries" data={stats.data?.queries} />
-                            <VerticalBarChart title="Hashes" data={stats.data?.hashes} />
+                            <VerticalBarChart title="Queries" unknownTitle="none" data={stats.data?.queries} />
+                            <VerticalBarChart title="Hashes" unknownTitle="none" data={stats.data?.hashes} />
                         </Tab>
                         <Tab chevronStyle={false} title="UTMs" titles={["Source", "Campaign", "Content", "Term"]}>
                             <VerticalBarChart title="Source" data={stats.data?.utms?.sources.filter((e: any) => e.name !== "")} />

@@ -19,6 +19,7 @@ export default function Index() {
   return (
     <WebsiteLayout>
       <Header data={data}/>
+      {/* <Message message={{ type: "info", text: "Optio molestiae at minima architecto aut temporibus accusantium eaque id iure saepe." }} duration={5000} /> */}
       {message && <Message message={message} duration={5000} />}
       <main className="max-w-4xl px-4 py-2 mx-auto grow">
         <Outlet />

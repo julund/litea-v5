@@ -26,14 +26,15 @@ export default function Index() {
 
   return (
     <MinimalLayout>
-      <div className="flex flex-col items-center gap-2 text-center">
+      <div className="flex flex-col items-center max-w-md gap-2 p-8 text-center">
         {message && <Message message={message} />}
         {!data?.handle && <Form id="loginForm" className="flex flex-col gap-4 py-4" method="post">
-          <h1 className="py-2 text-2xl font-semibold font-title">Login</h1>
+          <h1 className="py-2 text-4xl font-black font-title">Login</h1>
+          <p className="text-base-600">Asperiores quos fugit eligendi commodi ab alias aliquid illo nisi nihil.</p>
           <input className="" id="Email" type="email" name="email" placeholder="email@example.com" autoComplete="email" />
           <input className="" id="Password" type="password" name="password" autoComplete="password" />
           <p className="px-2 text-sm text-base-500">Forgot password?</p>
-          <button className="button button-primary justify-center disabled:opacity-40" type="submit" disabled={state == "submitting"}><IconLogin size={22}/>{state == "submitting" ? "Logging in..." : "Log in"}</button>
+          <button className="justify-center button button-primary disabled:opacity-40" type="submit" disabled={state == "submitting"}><IconLogin size={22}/>{state == "submitting" ? "Logging in..." : "Log in"}</button>
         </Form>}
         {data?.handle && <>
           <h1 className="py-2 text-2xl font-semibold font-title">You're allready logged in</h1>
