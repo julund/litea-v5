@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { startOfMonth, startOfDay, endOfDay, startOfWeek, startOfYear, subDays, subMonths, subWeeks, subYears, endOfWeek, endOfMonth, eachHourOfInterval, isBefore, eachDayOfInterval, endOfYear, eachMonthOfInterval, eachYearOfInterval, subMinutes, eachMinuteOfInterval, addMilliseconds } from "date-fns";
-import { nb } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import { format, utcToZonedTime, zonedTimeToUtc, getTimezoneOffset, type OptionsWithTZ } from "date-fns-tz";
 
 export type ClassValue = ClassArray | ClassDictionary | string | number | null | boolean | undefined;
@@ -18,7 +18,7 @@ export const periods = [
     { id: "all", title: "All time (years)" },
 ];
 
-const options: OptionsWithTZ = { timeZone: "Europe/Oslo", locale: nb, weekStartsOn: 1 };
+const options: OptionsWithTZ = { timeZone: "Europe/Oslo", locale: enUS, weekStartsOn: 1 };
 const timeZone = options.timeZone as string;
 
 export const zonedTimeToUtcString = (date: string | number | Date) => {
