@@ -38,10 +38,10 @@ export default function PeriodSelect() {
     };
 
     return (
-        <Form method="get" className="flex items-center w-full gap-2">
-            <div className="flex gap-1 text-xl grow">
-                <div className="text-base-600">{description}</div>
-                <div className="font-bold text-base-800">{title}</div>
+        <Form method="get" className="flex items-center w-full gap-2 p-4">
+            <div className="flex items-center gap-2 grow">
+                <div className="text-4xl font-black font-title text-base-800">{title}</div>
+                <div className="text-2xl text-base-500">{description}</div>
             </div>
             {isLoading && <div className="flex gap-1 text-sm text-base-600 shrink animate-pulse">Loading... <Spinner /></div>}
             <div className="flex items-center justify-center gap-2 text-sm shrink">
@@ -53,10 +53,10 @@ export default function PeriodSelect() {
                     className="hidden"
                     onChange={({ target: { value } }) => value && submit({ period, index: value })}
                 />
-                <button onClick={incrementIndex} className="py-1 rounded-sm px2- bg-base-100 hover:bg-base-200 disabled:opacity-25" disabled={period === "realtime"}>
+                <button onClick={incrementIndex} className="px-2 py-1 rounded-sm bg-base-100 hover:bg-base-200 disabled:opacity-25" disabled={period === "realtime"}>
                     <IconChevronLeft size={28} />
                 </button>
-                <button onClick={decrementIndex} className="py-1 rounded-sm px2- bg-base-100 hover:bg-base-200 disabled:opacity-25" disabled={index <= 0 || period === "realtime"} >
+                <button onClick={decrementIndex} className="px-2 py-1 rounded-sm bg-base-100 hover:bg-base-200 disabled:opacity-25" disabled={index <= 0 || period === "realtime"} >
                     <IconChevronRight size={28} />
                 </button>
             </div>
