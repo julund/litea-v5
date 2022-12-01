@@ -40,19 +40,19 @@ const Panel = ({ title, stats }: { title: string; stats: any }) => {
             <div className="px-4 py-1 mb-1 text-sm font-bold">{title}</div>
             <div className="grid grid-cols-2 gap-4 text-center md:grid-cols-4">
                 <PanelItem>
-                    <Counter value={stats?.pageViews.count} callback={(value: number) => count(value)} />
+                    <Counter value={stats?.pageViews.count} callback={(value: number) => count(value)} className="text-4xl font-black tracking-wider tabular-nums font-title" />
                     <span className="text-sm text-gray-500">Total views</span>
                 </PanelItem>
                 <PanelItem>
-                    <Counter value={stats?.uniqueVisits.count} callback={(value: number) => count(value)} />
+                    <Counter value={stats?.uniqueVisits.count} callback={(value: number) => count(value)} className="text-4xl font-black tracking-wider tabular-nums font-title" />
                     <span className="text-sm text-gray-500">Unique visits</span>
                 </PanelItem>
                 <PanelItem>
-                    <Counter value={stats?.bounceRate.count} callback={(value: number) => percent(value)} />
+                    <Counter value={stats?.bounceRate.count} callback={(value: number) => percent(value)} className="text-4xl font-black tracking-wider tabular-nums font-title" />
                     <span className="text-sm text-gray-500">Bounce rate</span>
                 </PanelItem>
                 <PanelItem>
-                    <Counter value={stats?.avgVisitDuration.count} config={{ duration: 650 }} callback={(value: number) => duration(value)} />
+                    <Counter value={stats?.avgVisitDuration.count} config={{ duration: 650 }} callback={(value: number) => duration(value)} className="text-4xl font-black tracking-wider tabular-nums font-title" />
                     <span className="text-sm text-gray-500">Avg. visit duration</span>
                 </PanelItem>
                 {/* <div className="flex flex-row items-center justify-between px-4 py-1 mb-1 bg-gray-200" style={{ width: `${item.percent}%` }}></div> */}
