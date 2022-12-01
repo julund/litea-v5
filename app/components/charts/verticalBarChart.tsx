@@ -1,19 +1,9 @@
-import numbro from "numbro";
 import { lowerCase } from "~/utils/helpers";
 import Bar from "../ui/bar";
 import Icon from "../icon";
 import { Dialog } from "../dialog";
 import Counter from './../counter';
-
-const countFormat = {
-    average: true,
-};
-
-const percentFormat: numbro.Format = {
-    output: "percent",
-    spaceSeparated: true,
-    mantissa: 1
-};
+import { format } from "numerable";
 
 const BarChartItem = ({ className, item, unknownTitle, iconCategory }: { className?: string; item: any; unknownTitle: string; iconCategory: string; }) => {
     return (
@@ -24,8 +14,8 @@ const BarChartItem = ({ className, item, unknownTitle, iconCategory }: { classNa
                     {item.name || unknownTitle}
                 </span>
                 <span className="flex items-end gap-2">
-                    <Counter className="text-sm" value={item.count} callback={(value: number) => numbro(value).format(countFormat)} />
-                    <Counter className="text-sm text-base-600 font-title tabular-nums" value={item.percent} callback={(value: number) => item.percent ? `(${numbro(value).format(percentFormat)})` : "(100 %)"} />
+                    <Counter className="text-sm" value={item.count} callback={(value: number) => format(value, "0")} />
+                <Counter className="text-sm text-base-600 font-title tabular-nums" value={item.percent} callback={(value: number) => `(${format(item.percent ? value : 1, "0.0 %")})`} />
                 </span>
             </div>
             <Bar value={item.percent} inPercent={true} />
@@ -52,7 +42,6 @@ const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none"
     return (
         <div className="flex flex-col gap-4 py-2">
             {/* <div className="text-sm font-bold">{title}</div> */}
-            {/* {emptyItem && <div className="text-lg font-medium text-base-400 font-title">No data.</div>} */}
             {emptyItem && <BarChartItem item={emptyItem} iconCategory={title} unknownTitle={unknownTitle} />}
             {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownTitle={unknownTitle} className="group" />)}
 
@@ -65,14 +54,6 @@ const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none"
                 </div>
             </Dialog>
             }
-            {/* {restItem &&
-                    <details className="">
-                        <summary className="mb-4 cursor-pointer hover:font-semibold">
-                            <BarChartItem item={restItem} iconCategory={title} unknownTitle={unknownTitle} />
-                        </summary>
-                        {modifiedRest && modifiedRest.map((item, i) => <BarChartItem key={i} className="mb-4 scale-90" item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
-                    </details>
-                } */}
         </div>
     );
 };

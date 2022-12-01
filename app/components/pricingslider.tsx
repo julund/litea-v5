@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useCounter } from "react-use";
-import numbro from "numbro";
+import { format } from "numerable";
 
 const BASE = 8.05;
 const PPR = 0.0000195;
@@ -24,27 +24,23 @@ const Pricingslider = () => {
         setResult({ price, discount: discount, total });
     }, [value]);
 
-    const count = (value: number) => numbro(value).format({ output: "number", spaceSeparated: true, thousandSeparated: true });
-    const currency = (value: number) => numbro(value).format({ output: "currency", mantissa: 2 });
-    const percent = (value: number) => numbro(value).format({ output: "percent", spaceSeparated: true, mantissa: 0, });
-
     return (
         <div className="flex flex-col gap-4 p-8 rounded-sm bg-base-100">
-            <span className="text-3xl font-semibold">{count(value)}</span>
+            <span className="text-3xl font-semibold">{format(value, "0,0")}</span>
             <span className="text-base-700">monthly pageviews</span>
             <input type="range" min={min} max={max} value={value} onChange={(e) => set(Number(e.target.value))} className="slider" id="pricing"></input>
             <div className="grid grid-cols-3 gap-4 p-4 rounded-sm bg-base-200">
                 <div>
                     <div className="text-sm text-base-600">Base price</div>
-                    <div className="text-lg font-medium text-base-800">{currency(result.price)}</div>
+                    <del className="text-lg font-medium text-base-800">${format(result.price,"$ 0.00")}</del>
                 </div>
                 <div>
                     <div className="text-sm text-base-600">discount</div>
-                    <div className="text-lg font-medium text-base-800">{percent(result.discount)}</div>
+                    <div className="text-lg font-medium text-base-800">{format(result.discount,"0 %")}</div>
                 </div>
                 <div>
                     <div className="text-sm text-base-600">Your price</div>
-                    <div className="text-lg font-medium text-base-800">{currency(result.total)}</div>
+                    <div className="text-lg font-medium text-base-800">${format(result.total,"$ 0.00")}</div>
                 </div>
             </div>
             <div className="flex flex-wrap gap-2 p-4">
