@@ -17,13 +17,13 @@ const Bar = ({ value, inPercent = false, max = 100, horizontal = true, ...props 
     if (horizontal) return (
         <div className="relative flex-grow h-4 overflow-hidden rounded-sm">
             <div ref={ref} className="absolute w-full h-full bg-base-200"></div>
-            <animated.div style={horizontalStyles} className="relative h-full rounded-sm bg-primary-700"></animated.div>
+            <animated.div style={horizontalStyles} className="relative h-full rounded-sm bg-primary-700 bg-opacity-80 group-hover:bg-opacity-100"></animated.div>
         </div>
     );
     return (
         <div className="relative flex items-end justify-center flex-grow h-24 overflow-hidden rounded-sm" {...props}>
             <div ref={ref} className="absolute w-full h-full bg-base-200"></div>
-            <animated.div style={verticalStyles} className="relative w-full rounded-sm bg-primary-700"></animated.div>
+            <animated.div style={verticalStyles} className="relative w-full rounded-sm bg-primary-700 bg-opacity-80 group-hover:bg-opacity-100"></animated.div>
         </div>
     );
 };
