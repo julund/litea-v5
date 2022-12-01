@@ -45,7 +45,7 @@
     @apply bg-primary-600 hover:bg-primary-700 text-primary-50;
   }
   .button-base {
-    @apply bg-base-600 text-base-50;
+    @apply bg-base-600 hover:bg-base-700 text-base-50;
   }
   .button-base-light {
     @apply bg-base-200 hover:bg-base-300 text-base-600 hover:text-base-700;
