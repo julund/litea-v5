@@ -9,7 +9,7 @@ const DashboardLayout = ({ children, session }: { children: ReactNode; session?:
 
     return (
         <Root>
-            <Header>
+            <Header message={session?.message}>
                <Nav data={session?.data}/> 
             </Header>
             <Main>

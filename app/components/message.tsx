@@ -3,6 +3,7 @@ import { AnimatePresence, LazyMotion, motion } from "~/lib/motion";
 import { type IMessage } from "~/lib/session.server";
 import { classNames } from "~/utils/helpers";
 import { IconX } from "./icons";
+
 const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation)
 
 export const Message = ({ message, duration, allowClose = true }: { message: IMessage; duration?: number; allowClose?: boolean }) => {
@@ -42,4 +43,5 @@ export const Message = ({ message, duration, allowClose = true }: { message: IMe
         </AnimatePresence>
         </LazyMotion>
     );
+    
 };
