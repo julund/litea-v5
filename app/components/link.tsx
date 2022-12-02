@@ -1,7 +1,7 @@
-import { Link as RemixLink, NavLink as RemixNavLink, type LinkProps, type NavLinkProps } from "@remix-run/react"
+import { Link as RemixLink, NavLink as RemixNavLink, type LinkProps, type NavLinkProps } from "@remix-run/react";
 import { type ReactNode } from "react";
 import { IconExternalLink } from "./icons";
-import { classNames } from '~/utils/helpers';
+import { classNames } from "~/utils/helpers";
 
 export const Link = ({ children, ...props }: { children: ReactNode } & LinkProps) => {
 
@@ -35,7 +35,7 @@ export const SiteNavLink = ({ children, ...props }: { children: ReactNode } & Na
 };
 
 export const ExternalLink = ({ to, children, ...props }: { to: string; children: ReactNode } & React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>) => {
-    const classes = classNames(props.className, "inline-flex gap-1 items-center hover:text-primary-600")
+    const classes = classNames(props.className, "inline-flex gap-1 items-center hover:text-primary-600");
     return (
         <a {...props} href={`https://${to}`} className={classes} rel="noreferrer" target="_blank">
             {children}<IconExternalLink size={14} />

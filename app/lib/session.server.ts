@@ -25,7 +25,7 @@ export class Session {
         if (!process.env.COOKIE_SECRET) throw new Error("COOKIE_SECRET must be set.");
         if (!process.env.COOKIE_MAXAGE) throw new Error("COOKIE_MAXAGE must be set.");
         if (!process.env.COOKIE_NAME) throw new Error("COOKIE_NAME must be set.");
-        this.cookieName = process.env.COOKIE_NAME
+        this.cookieName = process.env.COOKIE_NAME;
         this.sessionStorage = createCookieSessionStorage({
             cookie: {
                 name: process.env.COOKIE_NAME,

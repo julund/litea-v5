@@ -53,7 +53,7 @@ export async function getSiteVisitors(request: Request, siteId: string, period: 
         return {
             ...visitor,
             lastActivityAt: lastActivityAt ? new Date(lastActivityAt).toISOString() : null
-        }
+        };
     }) || null;
 
     return { data: modified, error };

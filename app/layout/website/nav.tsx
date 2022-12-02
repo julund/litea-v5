@@ -3,7 +3,7 @@ import { IconDashboard, IconMenu, IconX } from "~/components/icons";
 import { Link, SiteNavLink } from "~/components/link";
 import Logo from "~/components/logo";
 import { classNames } from "~/utils/helpers";
-import { type IData } from '../../lib/session.server';
+import { type IData } from "../../lib/session.server";
 
 const Nav = ({ data }: { data?: IData | null }) => {
 

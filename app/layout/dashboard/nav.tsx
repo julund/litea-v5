@@ -1,7 +1,7 @@
 import { IconLogout, IconSettings, IconUser } from "~/components/icons";
 import { NavLink } from "~/components/link";
 import Logo from "~/components/logo";
-import { type IData } from '../../lib/session.server';
+import { type IData } from "../../lib/session.server";
 
 const Nav = ({ data }: { data?: IData | null }) => {
 

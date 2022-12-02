@@ -3,13 +3,13 @@ import { useRef } from "react";
 
 export const Dialog = ({ children, button = "open dialog", ...props }: { children: React.ReactNode; button?: React.ReactNode } & React.DetailedHTMLProps<React.DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>) => {
 
-    const ref = useRef<HTMLDialogElement>(null)
+    const ref = useRef<HTMLDialogElement>(null);
     // const [ show, toggle ] = useToggle(false);
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         const dialog = ref?.current;
         if (dialog && typeof dialog.showModal === "function") {
             // dialog.hidden ? dialog.showModal() : dialog.close();
-            dialog.showModal()
+            dialog.showModal();
             // console.log(dialog.hidden)
         } else {
             console.warn("The <dialog> API is not supported by this browser.");
@@ -32,13 +32,13 @@ export const Dialog = ({ children, button = "open dialog", ...props }: { childre
             // console.log("clicked outside dialog")
             dialog.close();
         }
-    }
+    };
 
     const handleClose = (e: React.SyntheticEvent<HTMLDialogElement, Event>) => {
         const dialog = ref?.current;
         if (!dialog) return;
         console.log(e.type, dialog.returnValue);
-    }
+    };
 
     return (
         <>

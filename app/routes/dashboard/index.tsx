@@ -50,9 +50,9 @@ export default function SitesPage() {
                                 ...
                             </button>
                         </div>
-                    )
+                    );
                 })}
             </div>
         </Container>
-    )
+    );
 }

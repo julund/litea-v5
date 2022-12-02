@@ -5,7 +5,7 @@ import Container from "~/layout/shared/container";
 const ListItem = ({ children }: { children: React.ReactNode }) => {
     return (
         <li className="flex items-center gap-2 my-2 list-none"><IconCheck size={18} className="stroke-2 text-primary-500" />{children}</li>
-    )
+    );
 };
 
 export default function PricingPage() {

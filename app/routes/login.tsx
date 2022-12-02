@@ -18,7 +18,7 @@ export const action: ActionFunction = async ({ request }: { request: Request }) 
   const email = form.get("email")?.toString();
   const password = form.get("password")?.toString();
   if (email && password) await signIn(request, email, password);
-}
+};
 
 export default function Index() {
 

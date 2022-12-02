@@ -6,5 +6,5 @@ export default function NotFoundPage() {
         <Container>
             <NotFound />
         </Container>
-    )
+    );
 }

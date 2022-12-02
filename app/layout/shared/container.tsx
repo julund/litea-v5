@@ -1,5 +1,5 @@
 import { LazyMotion, motion } from "~/lib/motion";
-const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation)
+const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation);
 
 const Container = ({ children, ...props }: { children: React.ReactNode; props?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> }) => {
 

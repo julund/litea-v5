@@ -11,7 +11,7 @@ import {
 
 export default function Icon({ title, category, size = 16, ...props }: { title: string; size?: number; category: string; } & IconProps) {
 
-    const DefaultIcon = <IconQuestionMark {...props} />
+    const DefaultIcon = <IconQuestionMark {...props} />;
     if (!title) return DefaultIcon;
     const i = title.toLowerCase();
     const c = category?.toLowerCase();

@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import Main from '~/layout/shared/main';
+import Main from "~/layout/shared/main";
 import { type ISession } from "~/lib/session.server";
 import Header from "../shared/header";
 import Root from "../shared/root";

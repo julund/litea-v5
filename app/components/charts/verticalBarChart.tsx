@@ -2,7 +2,7 @@ import { lowerCase } from "~/utils/helpers";
 import Bar from "../ui/bar";
 import Icon from "../icon";
 import { Dialog } from "../dialog";
-import Counter from './../counter';
+import Counter from "./../counter";
 import { format } from "numerable";
 
 const BarChartItem = ({ className, item, unknownTitle, iconCategory }: { className?: string; item: any; unknownTitle: string; iconCategory: string; }) => {
@@ -20,8 +20,8 @@ const BarChartItem = ({ className, item, unknownTitle, iconCategory }: { classNa
             </div>
             <Bar value={item.percent} inPercent={true} />
         </div>
-    )
-}
+    );
+};
 
 const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none", data }: { title: string; unknownTitle?: string; emptyTitle?: string; data: Array<any> }) => {
 

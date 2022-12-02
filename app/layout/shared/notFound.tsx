@@ -1,5 +1,5 @@
 import { useLocation } from "@remix-run/react";
-import { IconArrowBack } from '~/components/icons';
+import { IconArrowBack } from "~/components/icons";
 
 export default function NotFound() {
     let { pathname } = useLocation();
@@ -11,5 +11,5 @@ export default function NotFound() {
             {/* <Link to="/" className="inline-flex button button-ghost"><IconArrowBack /> Go back home.</Link> */}
             <button onClick={() => history.back()} className="button button-ghost"><IconArrowBack size={16} />Go back</button>
         </>
-    )
+    );
 }

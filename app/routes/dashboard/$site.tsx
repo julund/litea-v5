@@ -88,7 +88,7 @@ export default function SitePage() {
                                     </span>
                                     {/* {(visitor.visits && typeof visitor.visits === "object") && visitor.visits.join(" ")} */}
                                 </div>
-                            )
+                            );
                         })}
                     </div>
                     :
@@ -134,7 +134,7 @@ export default function SitePage() {
                 </span>}
             </div>
         </Container>
-    )
+    );
 }
 
 export function CatchBoundary() {

@@ -7,16 +7,16 @@ export default function Counter({ value, defaultValue = 0, callback, config, cla
     const [current, { set: setCurrent }] = useCounter(defaultValue);
     const [next, { set: setNext }] = useCounter(value);
     const previous = usePrevious(next);
-    const from = useMotionValue(previous || defaultValue)
+    const from = useMotionValue(previous || defaultValue);
 
     useEffect(() => setNext(value), [value, setNext]);
 
     useEffect(() => {
         animate(from, value, {
-            onUpdate: val => { setCurrent(val) },
+            onUpdate: val => { setCurrent(val); },
             type: "tween", duration: config?.duration || undefined
-        })
-    }, [from, setCurrent, value, defaultValue, config])
+        });
+    }, [from, setCurrent, value, defaultValue, config]);
 
     return (
         <span className={className}>

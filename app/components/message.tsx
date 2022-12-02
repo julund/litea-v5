@@ -4,7 +4,7 @@ import { type IMessage } from "~/lib/session.server";
 import { classNames } from "~/utils/helpers";
 import { IconX } from "./icons";
 
-const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation)
+const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation);
 
 export const Message = ({ message, duration, allowClose = true }: { message: IMessage; duration?: number; allowClose?: boolean }) => {
     
@@ -14,15 +14,15 @@ export const Message = ({ message, duration, allowClose = true }: { message: IMe
         message.type === "info" && "message-info",
         message.type === "success" && "message-success",
         message.type === "warning" && "message-warning",
-    )
+    );
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
         if (duration) {
-            const t = setTimeout(() => setVisible(false), duration)
+            const t = setTimeout(() => setVisible(false), duration);
             return () => clearInterval(t);
         }
-    }, [duration])
+    }, [duration]);
 
     return (
         <LazyMotion features={loadFeatures}>

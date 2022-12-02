@@ -44,7 +44,7 @@ export function getPeriodDates(periodName: string, index: number) {
                 title: `${current(60)} minutes`,
                 description: "Last",
                 labelDates: eachMinuteOfInterval({ start: fromDate, end: toDate }, { step: 1 })
-            })
+            });
         },
         day: () => {
             const current = (d: number | Date) => subDays(d, index);
@@ -57,7 +57,7 @@ export function getPeriodDates(periodName: string, index: number) {
                 title: format(fromDate, "cccc", options),
                 description: format(fromDate, "PPP", options),
                 labelDates: eachHourOfInterval({ start: fromDate, end: toDate })
-            })
+            });
         },
         week: () => {
             const current = (d: number | Date) => subWeeks(d, index);
@@ -70,7 +70,7 @@ export function getPeriodDates(periodName: string, index: number) {
                 title: `week ${format(current(time), "I", options)}`,
                 description: format(current(time), "yyyy", options),
                 labelDates: eachDayOfInterval({ start: fromDate, end: toDate })
-            })
+            });
         },
         month: () => {
             const current = (d: number | Date) => subMonths(d, index);
@@ -83,7 +83,7 @@ export function getPeriodDates(periodName: string, index: number) {
                 title: format(current(time), "LLLL", options),
                 description: format(current(time), "yyyy", options),
                 labelDates: eachDayOfInterval({ start: fromDate, end: toDate })
-            })
+            });
         },
         year: () => {
             const current = (d: number | Date) => subYears(d, index);
@@ -96,7 +96,7 @@ export function getPeriodDates(periodName: string, index: number) {
                 title: format(current(time), "yyyy", options),
                 description: "Year",
                 labelDates: eachMonthOfInterval({ start: fromDate, end: toDate })
-            })
+            });
         },
         all: () => {
             const current = (d: number) => d;
@@ -109,7 +109,7 @@ export function getPeriodDates(periodName: string, index: number) {
                 title: `${format(fromDate, "yyyy", options)} - ${format(toDate, "yyyy", options)}`,
                 description: "Year",
                 labelDates: eachYearOfInterval({ start: fromDate, end: toDate })
-            })
+            });
         },
     };
 
@@ -234,7 +234,7 @@ const merged = stats ? stats?.reduce((total: any, document: any) => {
 merged.graph = grouped(merged.graph, period, index);
 
 return merged;
-}
+};
 
 export const toCSV = (array: Array<any>) => {
     try {
@@ -265,4 +265,4 @@ export const  isValidDomain = (input: string) => {
     const regex = new RegExp(/^(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*\.[A-Za-z]{2,6}$/);
     return !!(regex.test(input) == true);
 
-}
+};

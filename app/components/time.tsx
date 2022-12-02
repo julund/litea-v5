@@ -15,7 +15,7 @@ const Time = ({ value }: { value?: string; }) => {
         setDateTime(dateTime);
         const distance = formatDistanceToNow(parseISO(value), { locale: enGB, addSuffix: true, includeSeconds: false });
         setDistance(distance);
-    },[value])
+    },[value]);
 
 
 

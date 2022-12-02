@@ -3,7 +3,7 @@ import type { LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import WebsiteLayout from "~/layout/website";
 import { check } from "~/lib/auth.server";
-import { type ISession } from '~/lib/session.server';
+import { type ISession } from "~/lib/session.server";
 
 export const loader: LoaderFunction = async ({ request }: { request: Request }) => {
   const { data, message, headers } = await check(request);

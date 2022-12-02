@@ -22,19 +22,19 @@ export default function PeriodSelect() {
     useEffect(() => {
         if (period === "realtime") {
             const interval = setInterval(() => {
-                submit({ period, index: "0" })
-            }, 60000)
+                submit({ period, index: "0" });
+            }, 60000);
             return () => clearInterval(interval);
         }
-    }, [period, submit])
+    }, [period, submit]);
 
     const incrementIndex = () => {
-        const e = document?.querySelector('input[type=number]') as HTMLInputElement;
-        if (e) e.stepUp()
+        const e = document?.querySelector("input[type=number]") as HTMLInputElement;
+        if (e) e.stepUp();
     };
     const decrementIndex = () => {
-        const e = document?.querySelector('input[type=number]') as HTMLInputElement;
-        if (e) e.stepDown()
+        const e = document?.querySelector("input[type=number]") as HTMLInputElement;
+        if (e) e.stepDown();
     };
 
     return (
@@ -75,5 +75,5 @@ export default function PeriodSelect() {
             </div>
         </Form>
 
-    )
+    );
 }
