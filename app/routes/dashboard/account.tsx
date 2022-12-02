@@ -3,7 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import { IconUser } from "~/components/icons";
 import { Message } from "~/components/message";
 import Time from "~/components/time";
-import Container from "~/layout/dashboard/container";
+import Container from "~/layout/shared/container";
 import { getAccount } from "~/lib/db.server";
 
 export const handle = { title: "Account" };

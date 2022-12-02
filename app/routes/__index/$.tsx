@@ -1,10 +1,10 @@
-import NotFound from "~/layout/notFound";
-import Page from "~/layout/website/page";
+import Container from "~/layout/shared/container";
+import NotFound from "~/layout/shared/notFound";
 
 export default function NotFoundPage() {
     return (
-        <Page>
+        <Container>
             <NotFound />
-        </Page>
+        </Container>
     )
 }

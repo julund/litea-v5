@@ -1,5 +1,4 @@
 import { useLocation } from "@remix-run/react";
-// import { Link } from "~/components/link";
 import { IconArrowBack } from '~/components/icons';
 
 export default function NotFound() {

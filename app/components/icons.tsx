@@ -54,3 +54,4 @@ export const IconLink = ({ ...props }: IconProps) => icon.TbLink({ ...defaultIco
 export const IconFileHorizontal = ({ ...props }: IconProps) => icon.TbFileHorizontal({ ...defaultIconProps, ...props });
 export const IconMarquee = ({ ...props }: IconProps) => icon.TbMarquee2({ ...defaultIconProps, ...props });
 export const IconQuestionMark = ({ ...props }: IconProps) => icon.TbQuestionMark({ ...defaultIconProps, ...props });
+export const IconMenu = ({ ...props }: IconProps) => icon.TbMenu({ ...defaultIconProps, ...props });

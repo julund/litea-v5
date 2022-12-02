@@ -5,7 +5,7 @@ import { getAllSites } from "~/lib/db.server";
 import { format, parseISO } from "date-fns";
 import { enGB } from "date-fns/locale";
 import { IconCircle, IconCircleDotted } from "~/components/icons";
-import Container from "~/layout/dashboard/container";
+import Container from "~/layout/shared/container";
 import { Message } from "~/components/message";
 
 export const handle = { title: "Sites" };
