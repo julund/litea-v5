@@ -1,4 +1,4 @@
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import WebsiteLayout from "~/layout/website";
@@ -7,6 +7,7 @@ import { type ISession } from "~/lib/session.server";
 
 export const loader: LoaderFunction = async ({ request }: { request: Request }) => {
   const { data, message, headers } = await check(request);
+  if(data) throw redirect("/dashboard");
   return json({ data, message }, { headers });
 };
 
