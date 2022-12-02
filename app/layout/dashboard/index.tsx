@@ -14,7 +14,7 @@ const DashboardLayout = ({ children, session }: { children: ReactNode; session?:
         <Root>
             <Header>
                 <Nav>
-                    <div className="flex gap-2 py-2 items-centerpx-4 text-base-500"><IconUser />{session?.data?.handle}</div>
+                    <div className="flex items-center gap-2 px-4 py-2 text-base-500"><IconUser />{session?.data?.handle}</div>
                     <NavLink to="/dashboard/account"><IconSettings size={22} />Account</NavLink>
                     <NavLink to="/logout"><IconLogout />Log out</NavLink>
                 </Nav>

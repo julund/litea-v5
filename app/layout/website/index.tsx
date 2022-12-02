@@ -13,9 +13,9 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
         <Root>
             <Header>
                 <Nav>
-                    <SiteNavLink to="/features" className="nav-link">Features</SiteNavLink>
-                    <SiteNavLink to="/pricing" className="nav-link">Pricing</SiteNavLink>
-                    <SiteNavLink to="/docs" className="nav-link">Docs</SiteNavLink>
+                    <SiteNavLink to="/features">Features</SiteNavLink>
+                    <SiteNavLink to="/pricing">Pricing</SiteNavLink>
+                    <SiteNavLink to="/docs">Docs</SiteNavLink>
                     {session?.data ?
                         <Link to="/dashboard" className="button button-ghost"><IconDashboard className="text-base-400" />Dashboard</Link> :
                         <>
