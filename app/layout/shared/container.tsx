@@ -5,7 +5,7 @@ const Container = ({ children, ...props }: { children: React.ReactNode; props?: 
 
     return (
         <LazyMotion features={loadFeatures}>
-            <motion.div className="mx-auto px-6 max-w-6xl" {...props}
+            <motion.div className="max-w-4xl px-6 mx-auto" {...props}
                 initial={{ opacity: 0, y: -5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{  }}
