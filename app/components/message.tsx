@@ -6,15 +6,8 @@ import { IconX } from "./icons";
 
 const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation);
 
-export const Message = ({ message, duration, allowClose = true }: { message: IMessage; duration?: number; allowClose?: boolean }) => {
-    
-    const classes = classNames(
-        "sticky top-0 z-50 message flex justify-center",
-        message.type === "error" && "message-error",
-        message.type === "info" && "message-info",
-        message.type === "success" && "message-success",
-        message.type === "warning" && "message-warning",
-    );
+export const Message = ({ message, duration, allowClose = true }: { message?: IMessage | null; duration?: number; allowClose?: boolean }) => {
+
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
@@ -23,7 +16,17 @@ export const Message = ({ message, duration, allowClose = true }: { message: IMe
             return () => clearInterval(t);
         }
     }, [duration]);
-
+    
+    if(!message) return null;
+    
+    const classes = classNames(
+        "sticky top-0 z-50 message flex justify-center",
+        message.type === "error" && "message-error",
+        message.type === "info" && "message-info",
+        message.type === "success" && "message-success",
+        message.type === "warning" && "message-warning",
+    );
+    
     return (
         <LazyMotion features={loadFeatures}>
         <AnimatePresence>

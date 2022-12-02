@@ -3,14 +3,23 @@ import Main from "~/layout/shared/main";
 import { type ISession } from "~/lib/session.server";
 import Header from "../shared/header";
 import Root from "../shared/root";
-import Nav from "./nav";
+import Nav from "../shared/nav";
+import { Message } from "~/components/message";
+import { IconUser, IconSettings, IconLogout } from "~/components/icons";
+import { NavLink } from "~/components/link";
 
 const DashboardLayout = ({ children, session }: { children: ReactNode; session?: ISession; }) => {
 
     return (
         <Root>
-            <Header message={session?.message}>
-               <Nav data={session?.data}/> 
+            <Header>
+                <Nav>
+                    <div className="flex gap-2 py-2 items-centerpx-4 text-base-500"><IconUser />{session?.data?.handle}</div>
+                    <NavLink to="/dashboard/account"><IconSettings size={22} />Account</NavLink>
+                    <NavLink to="/logout"><IconLogout />Log out</NavLink>
+                </Nav>
+                {/* <Message message={{ type: "info", text: "Message on DashboardLayout." }} /> */}
+                <Message message={session?.message} duration={5000} />
             </Header>
             <Main>
                 {children}
