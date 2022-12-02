@@ -5,12 +5,14 @@ import { classNames } from "~/utils/helpers";
 import { Link } from "~/components/link";
 import { useRef } from "react";
 
-const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, className = "flex flex-col gap-2 md:flex-row" }: { children?: React.ReactNode; forceToggle?: boolean; absolute?: boolean; buttonContent?: React.ReactNode; className?: string }) => {
+const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, className = "flex flex-col gap-2 md:flex-row" }: { children?: React.ReactNode; forceToggle?: boolean; absolute?: boolean; buttonContent?: Function; className?: string }) => {
 
     const [ref, { width }] = useMeasure<HTMLElement>();
     const navToggleRef = useRef<HTMLDivElement>(null);
     const showToggle = forceToggle || width <= 704;
     const [expanded, toggle] = useToggle(false);
+
+    if (!buttonContent) buttonContent = (expanded: boolean) => !expanded ? <IconMenu size={22} className="text-base-400" /> : <IconX size={22} className="text-base-400" />;
 
     return (
         <nav ref={ref} className={classNames("z-0 flex items-start w-full gap-2 p-8 shrink",
@@ -22,7 +24,8 @@ const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, c
                     <Brand />
                 </Link>
                 {!!children && showToggle && <button aria-label="nav-toggle" onClick={toggle} className="justify-end button button-ghost">
-                    {buttonContent}{!expanded ? <IconMenu size={22} className="text-base-400" /> : <IconX size={22} className="text-base-400" />}
+                    {buttonContent(expanded)}
+                    {/* {!expanded ? <IconMenu size={22} className="text-base-400" /> : <IconX size={22} className="text-base-400" />} */}
                 </button>}
             </div>
             {!!children && <div className="relative top-0 right-0 z-0 flex flex-col w-full gap-2 md:flex-row-reverse">
