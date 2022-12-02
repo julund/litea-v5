@@ -29,20 +29,22 @@ export default function Index() {
     <MinimalLayout>
       <Container>
         {message && <Message message={message} />}
-        {!data?.handle && <Form id="loginForm" className="flex flex-col gap-4 py-4" method="post">
-          <h1 className="py-2 text-4xl font-black font-title">Login</h1>
-          <p className="text-base-600">Asperiores quos fugit eligendi commodi ab alias aliquid illo nisi nihil.</p>
-          <input className="" id="Email" type="email" name="email" placeholder="email@example.com" autoComplete="email" />
-          <input className="" id="Password" type="password" name="password" autoComplete="password" />
-          <p className="px-2 text-sm text-base-500">Forgot password?</p>
-          <button className="justify-center button button-primary disabled:opacity-40" type="submit" disabled={state == "submitting"}><IconLogin size={22} />{state == "submitting" ? "Logging in..." : "Log in"}</button>
-        </Form>}
-        {data?.handle && <>
-          <h1 className="py-2 text-2xl font-semibold font-title">You're allready logged in</h1>
-          <p className="text-primary-500">{data?.handle}</p>
-          <Link to="/dashboard" className="button button-primary">Open dashboard</Link>
-          <Link to="/logout" className="button button-ghost">Log out</Link>
-        </>}
+        <div className="flex flex-col items-center gap-4 py-4" >
+          {!data?.handle && <Form id="loginForm" method="post">
+            <h1 className="text-4xl font-black font-title">Login</h1>
+            <p className="text-base-600">Asperiores quos fugit eligendi commodi ab alias aliquid illo nisi nihil.</p>
+            <input className="" id="Email" type="email" name="email" placeholder="email@example.com" autoComplete="email" />
+            <input className="" id="Password" type="password" name="password" autoComplete="password" />
+            <p className="px-2 text-sm text-base-500">Forgot password?</p>
+            <button className="justify-center button button-primary disabled:opacity-40" type="submit" disabled={state == "submitting"}><IconLogin size={22} />{state == "submitting" ? "Logging in..." : "Log in"}</button>
+          </Form>}
+          {data?.handle && <>
+            <h1 className="py-2 text-4xl font-black font-title">You're allready logged in</h1>
+            <p className="text-primary-500">{data?.handle}</p>
+            <Link to="/dashboard" className="button button-primary">Open dashboard</Link>
+            <Link to="/logout" className="button button-ghost">Log out</Link>
+          </>}
+        </div>
       </Container>
     </MinimalLayout>
   );

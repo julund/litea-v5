@@ -18,9 +18,9 @@ export default function Logout() {
     return (
         <MinimalLayout>
             <Container>
-                <div className="flex flex-col gap-4 py-4">
-                    <h1 className="py-2 text-2xl">Log out</h1>
-                    <p className="py-2">Are you sure you want to log out?</p>
+                <div className="flex flex-col items-center gap-4 py-4">
+                    <h1 className="text-4xl">Log out</h1>
+                    <p>Are you sure you want to log out?</p>
                     <Form method="post" className="" aria-disabled={state == "submitting"}>
                         <fieldset className="flex flex-col gap-2">
                             <button className="justify-center button button-primary disabled:opacity-40" disabled={state == "submitting"}>{state == "submitting" ? "Logging out..." : "Log out"}</button>
