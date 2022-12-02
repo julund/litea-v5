@@ -59,7 +59,7 @@ export default function SitePage() {
 
     return (
         <Container>
-            <nav className="sticky top-0 z-20 flex items-center justify-end w-full gap-4 px-6 py-4 bg-base-50">
+            <nav className="sticky flex items-center justify-end w-full gap-4 px-6 py-4 bg-base-50">
                 <Breadcrumbs current={site?.data?.title} />
                 <ExternalLink to={site.data.url} className="text-base-500" title="Open site in new tab">{site?.data?.url}</ExternalLink>
             </nav>
