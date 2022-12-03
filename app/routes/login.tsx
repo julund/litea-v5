@@ -17,7 +17,7 @@ export const action: ActionFunction = async ({ request }: { request: Request }) 
   const form = await request.formData();
   const email = form.get("email")?.toString();
   const password = form.get("password")?.toString();
-  if (email && password) await signIn(request, email, password);
+  await signIn(request, email, password);
 };
 
 export default function Index() {
@@ -28,8 +28,7 @@ export default function Index() {
   return (
     <MinimalLayout>
       <Container>
-        {message && <Message message={message} />}
-
+        {message && <Message allowClose={false} message={message} />}
         {!data?.handle && <Form id="loginForm" className="flex flex-col items-center gap-4 py-4 text-center" method="post">
           <h1 className="text-4xl font-black font-title">Login</h1>
           <p className="text-base-600">Asperiores quos fugit eligendi commodi ab alias aliquid illo nisi nihil.</p>
