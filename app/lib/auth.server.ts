@@ -18,8 +18,9 @@ export async function check(request: Request, redirectTo?: string | null, noToke
 
 }
 
-export async function signIn(request: Request, email: string, password: string) {
+export async function signIn(request: Request, email?: string, password?: string) {
 
+    if (!email || !password) { await session.end(request, "/login", { type: "error", text: "email and password cannot be empty." }); return null; }
     const { data, error } = await anonClient().auth.signInWithPassword({ email, password });
     if (error) { await session.end(request, "/login", { type: "error", text: error.message }); return null; }
 
