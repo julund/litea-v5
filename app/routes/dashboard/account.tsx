@@ -24,7 +24,7 @@ export default function Account() {
         <Container>
             <h1>Account</h1>
             <p className="text-base-500">Manage your account settings and configuration.</p>
-            {error && <Message message={{ type: "error", text: error.message || "An unknown error occured."}} allowClose={false}/>}
+            {error && <Message message={{ type: "error", text: error.message || "An unknown error occured." }} allowClose={false} />}
             {account && <>
                 <div className="flex items-center gap-2 py-4">
                     <div>

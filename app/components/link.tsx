@@ -1,4 +1,4 @@
-import { Link as RemixLink, NavLink as RemixNavLink, type LinkProps, type NavLinkProps } from "@remix-run/react";
+import { Link as RemixLink, NavLink as RemixNavLink, useLocation, type LinkProps, type NavLinkProps } from "@remix-run/react";
 import { type ReactNode } from "react";
 import { IconExternalLink } from "./icons";
 import { classNames } from "~/utils/helpers";
@@ -18,6 +18,22 @@ export const NavLink = ({ children, ...props }: { children: ReactNode } & NavLin
     const inactiveClassName = "text-base-600 hover:bg-base-200";
     return (
         <RemixNavLink {...props} prefetch="intent" className={({ isActive }) => classNames("flex items-center gap-2 px-4 py-2 w-full text-lg font-medium font-title rounded-sm transition-all duration-500", isActive ? activeClassName : inactiveClassName)}>
+            {children}
+        </RemixNavLink>
+    );
+};
+
+// Custom because NavLink fn won't be correct on index page
+export const IndexNavLink = ({ children, ...props }: { children: ReactNode } & NavLinkProps) => {
+
+    const activeClassName = "text-base-500 bg-base-200 ";
+    const inactiveClassName = "text-base-600 hover:bg-base-200";
+
+    const location = useLocation();
+    const isActive = props.to === location.pathname;
+
+    return (
+        <RemixNavLink {...props} prefetch="intent" className={(classNames("flex items-center gap-2 px-4 py-2 w-full text-lg font-medium font-title rounded-sm transition-all duration-500", isActive ? activeClassName : inactiveClassName))}>
             {children}
         </RemixNavLink>
     );
