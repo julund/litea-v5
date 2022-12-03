@@ -54,7 +54,7 @@
     @apply bg-transparent hover:bg-base-200 text-base-800;
   }
   .message {
-    @apply px-6 py-4;
+    @apply flex gap-2 px-6 py-4;
   }
   .message-info {
     @apply text-sky-700 bg-sky-100;

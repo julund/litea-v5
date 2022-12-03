@@ -12,7 +12,7 @@ export default function Home() {
                 <Image src="/stats.svg" alt="stats" width={350} height={350}/>
                 </a.div> */}
                 <div className="flex flex-col col-span-2">
-                    <h1 className="my-2 text-4xl text-base-900 font-title">Lightweight & privacy-oriented website analytics</h1>
+                    <h1 className="my-2 text-5xl text-base-900 font-title">Lightweight & privacy-oriented website analytics</h1>
                     <div className="text-lg text-base-800">
                         Litea is a lightweight website analytics tool free from cookies and fully compliant with <abbr title="The General Data Protection Regulation 2016/679 (GDPR) is a regulation in EU law on data protection and privacy in the European Union and the European Economic Area. It also addresses the transfer of personal data outside the EU and EEA areas.">GDPR</abbr>, <abbr title="The California Consumer Privacy Act is a state statute intended to enhance privacy rights and consumer protection for residents of California, United States.">CCPA</abbr> and <abbr title="The Privacy and Electronic Communications Regulations (PECR) sit alongside the Data Protection Act and the UK GDPR. They give people specific privacy rights in relation to electronic communications.">PECR</abbr>. Stop scrolling through pages of reports and collecting useless personal data about your visitors. Our responsive dashboard will help you make business decisions quickly.
                     </div>

@@ -4,7 +4,6 @@ import { type ISession } from "~/lib/session.server";
 import Root from "../shared/root";
 import Nav from "../shared/nav";
 import Header from "../shared/header";
-import { Message } from "~/components/message";
 
 const MinimalLayout = ({ children, session }: { children: ReactNode; session?: ISession; }) => {
 
@@ -12,7 +11,6 @@ const MinimalLayout = ({ children, session }: { children: ReactNode; session?: I
         <Root>
             <Header>
                 <Nav/>
-                <Message message={session?.message} duration={5000} />
             </Header>
             <Main>
                 {children}
