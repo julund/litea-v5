@@ -9,10 +9,14 @@ const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, c
 
     const [ref, { width }] = useMeasure<HTMLElement>();
     const navToggleRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
     const showToggle = forceToggle || width <= 704;
     const [expanded, toggle] = useToggle(false);
 
-    useClickAway(navToggleRef, () => { if (expanded) toggle(false); });
+    useClickAway(navToggleRef, (event: Event & { target: HTMLButtonElement }) => {
+        const buttonClicked = event.target?.parentNode === buttonRef.current;
+        if (expanded && !buttonClicked) toggle(false);
+    });
 
     if (!buttonContent) buttonContent = (expanded: boolean) => !expanded ? <IconMenu size={22} className="text-base-400" /> : <IconX size={22} className="text-base-400" />;
 
@@ -25,7 +29,7 @@ const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, c
                 <Link to="/" className="inline-flex p-2 select-none">
                     <Brand />
                 </Link>
-                {!!children && showToggle && <button aria-label="nav-toggle" onClick={() => { toggle(); }} className="justify-end button button-ghost">
+                {!!children && showToggle && <button ref={buttonRef} aria-label="nav-toggle" onClick={toggle} className="justify-end button button-ghost">
                     {buttonContent(expanded)}
                 </button>}
             </div>
