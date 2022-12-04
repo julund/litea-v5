@@ -74,7 +74,7 @@ export default function SitePage() {
 
                 {isRealtime ?
                     <div className="flex flex-wrap h-40 gap-2 p-4 bg-white bg-opacity-50 rounded-sm">
-                        {visitors && visitors.data?.map(visitor => {
+                        {visitors ? visitors.data?.map(visitor => {
                             return (
                                 <div className="flex flex-col flex-wrap gap-1 p-4 rounded-sm bg-base-100 text-base-600" key={visitor.id}>
                                     <span className="flex items-center gap-1 text-base" title={visitor.id}>
@@ -89,8 +89,10 @@ export default function SitePage() {
                                     {/* {(visitor.visits && typeof visitor.visits === "object") && visitor.visits.join(" ")} */}
                                 </div>
                             );
-                        })}
-                        <div className="flex items-center justify-center w-full h-full text-base-400">No visitor data</div>
+                        })
+                            :
+                            <div className="flex items-center justify-center w-full h-full text-base-400">No visitor data</div>
+                        }
                     </div>
                     :
                     <HorizontalBarChart data={stats.data?.graph} />
