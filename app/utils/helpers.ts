@@ -145,7 +145,7 @@ export const grouped = (arr : Array<any>, period: string, index = 0) => {
         return period == "realtime" ? format(t, "HH:mm", options) :
             period == "day" ? format(t, "HH:mm", options) :
                 period == "week" ? format(t, "eee", options) :
-                    period == "month" ? format(t, "EEEEEE doM", options) :
+                    period == "month" ? format(t, "EEEEEE do", options) :
                         period == "year" ? format(t, "MMM", options) :
                             format(t, "yyyy", options);
     };
