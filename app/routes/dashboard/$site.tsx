@@ -102,7 +102,7 @@ export default function SitePage() {
                         <VerticalBarChart title="Countries" data={stats.data?.countries?.map((country: any) => ({ ...country, countryCode: country.name, name: countryNameFromCode(country.name) }))} />
                     </Tab>
                     <Tab chevronStyle={false} title="Referrers">
-                        <VerticalBarChart title="Referrers" unknownTitle="direct/none" data={stats.data?.referrers?.map((referrer: any) => ({ ...referrer, domain: referrer.name }))} />
+                        <VerticalBarChart title="Referrers" unknownName="direct/none" data={stats.data?.referrers?.map((referrer: any) => ({ ...referrer, domain: referrer.name }))} />
                     </Tab>
                 </div>
                 <div className="grid items-stretch justify-center grid-cols-1 gap-4 md:grid-cols-3">
@@ -115,14 +115,14 @@ export default function SitePage() {
                         <VerticalBarChart title="All pages" data={stats.data?.pages?.all} />
                         <VerticalBarChart title="Entry pages" data={stats.data?.pages?.entry} />
                         <VerticalBarChart title="Exit pages" data={stats.data?.pages?.exit} />
-                        <VerticalBarChart title="Queries" unknownTitle="none" data={stats.data?.queries} />
-                        <VerticalBarChart title="Hashes" unknownTitle="none" data={stats.data?.hashes} />
+                        <VerticalBarChart title="Queries" unknownName="none" data={stats.data?.queries} />
+                        <VerticalBarChart title="Hashes" unknownName="none" data={stats.data?.hashes} />
                     </Tab>
                     <Tab chevronStyle={false} title="UTMs" titles={["Source", "Campaign", "Content", "Term"]}>
-                        <VerticalBarChart title="Source" data={stats.data?.utms?.sources.filter((e: any) => e.name !== "")} />
-                        <VerticalBarChart title="Campaign" data={stats.data?.utms?.campaigns.filter((e: any) => e.name !== "")} />
-                        <VerticalBarChart title="Content" data={stats.data?.utms?.contents.filter((e: any) => e.name !== "")} />
-                        <VerticalBarChart title="Terms" data={stats.data?.utms?.terms.filter((e: any) => e.name !== "")} />
+                        <VerticalBarChart unknownName="none" title="Source" data={stats.data?.utms?.sources} />
+                        <VerticalBarChart unknownName="none" title="Campaign" data={stats.data?.utms?.campaigns} />
+                        <VerticalBarChart unknownName="none" title="Content" data={stats.data?.utms?.contents} />
+                        <VerticalBarChart unknownName="none" title="Terms" data={stats.data?.utms?.terms} />
                     </Tab>
                 </div>
 
