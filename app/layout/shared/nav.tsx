@@ -25,7 +25,7 @@ const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, c
                 <Link to="/" className="inline-flex p-2 select-none">
                     <Brand />
                 </Link>
-                {!!children && showToggle && <button aria-label="nav-toggle" onClick={() => { toggle(); navToggleRef.current?.focus(); }} className="justify-end button button-ghost">
+                {!!children && showToggle && <button aria-label="nav-toggle" onClick={() => { toggle(); }} className="justify-end button button-ghost">
                     {buttonContent(expanded)}
                 </button>}
             </div>
