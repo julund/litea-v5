@@ -59,7 +59,7 @@ export default function PeriodSelect() {
                     name="period"
                     defaultValue={period}
                     className="select"
-                    onChange={({ target: { value } }) => submit({ period: value })}
+                    onChange={({ target: { value } }) => submit({ period: value, time: time || "" })}
                 >
                     {periods?.map(({ id, name }) => <option key={id} value={id}>{name}</option>)}
                 </select>

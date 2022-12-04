@@ -45,7 +45,6 @@ export const loader: LoaderFunction = async ({ request, params }: { request: Req
                 "max-age=3600, s-maxage=3600"
         }
     });
-    // return json<LoaderData>({ site, stats, visitors });
 
 };
 
