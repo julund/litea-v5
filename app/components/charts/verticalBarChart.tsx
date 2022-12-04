@@ -5,13 +5,13 @@ import { Dialog } from "../dialog";
 import Counter from "./../counter";
 import { format } from "numerable";
 
-const BarChartItem = ({ className, item, unknownTitle, iconCategory }: { className?: string; item: any; unknownTitle: string; iconCategory: string; }) => {
+const BarChartItem = ({ className, item, unknownName, iconCategory }: { className?: string; item: any; unknownName: string | null; iconCategory: string; }) => {
     return (
         <div className={className}>
             <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
                 <span className="flex items-center gap-1">
                     <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} className="text-base-500" />
-                    {item.name || unknownTitle}
+                    {item.name || unknownName}
                 </span>
                 <span className="flex items-end gap-2">
                     <Counter className="text-sm" value={item.count} callback={(value: number) => format(value, "0")} />
@@ -23,8 +23,10 @@ const BarChartItem = ({ className, item, unknownTitle, iconCategory }: { classNa
     );
 };
 
-const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none", data }: { title: string; unknownTitle?: string; emptyTitle?: string; data: Array<any> }) => {
+const VerticalBarChart = ({ title, unknownName = "unknown", emptyTitle = "none", data }: { title: string; unknownName?: string | null; emptyTitle?: string; data: Array<any> }) => {
 
+    if (!unknownName) data= data.filter((item: any) => item.name !== "");
+    
     const sumAll = data && data?.reduce((total, item) => total + item.count, 0);
     const dataWithPercent = data && data?.map(item => {
         return { ...item, percent: (item.count / sumAll) };
@@ -42,15 +44,15 @@ const VerticalBarChart = ({ title, unknownTitle = "unknown", emptyTitle = "none"
     return (
         <div className="flex flex-col gap-4 py-2">
             {/* <div className="text-sm font-bold">{title}</div> */}
-            {emptyItem && <BarChartItem item={emptyItem} iconCategory={title} unknownTitle={unknownTitle} />}
-            {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownTitle={unknownTitle} className="group" />)}
+            {emptyItem && <BarChartItem item={emptyItem} iconCategory={title} unknownName={unknownName} />}
+            {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownName={unknownName} className="group" />)}
 
             {modifiedRest && <Dialog className="p-8 transition-opacity duration-500 rounded-sm shadow-md opacity-0 open:opacity-100" button={
-                <BarChartItem item={restItem} iconCategory={title} unknownTitle={unknownTitle} className="cursor-pointer hover:font-semibold group" />
+                <BarChartItem item={restItem} iconCategory={title} unknownName={unknownName} className="cursor-pointer hover:font-semibold group" />
             }>
                 <div className="dads">
                     <h3>{title}</h3>
-                    {modifiedRest.map((item, i) => <BarChartItem key={i} className="w-64 mb-4 group" item={item} iconCategory={title} unknownTitle={unknownTitle} />)}
+                    {modifiedRest.map((item, i) => <BarChartItem key={i} className="w-64 mb-4 group" item={item} iconCategory={title} unknownName={unknownName} />)}
                 </div>
             </Dialog>
             }
