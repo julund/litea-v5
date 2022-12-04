@@ -41,7 +41,7 @@ export const loader: LoaderFunction = async ({ request, params }: { request: Req
     return json<LoaderData>({ site, stats, visitors }, {
         headers: { // cache data if it is not realtime data
             "Cache-Control": period === "realtime" ?
-                "max-age=3600, must-revalidate" :
+                "no-store" : // "max-age=3600, must-revalidate" :
                 "max-age=3600, s-maxage=3600"
         }
     });
@@ -90,6 +90,7 @@ export default function SitePage() {
                                 </div>
                             );
                         })}
+                        <div className="flex items-center justify-center w-full h-full text-base-400">No visitor data</div>
                     </div>
                     :
                     <HorizontalBarChart data={stats.data?.graph} />
