@@ -15,7 +15,7 @@ const BarChartItem = ({ className, item, unknownName, iconCategory }: { classNam
                 </span>
                 <span className="flex items-end gap-2">
                     <Counter className="text-sm" value={item.count} callback={(value: number) => format(value, "0")} />
-                <Counter className="text-sm text-base-600 font-title tabular-nums" value={item.percent} callback={(value: number) => `(${format(item.percent ? value : 1, "0.0 %")})`} />
+                    <Counter className="text-sm text-base-600 font-title tabular-nums" value={item.percent} callback={(value: number) => `(${format(item.percent ? value : 1, "0.0 %")})`} />
                 </span>
             </div>
             <Bar value={item.percent} inPercent={true} />
@@ -25,8 +25,8 @@ const BarChartItem = ({ className, item, unknownName, iconCategory }: { classNam
 
 const VerticalBarChart = ({ title, unknownName = "unknown", emptyTitle = "none", data }: { title: string; unknownName?: string | null; emptyTitle?: string; data: Array<any> }) => {
 
-    if (!unknownName) data= data.filter((item: any) => item.name !== "");
-    
+    if (!unknownName) data = data.filter((item: any) => item.name !== "");
+
     const sumAll = data && data?.reduce((total, item) => total + item.count, 0);
     const dataWithPercent = data && data?.map(item => {
         return { ...item, percent: (item.count / sumAll) };
@@ -38,7 +38,7 @@ const VerticalBarChart = ({ title, unknownName = "unknown", emptyTitle = "none",
     const sumRest = rest && rest?.reduce((total, item) => total + item.count, 0);
     const modifiedData = sumRest > 1 ? top && [...top] : top && [...top, ...rest];
     const modifiedRest = sumRest > 1 ? [...rest] : null;
-    const restItem = sumRest > 1 ? { name: `Other (${rest?.length} additional ${lowerCase(title)})`, count: sumRest, percent: (sumRest / sumAll) } : null;
+    const restItem = sumRest > 1 ? { name: `Other (${rest?.length} ${lowerCase(title)})`, count: sumRest, percent: (sumRest / sumAll) } : null;
     const emptyItem = modifiedData?.length == 0 ? { name: emptyTitle, count: 0, percent: 0 } : null;
 
     return (
@@ -47,14 +47,17 @@ const VerticalBarChart = ({ title, unknownName = "unknown", emptyTitle = "none",
             {emptyItem && <BarChartItem item={emptyItem} iconCategory={title} unknownName={unknownName} />}
             {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownName={unknownName} className="group" />)}
 
-            {modifiedRest && <Dialog className="p-8 transition-opacity duration-500 rounded-sm shadow-md opacity-0 open:opacity-100" button={
-                <BarChartItem item={restItem} iconCategory={title} unknownName={unknownName} className="cursor-pointer hover:font-semibold group" />
-            }>
-                <div className="dads">
-                    <h3>{title}</h3>
-                    {modifiedRest.map((item, i) => <BarChartItem key={i} className="w-64 mb-4 group" item={item} iconCategory={title} unknownName={unknownName} />)}
-                </div>
-            </Dialog>
+            {modifiedRest &&
+                <Dialog
+                    title={title}
+                    button={
+                        <BarChartItem item={restItem} iconCategory={title} unknownName={unknownName} className="cursor-pointer hover:font-semibold group" />
+                    }
+                >
+                    <div className="flex flex-col gap-4">
+                        {modifiedRest.map((item, i) => <BarChartItem key={i} className="w-64 mb-4 group" item={item} iconCategory={title} unknownName={unknownName} />)}
+                    </div>
+                </Dialog>
             }
         </div>
     );

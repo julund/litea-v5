@@ -1,7 +1,7 @@
 import { useRef } from "react";
 // import { useToggle } from "react-use";
 
-export const Dialog = ({ children, button = "open dialog", ...props }: { children: React.ReactNode; button?: React.ReactNode } & React.DetailedHTMLProps<React.DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>) => {
+export const Dialog = ({ children, button = "open dialog", title, ...props }: { children: React.ReactNode; button?: React.ReactNode, title?: string; } & React.DetailedHTMLProps<React.DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>) => {
 
     const ref = useRef<HTMLDialogElement>(null);
     // const [ show, toggle ] = useToggle(false);
@@ -43,11 +43,14 @@ export const Dialog = ({ children, button = "open dialog", ...props }: { childre
     return (
         <>
             <button onClick={handleButtonClick}>{button}</button>
-            <dialog ref={ref} {...props} onClose={handleClose} onClick={handleModalClick}>
-                {children}
+            <dialog ref={ref} className="p-8 transition-opacity duration-500 rounded-sm shadow-md opacity-0 open:opacity-100" {...props} onClose={handleClose} onClick={handleModalClick}>
+                { title && <h3 className="text-xl font-semibold text-base-800 font-title">{title}</h3>}
+                <div className="max-h-[60vh] overflow-y-auto p-4">
+                    {children}
+                </div>
                 <hr className="my-4" />
                 <form method="dialog" className="flex justify-end gap-2">
-                    <button value="confirm" className="button button-primary">OK</button>
+                    <button value="ok" className="button button-primary">OK</button>
                     <button value="cancel" className="button button-ghost">Cancel</button>
                 </form>
             </dialog>
