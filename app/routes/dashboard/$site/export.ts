@@ -1,6 +1,6 @@
 import invariant from "tiny-invariant";
 import { getSite, getSiteStats } from "~/lib/db.server";
-import { getPeriodDates, toCSV } from "~/utils/helpers";
+import { getPeriodByName, toCSV } from "~/utils/helpers";
 import { format } from "date-fns";
 // import { json } from "@remix-run/node";
 
@@ -12,11 +12,11 @@ export async function loader({ request, params }: { request: Request; params: an
 
     const url = new URL(request.url);
     const period = url.searchParams.get("period") || "week";
-    const index = Number(url.searchParams.get("index")) || 0;
+    const time = url.searchParams.get("time") || "1900-01-01"; // todo: better default value
     const fileType: "csv" | "json" | unknown = url.searchParams.get("filetype"); // csv/json
     if (!(fileType === "csv" || fileType === "json")) throw new Response("Unknown file type requested", { status: 404 });
 
-    const stats = site.data?.id ? await getSiteStats(request, site.data?.id, period, index, false) : { data: null, error: null };
+    const stats = site.data?.id ? await getSiteStats(request, site.data?.id, period, time, false) : { data: null, error: null };
     if (stats?.error) throw new Response("Not Found", { status: 404 });
 
     // console.log(stats?.data);
@@ -31,8 +31,8 @@ export async function loader({ request, params }: { request: Request; params: an
     });
     // console.log(data);
 
-    const from = getPeriodDates(period, index).from;
-    const to = getPeriodDates(period, index).to;
+    const from = getPeriodByName(period, time).from;
+    const to = getPeriodByName(period, time).to;
     const fileName = `${params.site}-${format(from, "yyyy-MM-dd-hhmm")}-${format(to, "yyyy-MM-dd-hhmm")}`;
     const body = fileType == "json" ? JSON.stringify(data) : toCSV(data);
 

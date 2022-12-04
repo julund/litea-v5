@@ -33,18 +33,19 @@ export const loader: LoaderFunction = async ({ request, params }: { request: Req
 
     const url = new URL(request.url);
     const period = url.searchParams.get("period") || "realtime";
-    const index = period === "realtime" ? 0 : Number(url.searchParams.get("index")) || 0;
+    const time = period === "realtime" ? undefined : url.searchParams.get("time") || undefined;
 
-    const stats = site.data?.id ? await getSiteStats(request, site.data?.id, period, index) : { data: null, error: null };
-    const visitors = site.data?.id && period == "realtime" ? await getSiteVisitors(request, site.data?.id, period, index) : { data: null, error: null };
+    const stats = site.data?.id ? await getSiteStats(request, site.data?.id, period, time) : { data: null, error: null };
+    const visitors = site.data?.id && period == "realtime" ? await getSiteVisitors(request, site.data?.id, period, time) : { data: null, error: null };
 
     return json<LoaderData>({ site, stats, visitors }, {
         headers: { // cache data if it is not realtime data
-            "Cache-Control": index === 0 ? // or period === "realtime"
-                "max-age=3600, must-revalidate" : //
+            "Cache-Control": period === "realtime" ?
+                "max-age=3600, must-revalidate" :
                 "max-age=3600, s-maxage=3600"
         }
     });
+    // return json<LoaderData>({ site, stats, visitors });
 
 };
 

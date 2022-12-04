@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { startOfMonth, startOfDay, endOfDay, startOfWeek, startOfYear, subDays, subMonths, subWeeks, subYears, endOfWeek, endOfMonth, eachHourOfInterval, isBefore, eachDayOfInterval, endOfYear, eachMonthOfInterval, eachYearOfInterval, subMinutes, eachMinuteOfInterval, addMilliseconds } from "date-fns";
+import { startOfMonth, startOfDay, endOfDay, startOfWeek, startOfYear, subDays, subMonths, subWeeks, subYears, endOfWeek, endOfMonth, eachHourOfInterval, isBefore, eachDayOfInterval, endOfYear, eachMonthOfInterval, eachYearOfInterval, subMinutes, eachMinuteOfInterval, addMilliseconds, addDays, parse, addWeeks, addMonths, isToday, isThisWeek, isThisMonth, addYears, isThisYear } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { format, utcToZonedTime, zonedTimeToUtc, getTimezoneOffset, type OptionsWithTZ } from "date-fns-tz";
 
@@ -9,14 +9,6 @@ export type ClassArray = ClassValue[];
 
 export const classNames = (...inputs: ClassValue[]) => [...new Set(clsx(...inputs).split(" "))].join(" ");
 
-export const periods = [
-    { id: "realtime", title: "Realtime" },
-    { id: "day", title: "Day (hours)" },
-    { id: "week", title: "Week (days)" },
-    { id: "month", title: "Month (days)" },
-    { id: "year", title: "Year (months)" },
-    { id: "all", title: "All time (years)" },
-];
 
 const options: OptionsWithTZ = { timeZone: "Europe/Oslo", locale: enUS, weekStartsOn: 1 };
 const timeZone = options.timeZone as string;
@@ -25,95 +17,88 @@ export const zonedTimeToUtcString = (date: string | number | Date) => {
     return zonedTimeToUtc(date, timeZone, options).toUTCString();
 };
 
-type Period = "realtime" | "day" | "week" | "month" | "year" | "all";
+interface Period {
+    id: string;
+    name: string;
+}
 
-export function getPeriodDates(periodName: string, index: number) {
+export const periods: Period[] = [
+    { id: "realtime", name: "Realtime" },
+    { id: "day", name: "Day (hours)" },
+    { id: "week", name: "Week (days)" },
+    { id: "month", name: "Month (days)" },
+    { id: "year", name: "Year (months)" },
+    { id: "all", name: "All time (years)" },
+];
 
-    const period = periodName as Period;
-    const time = utcToZonedTime(Date.now(), timeZone, options);
+export function getPeriodByName(periodName: string, time?: string) {
 
-    const periodFns = {
-        realtime: () => {
-            const current = (d: number) => d;
-            const fromDate = subMinutes(time, current(60)); // should be 30 mins but need to fix realtime view
-            const toDate = time; // startOfHour, endOfHour,
-            return ({
-                name: "Realtime",
-                from: fromDate,
-                to: toDate,
-                title: `${current(60)} minutes`,
-                description: "Last",
-                labelDates: eachMinuteOfInterval({ start: fromDate, end: toDate }, { step: 1 })
-            });
-        },
-        day: () => {
-            const current = (d: number | Date) => subDays(d, index);
-            const fromDate = current(startOfDay(time));
-            const toDate = current(endOfDay(time));
-            return ({ 
-                name: "Day (hours)", 
-                from: fromDate, 
-                to: toDate,
-                title: format(fromDate, "cccc", options),
-                description: format(fromDate, "PPP", options),
-                labelDates: eachHourOfInterval({ start: fromDate, end: toDate })
-            });
-        },
-        week: () => {
-            const current = (d: number | Date) => subWeeks(d, index);
-            const fromDate = current(startOfWeek(time, { locale: options.locale, weekStartsOn: options.weekStartsOn }));
-            const toDate = current(endOfWeek(time, { locale: options.locale, weekStartsOn: options.weekStartsOn }));
-            return ({
-                name: "Week (days)", 
-                from: fromDate,
-                to: toDate,
-                title: `week ${format(current(time), "I", options)}`,
-                description: format(current(time), "yyyy", options),
-                labelDates: eachDayOfInterval({ start: fromDate, end: toDate })
-            });
-        },
-        month: () => {
-            const current = (d: number | Date) => subMonths(d, index);
-            const fromDate = current(startOfMonth(time));
-            const toDate = current(endOfMonth(time));
-            return ({
-                name: "Month (days)", 
-                from: fromDate,
-                to: toDate,
-                title: format(current(time), "LLLL", options),
-                description: format(current(time), "yyyy", options),
-                labelDates: eachDayOfInterval({ start: fromDate, end: toDate })
-            });
-        },
-        year: () => {
-            const current = (d: number | Date) => subYears(d, index);
-            const fromDate = current(startOfYear(time));
-            const toDate = current(endOfYear(time));
-            return ({
-                name: "Year (months)", 
-                from: fromDate,
-                to: toDate,
-                title: format(current(time), "yyyy", options),
-                description: "Year",
-                labelDates: eachMonthOfInterval({ start: fromDate, end: toDate })
-            });
-        },
-        all: () => {
-            const current = (d: number) => d;
-            const fromDate = subYears(time, current(10));
-            const toDate = time;
-            return ({
-                name: "All time (years)", 
-                from: fromDate,
-                to: toDate,
-                title: `${format(fromDate, "yyyy", options)} - ${format(toDate, "yyyy", options)}`,
-                description: "Year",
-                labelDates: eachYearOfInterval({ start: fromDate, end: toDate })
-            });
-        },
-    };
+    const period = periods.find(({ id }) => id === periodName);
+    if (!period) throw new Error("unknown period");
+    // console.log({ period });
+    const parsedTime = time ? parse(time, "yyyy-MM-dd", Date.now(), options) : Date.now();
+    const utcTime = utcToZonedTime(parsedTime, timeZone, options);
 
-    return periodFns[period]();
+    switch (period.id) {
+        case "day":
+            return ({
+                get from() { return startOfDay(utcTime); },
+                get to() { return endOfDay(utcTime); },
+                get previous() { return format(subDays(utcTime, 1), "yyyy-MM-dd", options); },
+                get next() { return isToday(utcTime) ? undefined : format(addDays(utcTime, 1), "yyyy-MM-dd", options); },
+                get title() { return format(this.from, "cccc", options); },
+                get description() { return format(this.from, "PPP", options); },
+                get labelDates() { return eachHourOfInterval({ start: this.from, end: this.to }); },
+            });
+        case "week":
+            return ({
+                get from() { return startOfWeek(utcTime, options); },
+                get to() { return endOfWeek(utcTime, options); },
+                get previous() { return format(subWeeks(this.from, 1), "yyyy-MM-dd", options); },
+                get next() { return isThisWeek(utcTime, options) ? undefined : format(addWeeks(this.from, 1), "yyyy-MM-dd", options); },
+                get title() { return `Week ${format(this.from, "I", options)}`; },
+                get description() { return format(this.from, "yyyy", options); },
+                get labelDates() { return eachDayOfInterval({ start: this.from, end: this.to }); },
+            });
+        case "month":
+            return ({
+                get from() { return startOfMonth(utcTime); },
+                get to() { return endOfMonth(utcTime); },
+                get previous() { return format(subMonths(this.from, 1), "yyyy-MM-dd", options); },
+                get next() { return isThisMonth(utcTime) ? undefined : format(addMonths(this.from, 1), "yyyy-MM-dd", options); },
+                get title() { return format(this.from, "LLLL", options); },
+                get description() { return format(this.from, "yyyy", options); },
+                get labelDates() { return eachDayOfInterval({ start: this.from, end: this.to }); },
+            });
+        case "year":
+            return ({
+                get from() { return startOfYear(utcTime); },
+                get to() { return endOfYear(utcTime); },
+                get previous() { return format(subYears(this.from, 1), "yyyy-MM-dd", options); },
+                get next() { return isThisYear(utcTime) ? undefined : format(addYears(this.from, 1), "yyyy-MM-dd", options); },
+                get title() { return format(this.from, "yyyy", options); },
+                get description() { return ""; },
+                get labelDates() { return eachMonthOfInterval({ start: this.from, end: this.to }); },
+            });
+            case "all":
+                return ({
+                    get from() { return startOfYear(subYears(utcTime, 10)); },
+                    get to() { return endOfYear(utcTime); },
+                    get previous() { return undefined; },
+                    get next() { return undefined; },
+                    get title() { return `${format(this.from, "yyyy", options)} - ${format(this.to, "yyyy", options)}`; },
+                    get description() { return "all time"; },
+                    get labelDates() { return eachYearOfInterval({ start: this.from, end: this.to }); },
+                });
+        default: // "realtime"
+            return ({
+                get from() { return subMinutes(utcTime, 60); }, // should be 30 mins but need to fix realtime view
+                get to() { return utcTime; },  // startOfHour, endOfHour
+                get title() { return format(this.from, "HH:mm", options); },
+                get description() { return format(this.to, "HH:mm", options); },
+                get labelDates() { return eachMinuteOfInterval({ start: this.from, end: this.to }, { step: 1 }); },
+            });
+    }
 
 }
 
@@ -136,7 +121,7 @@ export const merge = (arr: Array<any>) => {
 };
 
 // Function to group objects
-export const grouped = (arr : Array<any>, period: string, index = 0) => {
+export const grouped = (arr: Array<any>, period: string, date?: string) => {
 
     if (typeof arr == "undefined") return [];
 
@@ -167,17 +152,17 @@ export const grouped = (arr : Array<any>, period: string, index = 0) => {
     });
     // console.log(filtered);
     const initial: any = [];
-    const periods = getPeriodDates(period, index).labelDates || [];
+    const periods = getPeriodByName(period, date).labelDates || [];
     // const periodLabels = periods.filter(d => isBefore(d,Date.now())); //Change to filter values only, not labels
     const periodLabels = periods;
     // console.log(periodLabels);
     periodLabels.forEach(d => {
         const label = formatLabel(d); // localizedFormatLabel(d);
-        if(label) initial[label] = filtered[label] ? filtered[label] : isBefore(d, Date.now()) ? [0, 0] : undefined;
+        if (label) initial[label] = filtered[label] ? filtered[label] : isBefore(d, Date.now()) ? [0, 0] : undefined;
     });
     // console.log(initial);
 
-    const result = Object.entries(initial).map(([key, value] : [key: string, value: any]) => {
+    const result = Object.entries(initial).map(([key, value]: [key: string, value: any]) => {
         if (key && value) return { label: key, pageViews: value[0], uniqueVisits: value[1] };
         return { label: key };
     });
@@ -186,54 +171,54 @@ export const grouped = (arr : Array<any>, period: string, index = 0) => {
 
 };
 
-export const merged = (stats: any, period: string, index: number) => {
+export const merged = (stats: any, period: string, date?: string) => {
 
-const merged = stats ? stats?.reduce((total: any, document: any) => {
+    const merged = stats ? stats?.reduce((total: any, document: any) => {
 
-    return {
-        ...total,
-        aggregates: {
-            pageViews: { count: (total?.aggregates?.pageViews?.count || 0) + (document?.aggregates?.pageViews?.count || 0) },
-            uniqueVisits: { count: (total?.aggregates?.uniqueVisits?.count || 0) + (document?.aggregates?.uniqueVisits?.count || 0) },
-            singlePageVisits: { count: total?.aggregates?.singlePageVisits?.count || 0 + document?.aggregates?.singlePageVisits?.count || 0 },
-            bounceRate: { count: average(total?.aggregates?.bounceRate?.count, document?.aggregates?.bounceRate?.count) },
-            avgVisitDuration: { count: average(total?.aggregates?.avgVisitDuration?.count, document?.aggregates?.avgVisitDuration?.count) },
-        },
-        graph: [...total.graph, { value: [document?.aggregates?.pageViews?.count || 0, document?.aggregates?.uniqueVisits?.count || 0], time: document?.time}],
-        browsers:  merge([...total?.browsers, ...document?.browsers]),
-        systems: merge([...total?.systems, ...document?.systems]),
-        platforms: merge([...total?.platforms, ...document?.platforms]),
-        engines: merge([...total?.engines, ...document?.engines]),
-        pages: {
-            all: merge([...total?.pages?.all, ...document?.pages?.all]),
-            entry: merge([...total?.pages?.entry, ...document?.pages?.entry]),
-            exit: merge([...total?.pages?.exit, ...document?.pages?.exit]),
-        },
-        hashes: merge([...total?.hashes, ...document?.hashes]),
-        queries: merge([...total?.queries, ...document?.queries]),
-        utms: {
-            sources: merge([...total?.utms?.sources, ...document?.utms?.sources]),
-            campaigns: merge([...total?.utms?.campaigns, ...document?.utms?.campaigns]),
-            contents: merge([...total?.utms?.contents, ...document?.utms?.contents]),
-            terms: merge([...total?.utms?.terms, ...document?.utms?.terms]),
-        },
-        referrers: merge([...total?.referrers, ...document?.referrers]),
-        countries: merge([...total?.countries, ...document?.countries]),
-    };
-}, {
-    aggregates: { pageViews: { count: 0 }, uniqueVisits: { count: 0 }, singlePageVisits: { count: 0 }, bounceRate: { count: 0 }, avgVisitDuration: { count: 0 }, },
-    graph: [], browsers: [], systems: [], platforms: [], engines: [], 
-    pages: { all: [], entry: [], exit: [] }, 
-    hashes: [], 
-    queries: [], 
-    utms: { sources: [], campaigns: [], contents: [], terms: [], }, 
-    referrers: [], countries: [],
-}
-) : [];
+        return {
+            ...total,
+            aggregates: {
+                pageViews: { count: (total?.aggregates?.pageViews?.count || 0) + (document?.aggregates?.pageViews?.count || 0) },
+                uniqueVisits: { count: (total?.aggregates?.uniqueVisits?.count || 0) + (document?.aggregates?.uniqueVisits?.count || 0) },
+                singlePageVisits: { count: total?.aggregates?.singlePageVisits?.count || 0 + document?.aggregates?.singlePageVisits?.count || 0 },
+                bounceRate: { count: average(total?.aggregates?.bounceRate?.count, document?.aggregates?.bounceRate?.count) },
+                avgVisitDuration: { count: average(total?.aggregates?.avgVisitDuration?.count, document?.aggregates?.avgVisitDuration?.count) },
+            },
+            graph: [...total.graph, { value: [document?.aggregates?.pageViews?.count || 0, document?.aggregates?.uniqueVisits?.count || 0], time: document?.time }],
+            browsers: merge([...total?.browsers, ...document?.browsers]),
+            systems: merge([...total?.systems, ...document?.systems]),
+            platforms: merge([...total?.platforms, ...document?.platforms]),
+            engines: merge([...total?.engines, ...document?.engines]),
+            pages: {
+                all: merge([...total?.pages?.all, ...document?.pages?.all]),
+                entry: merge([...total?.pages?.entry, ...document?.pages?.entry]),
+                exit: merge([...total?.pages?.exit, ...document?.pages?.exit]),
+            },
+            hashes: merge([...total?.hashes, ...document?.hashes]),
+            queries: merge([...total?.queries, ...document?.queries]),
+            utms: {
+                sources: merge([...total?.utms?.sources, ...document?.utms?.sources]),
+                campaigns: merge([...total?.utms?.campaigns, ...document?.utms?.campaigns]),
+                contents: merge([...total?.utms?.contents, ...document?.utms?.contents]),
+                terms: merge([...total?.utms?.terms, ...document?.utms?.terms]),
+            },
+            referrers: merge([...total?.referrers, ...document?.referrers]),
+            countries: merge([...total?.countries, ...document?.countries]),
+        };
+    }, {
+        aggregates: { pageViews: { count: 0 }, uniqueVisits: { count: 0 }, singlePageVisits: { count: 0 }, bounceRate: { count: 0 }, avgVisitDuration: { count: 0 }, },
+        graph: [], browsers: [], systems: [], platforms: [], engines: [],
+        pages: { all: [], entry: [], exit: [] },
+        hashes: [],
+        queries: [],
+        utms: { sources: [], campaigns: [], contents: [], terms: [], },
+        referrers: [], countries: [],
+    }
+    ) : [];
 
-merged.graph = grouped(merged.graph, period, index);
+    merged.graph = grouped(merged.graph, period, date);
 
-return merged;
+    return merged;
 };
 
 export const toCSV = (array: Array<any>) => {
@@ -259,7 +244,7 @@ export const lowerCase = (value: string) => {
     return typeof value == "string" ? value.toLowerCase() : value;
 };
 
-export const  isValidDomain = (input: string) => {
+export const isValidDomain = (input: string) => {
 
     if (!input) return false;
     const regex = new RegExp(/^(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*\.[A-Za-z]{2,6}$/);

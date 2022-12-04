@@ -1,6 +1,6 @@
 import { getSession } from "./auth.server";
 import { anonClient } from "./supabase";
-import { getPeriodDates, merged, zonedTimeToUtcString } from "~/utils/helpers";
+import { getPeriodByName, merged, zonedTimeToUtcString } from "~/utils/helpers";
 
 async function initclient(request: Request) {
     const { data: session } = await getSession(request);
@@ -29,21 +29,21 @@ export async function getSite(request: Request, url: string) {
 
 }
 
-export async function getSiteStats(request: Request, siteId: string, period: string, index: number, mergeData = true) {
+export async function getSiteStats(request: Request, siteId: string, period: string, time?: string, mergeData = true) {
 
     const client = await initclient(request);
-    const from = zonedTimeToUtcString(getPeriodDates(period, index).from);
-    const to = zonedTimeToUtcString(getPeriodDates(period, index).to);
+    const from = zonedTimeToUtcString(getPeriodByName(period, time).from);
+    const to = zonedTimeToUtcString(getPeriodByName(period, time).to);
     const { data, error } = await client.from("stats").select().eq("site_id", siteId).gte("time", from).lte("time", to);
-    return { data: mergeData === true ? merged(data, period, index) : data, error };
+    return { data: mergeData === true ? merged(data, period, time) : data, error };
 
 }
 
-export async function getSiteVisitors(request: Request, siteId: string, period: string, index: number) {
+export async function getSiteVisitors(request: Request, siteId: string, period: string, time?: string) {
 
     const client = await initclient(request);
-    const from = zonedTimeToUtcString(getPeriodDates(period, index).from);
-    const to = zonedTimeToUtcString(getPeriodDates(period, index).to);
+    const from = zonedTimeToUtcString(getPeriodByName(period, time).from);
+    const to = zonedTimeToUtcString(getPeriodByName(period, time).to);
     const { data, error } = await client.from("visitors").select().eq("site_id", siteId).gte("time", from).lte("time", to);
 
     const modified = data?.map(visitor => {
