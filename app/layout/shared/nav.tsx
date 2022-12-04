@@ -1,4 +1,4 @@
-import { useToggle, useMeasure } from "react-use";
+import { useToggle, useMeasure, useClickAway } from "react-use";
 import { IconMenu, IconX } from "~/components/icons";
 import Brand from "~/components/brand";
 import { classNames } from "~/utils/helpers";
@@ -12,6 +12,8 @@ const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, c
     const showToggle = forceToggle || width <= 704;
     const [expanded, toggle] = useToggle(false);
 
+    useClickAway(navToggleRef, () => { if (expanded) toggle(false); });
+
     if (!buttonContent) buttonContent = (expanded: boolean) => !expanded ? <IconMenu size={22} className="text-base-400" /> : <IconX size={22} className="text-base-400" />;
 
     return (
@@ -23,9 +25,8 @@ const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, c
                 <Link to="/" className="inline-flex p-2 select-none">
                     <Brand />
                 </Link>
-                {!!children && showToggle && <button aria-label="nav-toggle" onClick={toggle} className="justify-end button button-ghost">
+                {!!children && showToggle && <button aria-label="nav-toggle" onClick={() => { toggle(); navToggleRef.current?.focus(); }} className="justify-end button button-ghost">
                     {buttonContent(expanded)}
-                    {/* {!expanded ? <IconMenu size={22} className="text-base-400" /> : <IconX size={22} className="text-base-400" />} */}
                 </button>}
             </div>
             {!!children && <div className="relative top-0 right-0 z-50 flex flex-col w-full gap-2 md:flex-row-reverse">
