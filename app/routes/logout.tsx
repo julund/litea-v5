@@ -18,14 +18,12 @@ export default function Logout() {
     return (
         <MinimalLayout>
             <Container>
-                <div className="flex flex-col items-center gap-4 py-4">
-                    <h1 className="text-4xl">Log out</h1>
-                    <p>Are you sure you want to log out?</p>
-                    <Form method="post" className="" aria-disabled={state == "submitting"}>
-                        <fieldset className="flex flex-col gap-2">
-                            <button className="justify-center button button-primary disabled:opacity-40" disabled={state == "submitting"}>{state == "submitting" ? "Logging out..." : "Log out"}</button>
-                            <button onClick={() => history.back()} className="button button-ghost"><IconArrowBack size={16} />Back</button>
-                        </fieldset>
+                <div className="flex flex-col items-center gap-4 w-72">
+                    <h1 className="text-4xl font-black font-title">Log out</h1>
+                    <p className="text-base-600">Are you sure you want to log out?</p>
+                    <Form method="post" className="flex flex-col gap-2" aria-disabled={state == "submitting"}>
+                        <button className="justify-center button button-primary disabled:opacity-40" disabled={state == "submitting"}>{state == "submitting" ? "Logging out..." : "Log out"}</button>
+                        <button onClick={() => history.back()} className="button button-ghost"><IconArrowBack size={16} />Back</button>
                     </Form>
                 </div>
             </Container>

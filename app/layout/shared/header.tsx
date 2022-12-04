@@ -1,7 +1,9 @@
-const Header = ({ children }: { children: React.ReactNode; }) => {
+import { classNames } from "~/utils/helpers";
+
+const Header = ({ children, className = "bg-base-50" }: { children: React.ReactNode; className?: string; }) => {
 
     return (
-        <header className="sticky top-0 z-10 flex-grow-0 w-full bg-base-50">
+        <header className={classNames("sticky top-0 z-50 flex-grow-0 w-full", className)}>
             {children}
         </header>
     );

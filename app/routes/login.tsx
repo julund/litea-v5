@@ -28,21 +28,29 @@ export default function Index() {
   return (
     <MinimalLayout>
       <Container>
-        {message && <Message allowClose={false} message={message} />}
-        {!data?.handle && <Form id="loginForm" className="flex flex-col items-center gap-4 py-4 text-center" method="post">
-          <h1 className="text-4xl font-black font-title">Login</h1>
-          <p className="text-base-600">Asperiores quos fugit eligendi commodi ab alias aliquid illo nisi nihil.</p>
-          <input className="" id="Email" type="email" name="email" placeholder="email@example.com" autoComplete="email" />
-          <input className="" id="Password" type="password" name="password" autoComplete="password" />
-          <p className="px-2 text-sm text-base-500">Forgot password?</p>
-          <button className="justify-center button button-primary disabled:opacity-40" type="submit" disabled={state == "submitting"}><IconLogin size={22} />{state == "submitting" ? "Logging in..." : "Log in"}</button>
-        </Form>}
-        {data?.handle && <div className="flex flex-col items-center gap-4 py-4">
-          <h1 className="py-2 text-4xl font-black font-title">You're allready logged in</h1>
-          <p className="text-primary-500">{data?.handle}</p>
-          <Link to="/dashboard" className="button button-primary">Open dashboard</Link>
-          <Link to="/logout" className="button button-ghost">Log out</Link>
-        </div>}
+        <div className="flex flex-col gap-4 w-72">
+          <h1 className="text-4xl font-black font-title">Log in</h1>
+          {data ?
+            <>
+              <p className="text-base-500">You're allready logged in as {data?.handle}</p>
+              <div className="flex gap-4">
+                <Link to="/dashboard" className="button button-primary">Open dashboard</Link>
+                <Link to="/logout" className="button button-ghost">Log out</Link>
+              </div>
+            </>
+            :
+            <>
+              <p className="text-base-500">Please provide your credentials to access the dashboard.</p>
+              <Form id="loginForm" className="flex flex-col gap-2" method="post" aria-disabled={state == "submitting"}>
+                <input className="" id="Email" type="email" name="email" placeholder="email@example.com" autoComplete="email" />
+                <input className="" id="Password" type="password" name="password" autoComplete="password" />
+                <p className="px-2 text-sm text-base-500">Forgot password?</p>
+                <button className="justify-center button button-primary disabled:opacity-40" type="submit" disabled={state == "submitting"}><IconLogin size={22} />{state == "submitting" ? "Logging in..." : "Log in"}</button>
+              </Form>
+            </>
+          }
+          {message && <Message allowClose={false} message={message} />}
+        </div>
 
       </Container>
     </MinimalLayout>

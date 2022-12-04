@@ -12,7 +12,7 @@ const DashboardLayout = ({ children, session }: { children: ReactNode; session?:
 
     return (
         <Root>
-            <Header>
+            <Header className="bg-white">
                 <Nav
                     forceToggle
                     absolute

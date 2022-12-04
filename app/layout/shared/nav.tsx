@@ -15,7 +15,7 @@ const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, c
     if (!buttonContent) buttonContent = (expanded: boolean) => !expanded ? <IconMenu size={22} className="text-base-400" /> : <IconX size={22} className="text-base-400" />;
 
     return (
-        <nav ref={ref} className={classNames("z-0 flex items-start w-full gap-2 p-8 shrink",
+        <nav ref={ref} className={classNames("flex items-start w-full gap-2 shrink p-8",
             (!showToggle) ? "flex-row" : "flex-col"
         )}>
             <div className={classNames("flex grow",
@@ -28,7 +28,7 @@ const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, c
                     {/* {!expanded ? <IconMenu size={22} className="text-base-400" /> : <IconX size={22} className="text-base-400" />} */}
                 </button>}
             </div>
-            {!!children && <div className="relative top-0 right-0 z-0 flex flex-col w-full gap-2 md:flex-row-reverse">
+            {!!children && <div className="relative top-0 right-0 z-50 flex flex-col w-full gap-2 md:flex-row-reverse">
                 <div aria-labelledby="nav-toggle" aria-expanded={expanded} className={classNames(
                     "flex shrink gap-2",
                     absolute ? "absolute" : "relative",

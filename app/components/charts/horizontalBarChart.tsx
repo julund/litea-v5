@@ -25,13 +25,13 @@ const HorizontalBarChart = ({ data }: { data: Array<any> }) => {
                             {item.pageViews > 0 || item.pageViews === 0 ?
                                 <div className="h-full cursor-pointer opacity-80 hover:opacity-100">
                                     <Bar value={item.percent} inPercent={true} horizontal={false} />
-                                    <div className="flex justify-center py-2 text-xs font-bold text-gray-800">
+                                    <div className="flex justify-center py-2 text-xs font-semibold text-gray-800">
                                         {!hide && item.label}
                                     </div>
                                 </div> :
                                 <div className="h-full opacity-70">
                                     <Bar value={0} inPercent={true} horizontal={false} />
-                                    <div className="flex justify-center py-2 text-xs font-bold text-gray-800">
+                                    <div className="flex justify-center py-2 text-xs font-semibold text-gray-800">
                                         {!hide && item.label}
                                     </div>
                                 </div>

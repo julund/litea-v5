@@ -20,7 +20,7 @@ export const Message = ({ message, duration, allowClose = true }: { message?: IM
     if(!message) return null;
     
     const classes = classNames(
-        "sticky top-0 z-50 message flex justify-center",
+        "sticky top-0 z-0 message flex justify-center",
         message.type === "error" && "message-error",
         message.type === "info" && "message-info",
         message.type === "success" && "message-success",
