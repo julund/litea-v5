@@ -14,6 +14,7 @@ import VerticalBarChart from "~/components/charts/verticalBarChart";
 import { countryNameFromCode } from "~/utils/countries";
 import Breadcrumbs from "~/components/breadcrumbs";
 import Time from "~/components/time";
+// import BubbleChart from "~/components/charts/BubbleChart";
 // import Map from "~/components/charts/mapChart";
 
 export const handle = { title: "Site" };
@@ -63,6 +64,9 @@ export default function SitePage() {
                 <Breadcrumbs current={site?.data?.title} />
                 <ExternalLink to={site.data.url} className="text-base-500" title="Open site in new tab">{site?.data?.url}</ExternalLink>
             </nav>
+
+            {/* <BubbleChart title="Browsers" data={stats.data?.browsers.map( (d: any) => ({title: d.name, value: d.count}))} /> */}
+
             <div className="flex flex-col gap-4">
                 {/* <h1>{site?.data?.title}</h1> */}
                 <PeriodSelect />
