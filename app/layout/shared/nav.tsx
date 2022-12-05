@@ -28,6 +28,11 @@ const Nav = ({ children,
         if (showToggle && expanded && !buttonClicked) toggle(false);
     });
 
+    const handleNavToggleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent> & { target: HTMLDivElement }) => {
+        const isNavigationElement = event.target.tagName === "A" || event.target.tagName === "BUTTON";
+        if ((event.target !== navToggleRef.current) && isNavigationElement) toggle();
+    };
+
     if (!buttonContent) buttonContent = (expanded: boolean) => !expanded ? <IconMenu size={22} className="text-base-400" /> : <IconX size={22} className="text-base-400" />;
 
     return (
@@ -72,7 +77,7 @@ const Nav = ({ children,
                                 <div
                                     ref={navToggleRef}
                                     className={ className }
-                                    onClick={(e) => (e.target !== navToggleRef.current) && toggle()}
+                                    onClick={handleNavToggleClick}
                                 >
                                     {children}
                                 </div>
