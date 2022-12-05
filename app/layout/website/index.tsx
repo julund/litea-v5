@@ -12,7 +12,10 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
     return (
         <Root>
             <Header>
-                <Nav>
+                <Nav 
+                    absolute
+                    className="flex flex-col gap-2 md:flex-row md:bg-transparent bg-base-100 rounded-sm md:p-0 p-4 "
+                >
                     <SiteNavLink to="/features">Features</SiteNavLink>
                     <SiteNavLink to="/pricing">Pricing</SiteNavLink>
                     <SiteNavLink to="/docs">Docs</SiteNavLink>
