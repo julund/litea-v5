@@ -4,6 +4,7 @@ import Brand from "~/components/brand";
 import { classNames } from "~/utils/helpers";
 import { Link } from "~/components/link";
 import { useRef } from "react";
+// import { AnimatePresence, motion } from "~/lib/motion";
 
 const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, className = "flex flex-col gap-2 md:flex-row" }: { children?: React.ReactNode; forceToggle?: boolean; absolute?: boolean; buttonContent?: Function; className?: string }) => {
 
@@ -14,7 +15,7 @@ const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, c
     const [expanded, toggle] = useToggle(false);
 
     useClickAway(navToggleRef, (event: Event & { target: HTMLButtonElement }) => {
-        const buttonClicked = event.target?.parentNode === buttonRef.current;
+        const buttonClicked = event.target === buttonRef.current;
         if (expanded && !buttonClicked) toggle(false);
     });
 
@@ -30,21 +31,35 @@ const Nav = ({ children, forceToggle = false, absolute = false, buttonContent, c
                     <Brand />
                 </Link>
                 {!!children && showToggle && <button ref={buttonRef} aria-label="nav-toggle" onClick={toggle} className="justify-end button button-ghost">
-                    {buttonContent(expanded)}
+                    <span className="pointer-events-none">{buttonContent(expanded)}</span>
                 </button>}
             </div>
-            {!!children && <div className="relative top-0 right-0 z-50 flex flex-col w-full gap-2 md:flex-row-reverse">
+            {!!children && <div
+                className="relative top-0 right-0 z-50 flex flex-col w-full gap-2 md:flex-row-reverse"
+            >
                 <div aria-labelledby="nav-toggle" aria-expanded={expanded} className={classNames(
                     "flex shrink gap-2",
                     absolute ? "absolute" : "relative",
                     (!expanded && showToggle) ? "flex-row hidden" : showToggle && "flex-col w-full"
-                )}>
-                    <div ref={navToggleRef} className={className} onClick={(e) => (e.target !== navToggleRef.current) && toggle()}>
-                        {children}
-                    </div>
+                )}
+                >
+                    {/* <AnimatePresence> */}
+                        {(expanded || !showToggle) &&
+                            <div
+                                ref={navToggleRef}
+                                className={className}
+                                onClick={(e) => (e.target !== navToggleRef.current) && toggle()}
+                                // initial={{ opacity: 0.5 }}
+                                // animate={{ opacity: 1 }}
+                                // exit={{ opacity: 0.5 }}
+                            >
+                                {children}
+                            </div>
+                        }
+                    {/* </AnimatePresence> */}
                 </div>
-            </div>}
 
+            </div>}
         </nav>
     );
 };
