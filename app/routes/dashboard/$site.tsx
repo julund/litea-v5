@@ -112,18 +112,20 @@ export default function SitePage() {
                         <VerticalBarChart title="Referrers" unknownName="direct/none" data={stats.data?.referrers?.map((referrer: any) => ({ ...referrer, domain: referrer.name }))} />
                     </Tab>
                 </div>
-                <div className="grid items-stretch justify-center grid-cols-1 gap-4 md:grid-cols-3">
-                    <Tab chevronStyle={false} title="Device" titles={["Browsers", "Systems", "Platforms"]} >
-                        <VerticalBarChart title="Browsers" data={stats.data?.browsers} />
-                        <VerticalBarChart title="Systems" data={stats.data?.systems} />
-                        <VerticalBarChart title="Platforms" data={stats.data?.platforms} />
-                    </Tab>
+                <div className="grid items-stretch justify-center grid-cols-1 gap-4 md:grid-cols-1">
                     <Tab chevronStyle={false} title="Sources" titles={["All Pages", "Entry Pages", "Exit Pages", "Queries", "Hashes"]}>
                         <VerticalBarChart title="All pages" data={stats.data?.pages?.all} />
                         <VerticalBarChart title="Entry pages" data={stats.data?.pages?.entry} />
                         <VerticalBarChart title="Exit pages" data={stats.data?.pages?.exit} />
                         <VerticalBarChart title="Queries" unknownName="none" data={stats.data?.queries} />
                         <VerticalBarChart title="Hashes" unknownName="none" data={stats.data?.hashes} />
+                    </Tab>
+                </div>
+                <div className="grid items-stretch justify-center grid-cols-1 gap-4 md:grid-cols-2">
+                    <Tab chevronStyle={false} title="Device" titles={["Browsers", "Systems", "Platforms"]} >
+                        <VerticalBarChart title="Browsers" data={stats.data?.browsers} />
+                        <VerticalBarChart title="Systems" data={stats.data?.systems} />
+                        <VerticalBarChart title="Platforms" data={stats.data?.platforms} />
                     </Tab>
                     <Tab chevronStyle={false} title="UTMs" titles={["Source", "Campaign", "Content", "Term"]}>
                         <VerticalBarChart unknownName="none" title="Source" data={stats.data?.utms?.sources} />
