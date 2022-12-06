@@ -40,15 +40,19 @@ const Pricingslider = () => {
             <span className="text-base-700">monthly pageviews</span>
             <input type="range" min={min} max={max} value={inputValue} step={1} onChange={(e) => set(Number(e.target.value))} className="slider" id="pricing"></input>
             <div className="flex flex-col gap-2 p-4 rounded-sm bg-base-200">
-                <div className="flex flex-col justify-items-stretch gap-2">
-                    <div className="grow text-sm text-base-500">Base price</div>
-                    <Counter className="shrink text-lg font-title font-medium text-right text-base-600 px-4 py-2 rounded-sm bg-base-100" value={result.price} callback={(n: number) => format(n, "$ 0.00", { currency: "USD" })} />
-                    <div className="grow text-sm text-base-500">Volume discount</div>
-                    <Counter className="shrink text-lg font-title font-medium text-right text-base-600 px-4 py-2 rounded-sm bg-base-100" value={result.discount} callback={(n: number) => format(n, "0 %")} />
-                    <div className="grow text-sm text-base-500">Your price</div>
-                    <Counter className="shrink text-4xl font-title font-semibold text-right text-base-600 px-4 py-2 rounded-sm bg-base-100" value={result.total} callback={(n: number) => format(n, "$ 0.00", { currency: "USD" })} />
-                    <div className="grow text-sm text-base-600 self-end">
-                        <Switch title={((checked: boolean) => checked ? "Yearly billing" : "Monthly billing")} onChange={handleBillingPeriodChanged} className="flex gap-2 items-center" />
+                <div className="flex flex-col gap-2 justify-items-stretch">
+                    <div className="text-sm grow text-base-500">Base price</div>
+                    <Counter className="px-4 py-2 text-lg font-medium text-right rounded-sm shrink font-title text-base-600 bg-base-100" value={result.price} callback={(n: number) => format(n, "$ 0.00", { currency: "USD" })} />
+                    <div className="text-sm grow text-base-500">Volume discount</div>
+                    <Counter className="px-4 py-2 text-lg font-medium text-right rounded-sm shrink font-title text-base-600 bg-base-100" value={result.discount} callback={(n: number) => format(n, "0 %")} />
+                    <div className="text-sm grow text-base-500">Your price</div>
+                    <Counter className="px-4 py-2 text-4xl font-semibold text-right rounded-sm shrink font-title text-base-600 bg-base-100" value={result.total} callback={(n: number) => format(n, "$ 0.00", { currency: "USD" })} />
+                    <div className="text-sm grow">
+                        <Switch
+                            className="flex items-center w-full gap-2 text-base-600"
+                            title={((checked: boolean) => checked ? "Yearly billing" : "Monthly billing")}
+                            onChange={handleBillingPeriodChanged}
+                        />
                     </div>
                 </div>
             </div>

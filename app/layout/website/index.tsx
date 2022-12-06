@@ -11,10 +11,11 @@ import { Message } from "~/components/message";
 const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: ISession | null }) => {
     return (
         <Root>
+
             <Header>
-                <Nav 
+                <Nav
                     absolute
-                    className="flex flex-col gap-2 md:flex-row md:bg-transparent bg-base-100 rounded-sm md:p-0 p-4 "
+                    className="flex flex-col gap-2 p-4 rounded-sm md:flex-row md:bg-transparent bg-base-100 md:p-0 "
                 >
                     <SiteNavLink to="/features">Features</SiteNavLink>
                     <SiteNavLink to="/pricing">Pricing</SiteNavLink>
@@ -27,7 +28,6 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
                         </>
                     }
                 </Nav>
-                {/* <Message message={{ type: "info", text: "Message on WebsiteLayout." }} /> */}
                 <Message message={session?.message} duration={5000} />
             </Header>
             <Main>
