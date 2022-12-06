@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useCounter, useDebounce } from "react-use";
 import { format } from "numerable";
 import Counter from "./counter";
+import Switch from "./switch";
 
 const BASE = 7.50; // 8.05;
 const PPR = 0.0000250; // 0.0000195;
@@ -18,34 +19,37 @@ const Pricingslider = () => {
     const [value, setValue] = useState(min);
     useDebounce(() => setValue(inputValue), 10, [inputValue]);
 
+    const [isYearly, setIsYearly] = useState(false);
+
+    const handleBillingPeriodChanged = (checked: boolean) => setIsYearly(checked);
+
     useEffect(() => {
-        const price = +(BASE + (value * PPR)).toFixed(5);
-        const discount = +Math.min((value / DIV), MXD).toFixed(4);
+        let price = +(BASE + (value * PPR)).toFixed(5);
+        if (isYearly) price = (price * 12);
+        let discount = +Math.min((value / DIV), MXD);
+        if (isYearly) discount = (discount * 1.75);
+        discount = +discount.toFixed(2);
         const total = price - (price * discount);
         setResult({ price, discount, total });
-    }, [value]);
+    }, [value, isYearly]);
 
     return (
         <div className="flex flex-col gap-4 p-8 rounded-sm bg-base-100">
             {/* <span className="text-3xl font-semibold">{format(value, "0,0")}</span> */}
-            <Counter className="text-3xl font-semibold" value={value} defaultValue={min} callback={(n: number) => format(n, "0,0")}/>
+            <Counter className="text-3xl font-semibold" value={value} defaultValue={min} callback={(n: number) => format(n, "0,0")} />
             <span className="text-base-700">monthly pageviews</span>
             <input type="range" min={min} max={max} value={inputValue} step={1} onChange={(e) => set(Number(e.target.value))} className="slider" id="pricing"></input>
             <div className="flex flex-col gap-2 p-4 rounded-sm bg-base-200">
-                <div className="grid grid-cols-3 gap-2">
-                    <div className="text-sm text-base-600">Base price</div>
-                    <Counter className="col-span-2 text-lg font-medium text-right text-base-700" value={result.price} callback={(n: number) => format(n, "$ 0.00")}/>
-                    {/* <del className="text-lg font-medium text-base-800">${format(result.price,"$ 0.00")}</del> */}
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                    <div className="text-sm text-base-600">Discount</div>
-                    <Counter className="col-span-2 text-lg font-medium text-right text-primary-500" value={result.discount} callback={(n: number) => format(n, "0 %")}/>
-                    {/* <div className="text-lg font-medium text-base-800">{format(result.discount,"0 %")}</div> */}
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                    <div className="text-sm text-base-600">Your price</div>
-                    <Counter className="col-span-2 text-lg font-semibold text-right text-base-800" value={result.total} callback={(n: number) => `${format(n, "$ 0.00")} / mo`}/>
-                    {/* <div className="text-lg font-medium text-base-800">${format(result.total,"$ 0.00")}</div> */}
+                <div className="flex flex-col justify-items-stretch gap-2">
+                    <div className="grow text-sm text-base-500">Base price</div>
+                    <Counter className="shrink text-lg font-title font-medium text-right text-base-600 px-4 py-2 rounded-sm bg-base-100" value={result.price} callback={(n: number) => format(n, "$ 0.00", { currency: "USD" })} />
+                    <div className="grow text-sm text-base-500">Volume discount</div>
+                    <Counter className="shrink text-lg font-title font-medium text-right text-base-600 px-4 py-2 rounded-sm bg-base-100" value={result.discount} callback={(n: number) => format(n, "0 %")} />
+                    <div className="grow text-sm text-base-500">Your price</div>
+                    <Counter className="shrink text-4xl font-title font-semibold text-right text-base-600 px-4 py-2 rounded-sm bg-base-100" value={result.total} callback={(n: number) => format(n, "$ 0.00", { currency: "USD" })} />
+                    <div className="grow text-sm text-base-600 self-end">
+                        <Switch title={((checked: boolean) => checked ? "Yearly billing" : "Monthly billing")} onChange={handleBillingPeriodChanged} className="flex gap-2 items-center" />
+                    </div>
                 </div>
             </div>
             <div className="flex flex-wrap gap-2 p-4">
