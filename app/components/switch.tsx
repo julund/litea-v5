@@ -21,11 +21,11 @@ export default function Switch({ title, defaultState = false, size = 22, classNa
 
     return (
         <LazyMotion features={loadFeatures}>
-            <button className={className} onClick={handleToggle}>
-                <div className="relative bg-base-300 rounded-full" style={{ width: width, height: height }}>
+            <button className={classNames(className,"group")} onClick={handleToggle}>
+                <div className="relative rounded-full bg-base-300" style={{ width: width, height: height }}>
 
                     <motion.div
-                        className={classNames("absolute rounded-full", checked ? "bg-primary-600" : "bg-base-400")}
+                        className={classNames("absolute rounded-full transition-colors duration-500", checked ? "bg-primary-600 group-hover:bg-primary-700" : "bg-base-400 group-hover:bg-base-500")}
                         initial={{ x: 0, width: toggleSize, height: toggleSize }}
                         animate={{ x: checked ? (width - toggleSize) : 0 }}
                     >
