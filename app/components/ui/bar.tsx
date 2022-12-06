@@ -1,8 +1,8 @@
-import { LazyMotion, motion } from "~/lib/motion";
+import { motion } from "framer-motion";
 import { useMeasure } from "react-use";
 import { classNames } from "~/utils/helpers";
 
-const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation);
+// const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation);
 
 const Bar = ({ value, inPercent = false, max = 100, horizontal = true, ...props }: {
     value: number;
@@ -20,7 +20,6 @@ const Bar = ({ value, inPercent = false, max = 100, horizontal = true, ...props 
     const childClasses = classNames("relative rounded-sm bg-primary-700 bg-opacity-80 group-hover:bg-opacity-100", horizontal ? "h-full" : "w-full");
 
     return (
-        <LazyMotion features={loadFeatures}>
         <div className={parentClasses} {...props}>
             <div ref={ref} className="absolute w-full h-full bg-base-200"></div>
             <motion.div
@@ -30,7 +29,6 @@ const Bar = ({ value, inPercent = false, max = 100, horizontal = true, ...props 
                 className={childClasses}
             ></motion.div>
         </div>
-        </LazyMotion>
     );
 };
 

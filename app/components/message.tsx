@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, LazyMotion, motion } from "~/lib/motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { type IMessage } from "~/lib/session.server";
 import { classNames } from "~/utils/helpers";
 import { IconX } from "./icons";
-
-const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation);
 
 export const Message = ({ message, duration, allowClose = true }: { message?: IMessage | null; duration?: number; allowClose?: boolean }) => {
 
@@ -16,9 +14,9 @@ export const Message = ({ message, duration, allowClose = true }: { message?: IM
             return () => clearInterval(t);
         }
     }, [duration]);
-    
-    if(!message) return null;
-    
+
+    if (!message) return null;
+
     const classes = classNames(
         "sticky top-0 z-0 message flex justify-center",
         message.type === "error" && "message-error",
@@ -26,13 +24,13 @@ export const Message = ({ message, duration, allowClose = true }: { message?: IM
         message.type === "success" && "message-success",
         message.type === "warning" && "message-warning",
     );
-    
+
     return (
-        <LazyMotion features={loadFeatures}>
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
             {visible && (
                 <motion.div
                     layout
+                    layoutId="messages"
                     className={classes}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -44,7 +42,6 @@ export const Message = ({ message, duration, allowClose = true }: { message?: IM
                 </motion.div>
             )}
         </AnimatePresence>
-        </LazyMotion>
     );
-    
+
 };

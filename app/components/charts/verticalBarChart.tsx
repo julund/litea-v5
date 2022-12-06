@@ -4,10 +4,11 @@ import Icon from "../icon";
 import { Dialog } from "../dialog";
 import Counter from "./../counter";
 import { format } from "numerable";
+import { motion } from "framer-motion";
 
 const BarChartItem = ({ className, item, unknownName, iconCategory }: { className?: string; item: any; unknownName: string | null; iconCategory: string; }) => {
     return (
-        <div className={className}>
+        <motion.div className={className}>
             <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
                 <span className="flex items-center gap-1">
                     <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} className="text-base-500" />
@@ -19,7 +20,7 @@ const BarChartItem = ({ className, item, unknownName, iconCategory }: { classNam
                 </span>
             </div>
             <Bar value={item.percent} inPercent={true} />
-        </div>
+        </motion.div>
     );
 };
 
