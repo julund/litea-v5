@@ -108,7 +108,7 @@
     @apply outline-none text-base-600;
   }
   .bar {
-    @apply max-w-[2.5rem] min-w-[1rem] w-6;
+    @apply max-w-[2rem] min-w-[1rem] w-6;
   }
 
 }

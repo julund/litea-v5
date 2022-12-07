@@ -16,7 +16,7 @@ const Bar = ({ value, inPercent = false, max = 100, horizontal = true, ...props 
 
     const currentValue = Math.min(inPercent ? value * (horizontal ? width : height) : value * (horizontal ? width : height) / max, (horizontal ? width : height)) || 0;
 
-    const parentClasses = classNames("relative flex-grow overflow-hidden rounded-sm", horizontal ? "h-2" : "h-24 w-6 flex items-end justify-center");
+    const parentClasses = classNames("relative flex-grow overflow-hidden rounded-sm", horizontal ? "h-2" : "h-24 flex items-end justify-center");
     const childClasses = classNames("relative rounded-sm bg-primary-700 bg-opacity-80 group-hover:bg-opacity-100", horizontal ? "h-full" : "w-full");
 
     return (
@@ -25,7 +25,7 @@ const Bar = ({ value, inPercent = false, max = 100, horizontal = true, ...props 
             <motion.div
                 initial={horizontal ? { width: 0 } : { height: 0 }}
                 animate={horizontal ? { width: currentValue } : { height: currentValue }}
-                transition={{ }}
+                transition={{}}
                 className={childClasses}
             ></motion.div>
         </div>

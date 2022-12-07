@@ -18,7 +18,7 @@ const HorizontalBarChart = ({ data }: { data: Array<any> }) => {
 
     return (
         <div className="h-40 rounded-sm select-none bg-base-50">
-            <div className="flex flex-row justify-center w-full h-full gap-1 p-4">
+            <div className="flex flex-row justify-center w-full h-full gap-2 p-4">
                 {!modifiedData && <div className="flex items-center"> <Spinner size={64} /> </div>}
                 {modifiedData && modifiedData.map((item, i) => {
                     const len = modifiedData.length;
