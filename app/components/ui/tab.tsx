@@ -1,6 +1,6 @@
 import { Children, cloneElement } from "react";
 import { useCounter } from "react-use";
-import { IconChevronLeft, IconChevronRight } from "~/components/icons";
+import { IconChevronLeft, IconChevronRight, IconChevronUp } from "~/components/icons";
 
 const Tab = ({ title, titles, children, chevronStyle = false, ...props }: { title?: string; titles?: string[], children: React.ReactNode, chevronStyle?: boolean, props?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> }) => {
 
@@ -13,7 +13,10 @@ const Tab = ({ title, titles, children, chevronStyle = false, ...props }: { titl
 
     return (
             <div className="min-h-[150px] p-4 bg-white shadow-lg shadow-base-400/50" {...props}>
-                {title && <h3 className="pb-2 text-base text-base-500">{title}</h3>}
+                <div className="flex items-center gap-2">
+                    <h3 className="pb-2 text-base grow text-base-500">{title && title}</h3>
+                    <button className="shrink text-base-400"><IconChevronUp/></button>
+                </div>
                 <span className="flex flex-row items-center mb-2">
                     {!chevronStyle ?
                         <span className="flex flex-row flex-wrap flex-shrink gap-1">
