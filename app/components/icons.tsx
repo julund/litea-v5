@@ -25,6 +25,7 @@ export const IconWorld = ({ ...props }: IconProps) => icon.TbWorld({ ...defaultI
 export const IconUser = ({ ...props }: IconProps) => icon.TbUser({ ...defaultIconProps, ...props });
 export const IconChevronDown = ({ ...props }: IconProps) => icon.TbChevronDown({ ...defaultIconProps, ...props });
 export const IconChevronUp = ({ ...props }: IconProps) => icon.TbChevronUp({ ...defaultIconProps, ...props });
+export const IconChevronsUpRight = ({ ...props }: IconProps) => icon.TbChevronsUpRight({ ...defaultIconProps, ...props });
 export const IconChevronRight = ({ ...props }: IconProps) => icon.TbChevronRight({ ...defaultIconProps, ...props });
 export const IconChevronLeft = ({ ...props }: IconProps) => icon.TbChevronLeft({ ...defaultIconProps, ...props });
 export const IconCircle = ({ ...props }: IconProps) => icon.TbCircle({ ...defaultIconProps, ...props });
