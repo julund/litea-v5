@@ -1,59 +1,71 @@
 import { useRef } from "react";
-// import { useToggle } from "react-use";
+import { AnimatePresence, motion } from "framer-motion";
+import { useToggle, useClickAway } from "react-use";
 
-export const Dialog = ({ children, button = "open dialog", title, ...props }: { children: React.ReactNode; button?: React.ReactNode, title?: string; } & React.DetailedHTMLProps<React.DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>) => {
+export const Dialog = ({ children, toggleButton = "open dialog", buttons = "ok|cancel", title, onSubmit }: {
+    children: React.ReactNode;
+    toggleButton?: JSX.Element | string,
+    buttons?: "ok|cancel" | "close" | "dismiss";
+    title?: string;
+    onSubmit?: (value: string | null | undefined) => void;
+}) => {
 
-    const ref = useRef<HTMLDialogElement>(null);
-    // const [ show, toggle ] = useToggle(false);
-    const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        const dialog = ref?.current;
-        if (dialog && typeof dialog.showModal === "function") {
-            // dialog.hidden ? dialog.showModal() : dialog.close();
-            dialog.showModal();
-            // console.log(dialog.hidden)
-        } else {
-            console.warn("The <dialog> API is not supported by this browser.");
-        }
-        // if (typeof ref?.current?.showModal === "function") {
-        //     favDialog.showModal();
-        //   } else {
-        //     outputBox.value = "Sorry, the <dialog> API is not supported by this browser.";
-        //   }
-    };
+    const ref = useRef<HTMLDivElement>(null);
+    const [show, toggle] = useToggle(false);
 
-    const handleModalClick = (e: React.MouseEvent<HTMLDialogElement, MouseEvent>) => {
-        
-        const dialog = ref?.current;
-        if (!dialog) return;
-        var rect = dialog.getBoundingClientRect();
-        var isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height
-            && rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
-        if (!isInDialog) {
-            // console.log("clicked outside dialog")
-            dialog.close();
-        }
-    };
+    useClickAway(ref, toggle);
 
-    const handleClose = (e: React.SyntheticEvent<HTMLDialogElement, Event>) => {
-        const dialog = ref?.current;
-        if (!dialog) return;
-        console.log(e.type, dialog.returnValue);
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement> & { nativeEvent: SubmitEvent }) => {
+        const value = e.nativeEvent.submitter?.getAttribute("value");
+        onSubmit && onSubmit(value);
+        toggle();
     };
 
     return (
         <>
-            <button onClick={handleButtonClick}>{button}</button>
-            <dialog ref={ref} className="p-8 transition-opacity duration-500 rounded-sm shadow-md opacity-0 open:opacity-100" {...props} onClose={handleClose} onClick={handleModalClick}>
-                { title && <h3 className="text-xl font-semibold text-base-800 font-title">{title}</h3>}
-                <div className="max-h-[60vh] overflow-y-auto p-4">
-                    {children}
-                </div>
-                <hr className="my-4" />
-                <form method="dialog" className="flex justify-end gap-2">
-                    <button value="ok" className="button button-primary">OK</button>
-                    <button value="cancel" className="button button-ghost">Cancel</button>
-                </form>
-            </dialog>
+            <button onClick={toggle}>{toggleButton}</button>
+            <AnimatePresence>
+                {show &&
+                    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-2 p-8">
+                        <motion.div
+                            className="fixed inset-0 z-0 bg-opacity-40 bg-base-800"
+                            key="modalbg"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.5 }}
+                        />
+                        <motion.div
+                            ref={ref}
+                            className="z-50 max-w-xl p-4 rounded-sm bg-base-100"
+                            key="modalbox"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ opacity: { duration: 0.25 } }}
+                        >
+                            {title && <h3 className="text-xl font-semibold text-base-800 font-title">{title}</h3>}
+                            <div className="max-h-[60vh] overflow-y-auto p-4">
+                                {children}
+                            </div>
+                            <hr className="my-4" />
+                            <form method="dialog" className="flex justify-end gap-2" onSubmit={handleSubmit}>
+                                {
+                                    buttons === "ok|cancel" ?
+                                        <>
+                                            <button value="ok" className="button button-primary">OK</button>
+                                            <button value="cancel" className="button button-ghost">Cancel</button>
+                                        </>
+                                        :
+                                        buttons === "close" ?
+                                            <button value="close" className="button button-ghost">Close</button>
+                                            :
+                                            <button value="dismiss" className="button button-ghost">Dismiss</button>
+                                }
+                            </form>
+                        </motion.div>
+                    </div>}
+            </AnimatePresence>
         </>
     );
 };
