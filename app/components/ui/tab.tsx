@@ -12,7 +12,7 @@ const Tab = ({ title, titles, children, chevronStyle = false, ...props }: { titl
     const [current, { inc, dec, set }] = useCounter(min, max, min);
 
     return (
-            <div className="min-h-[150px] p-4 bg-white" {...props}>
+            <div className="min-h-[150px] p-4 bg-white shadow-lg shadow-base-400/50" {...props}>
                 {title && <h3 className="pb-2 text-base text-base-500">{title}</h3>}
                 <span className="flex flex-row items-center mb-2">
                     {!chevronStyle ?

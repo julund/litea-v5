@@ -9,15 +9,15 @@ import { motion } from "framer-motion";
 const BarChartItem = ({ className, item, unknownName, iconCategory }: { className?: string; item: any; unknownName: string | null; iconCategory: string; }) => {
     return (
         <motion.div className={className}>
-            <div className="flex flex-row items-center justify-between mb-1 text-sm break-all">
-                <span className="flex items-center gap-1">
+            <div className="flex flex-row items-center justify-between gap-2 mb-1 text-sm break-all">
+                <div className="flex items-center gap-1">
                     <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} className="text-base-500" />
-                    {item.name || unknownName}
-                </span>
-                <span className="flex items-end gap-2">
-                    <Counter className="text-sm" value={item.count} callback={(value: number) => format(value, "0")} />
+                    <span className="max-w-sm line-clamp-1">{item.name || unknownName}</span>
+                </div>
+                <div className="flex items-end gap-2">
+                    <Counter className="text-sm font-title" value={item.count} callback={(value: number) => format(value, "0")} />
                     <Counter className="text-sm text-base-600 font-title tabular-nums" value={item.percent} callback={(value: number) => `(${format(item.percent ? value : 1, "0.0 %")})`} />
-                </span>
+                </div>
             </div>
             <Bar value={item.percent} inPercent={true} />
         </motion.div>
@@ -39,24 +39,25 @@ const VerticalBarChart = ({ title, unknownName = "unknown", emptyTitle = "none",
     const sumRest = rest && rest?.reduce((total, item) => total + item.count, 0);
     const modifiedData = sumRest > 1 ? top && [...top] : top && [...top, ...rest];
     const modifiedRest = sumRest > 1 ? [...rest] : null;
-    const restItem = sumRest > 1 ? { name: `Other (${rest?.length} ${lowerCase(title)})`, count: sumRest, percent: (sumRest / sumAll) } : null;
+    const restItem = sumRest > 1 ? { name: `${rest?.length} other ${lowerCase(title)}`, count: sumRest, percent: (sumRest / sumAll) } : null;
     const emptyItem = modifiedData?.length == 0 ? { name: emptyTitle, count: 0, percent: 0 } : null;
 
     return (
         <div className="flex flex-col gap-4 py-2">
             {/* <div className="text-sm font-bold">{title}</div> */}
             {emptyItem && <BarChartItem item={emptyItem} iconCategory={title} unknownName={unknownName} />}
-            {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownName={unknownName} className="group" />)}
-
+            {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownName={unknownName} className="transition-opacity duration-300 rounded-sm opacity-80 hover:opacity-100 group" />)}
             {modifiedRest &&
                 <Dialog
                     title={title}
-                    button={
-                        <BarChartItem item={restItem} iconCategory={title} unknownName={unknownName} className="cursor-pointer hover:font-semibold group" />
+                    toggleButton={
+                        <BarChartItem item={restItem} iconCategory={title} unknownName={unknownName} className="px-4 py-2 transition-opacity duration-300 rounded-sm cursor-pointer hover:bg-base-100 opacity-80 hover:opacity-100 group" />
                     }
+                    buttons="close"
+                    onSubmit={(value) => console.log("onSubmit", value)}
                 >
                     <div className="flex flex-col gap-4">
-                        {modifiedRest.map((item, i) => <BarChartItem key={i} className="w-64 mb-4 group" item={item} iconCategory={title} unknownName={unknownName} />)}
+                        {modifiedRest.map((item, i) => <BarChartItem key={i} className=" min-w-[288px] mb-4 group" item={item} iconCategory={title} unknownName={unknownName} />)}
                     </div>
                 </Dialog>
             }
