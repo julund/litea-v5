@@ -20,7 +20,7 @@ const Time = ({ value }: { value?: string; }) => {
 
 
     return (
-        <time className="" dateTime={dateTime} title={dateTime}>
+        <time className="" dateTime={dateTime} data-tooltip={dateTime}>
             {distance}
         </time>
     );

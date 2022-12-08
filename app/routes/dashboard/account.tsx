@@ -33,7 +33,6 @@ export default function Account() {
                     <div className="flex flex-col gap-1 py-4">
                         <div className="text-xl font-semibold font-title">{account?.email}</div>
                         <div className="text-base text-base-500">{account?.id}</div>
-
                     </div>
                 </div>
                 <div className="">Signed up <Time value={account?.created_at} /></div>
