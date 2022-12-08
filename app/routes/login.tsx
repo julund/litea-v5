@@ -42,8 +42,8 @@ export default function Index() {
             <>
               <p className="text-base-500">Please provide your credentials to access the dashboard.</p>
               <Form id="loginForm" className="flex flex-col gap-2" method="post" aria-disabled={state == "submitting"}>
-                <input className="" id="Email" type="email" name="email" placeholder="email@example.com" autoComplete="email" />
-                <input className="" id="Password" type="password" name="password" autoComplete="password" />
+                <input id="Email" type="email" name="email" placeholder="email@example.com" autoComplete="email" />
+                <input id="Password" type="password" name="password" autoComplete="password" />
                 <p className="px-2 text-sm text-base-500">Forgot password?</p>
                 <button className="justify-center button button-primary disabled:opacity-40" type="submit" disabled={state == "submitting"}><IconLogin size={22} />{state == "submitting" ? "Logging in..." : "Log in"}</button>
               </Form>
