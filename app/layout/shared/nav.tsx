@@ -4,16 +4,10 @@ import Brand from "~/components/brand";
 import { classNames } from "~/utils/helpers";
 import { Link } from "~/components/link";
 import { useRef } from "react";
-import {
-    AnimatePresence,
-    LazyMotion,
-    motion
-} from "~/lib/motion";
+import { AnimatePresence, motion } from "framer-motion";
 
-const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation);
-
-const Nav = ({ children, 
-    forceToggle = false, absolute = false, buttonContent, 
+const Nav = ({ children,
+    forceToggle = false, absolute = false, buttonContent,
     className, // = "flex flex-col gap-2 md:flex-row", 
 }: { children?: React.ReactNode; forceToggle?: boolean; absolute?: boolean; buttonContent?: Function; className?: string; }) => {
 
@@ -51,40 +45,30 @@ const Nav = ({ children,
             {!!children && <div
                 className="relative top-0 right-0 z-50 flex flex-col w-full gap-2 md:flex-row-reverse"
             >
-                <LazyMotion features={loadFeatures}>
-                    <AnimatePresence>
-                        {(!(!expanded && showToggle) || !showToggle) &&
-                            <motion.div aria-labelledby="nav-toggle" aria-expanded={expanded} className={classNames(
-                                "flex shrink gap-2 w-full justify-end",
-                                absolute ? "absolute" : "relative",
-                                (!expanded && showToggle) ? "flex-row" : showToggle && "flex-col"
-                            )}
-                                key="nav"
-                                layout
-                                initial={{ 
-                                    opacity: 0, 
-                                    scaleY: 0.35, 
-                                    y: -50 }}
-                                animate={{ 
-                                    opacity: 1, 
-                                    scaleY: 1, 
-                                    y: 0 }}
-                                exit={{ 
-                                    opacity: 0, 
-                                    scaleY: 0.35, 
-                                    y: -50 }}
+                <AnimatePresence>
+                    {(!(!expanded && showToggle) || !showToggle) &&
+                        <motion.div aria-labelledby="nav-toggle" aria-expanded={expanded} className={classNames(
+                            "flex shrink gap-2 justify-end",
+                            absolute ? "absolute" : "relative",
+                            (!expanded && showToggle) ? "flex-row" : showToggle && "flex-col"
+                        )}
+                            key="nav"
+                            layout
+                            initial={{ opacity: 0, scale: 0.35 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.35 }}
+                            transition={{ type: "tween", duration: 0.15 }}
+                        >
+                            <div
+                                ref={navToggleRef}
+                                className={className}
+                                onClick={handleNavToggleClick}
                             >
-                                <div
-                                    ref={navToggleRef}
-                                    className={ className }
-                                    onClick={handleNavToggleClick}
-                                >
-                                    {children}
-                                </div>
-                            </motion.div>
-                        }
-                    </AnimatePresence>
-                </LazyMotion>
+                                {children}
+                            </div>
+                        </motion.div>
+                    }
+                </AnimatePresence>
             </div>}
         </nav>
     );
