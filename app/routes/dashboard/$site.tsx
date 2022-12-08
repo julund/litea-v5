@@ -87,7 +87,7 @@ export default function SitePage() {
                                         Last activity
                                     </span>
                                     <span className="flex flex-wrap text-xs">
-                                        {visitor.lastActivityAt && <Time value={visitor.lastActivityAt} />}
+                                        {visitor.lastActivityAt && <Time value={visitor.lastActivityAt} dateFormat="hh:mm" />}
                                     </span>
                                 </div>
                             );

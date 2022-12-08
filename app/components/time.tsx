@@ -3,7 +3,7 @@ import { enGB } from "date-fns/locale";
 import { format } from "date-fns-tz";
 import { useEffect, useState } from "react";
 
-const Time = ({ value }: { value?: string; }) => {
+const Time = ({ value, dateFormat = "PPpp" }: { value?: string; dateFormat?: string; }) => {
 
     const [dateTime, setDateTime] = useState<string | undefined>(undefined);
     const [distance, setDistance] = useState<string | undefined>(undefined);
@@ -11,11 +11,11 @@ const Time = ({ value }: { value?: string; }) => {
     useEffect( () => {
         
         if (!value) return;
-        const dateTime = format(parseISO(value), "PPpp", { locale: enGB, timeZone: "Europe/Oslo" });
+        const dateTime = format(parseISO(value), dateFormat, { locale: enGB, timeZone: "Europe/Oslo" });
         setDateTime(dateTime);
         const distance = formatDistanceToNow(parseISO(value), { locale: enGB, addSuffix: true, includeSeconds: false });
         setDistance(distance);
-    },[value]);
+    },[value, dateFormat]);
 
 
 
