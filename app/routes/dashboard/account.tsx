@@ -37,6 +37,9 @@ export default function Account() {
                 </div>
                 <div className="">Signed up <Time value={account?.created_at} /></div>
                 <div className="">You logged in <Time value={account?.last_sign_in_at} /></div>
+                <div className="p-12 my-4 bg-base-200" data-tooltip="Cupiditate animi corporis ad a velit.">
+                    Nemo praesentium molestias quibusdam! Cupiditate animi corporis ad a velit sapiente vel, asperiores dolorum aliquid dolore, debitis quidem neque! Assumenda, iure eos.
+                </div>
             </>
             }
         </Container>
