@@ -80,17 +80,15 @@ export default function SitePage() {
                     <div className="flex flex-wrap h-40 gap-2 p-4 bg-white bg-opacity-50 rounded-sm">
                         {visitors ? visitors.data?.map(visitor => {
                             return (
-                                <div className="flex flex-col flex-wrap gap-1 p-4 rounded-sm bg-base-100 text-base-600" key={visitor.id}>
-                                    <span className="flex items-center gap-1 text-base" title={visitor.id}>
-                                        <span><IconUser /></span>
-                                        <span>{"..." + visitor.id.slice(visitor.id.length - 10)}</span>
+                                <div className="flex flex-col items-center  flex-wrap gap-1 p-4 rounded-sm bg-base-100 text-base-600" key={visitor.id}>
+                                    <span><IconUser /></span>
+                                    <span>{visitor.id.slice(visitor.id.length - 10)}</span>
+                                    <span className="flex flex-wrap text-xs">
+                                        Last activity
                                     </span>
-                                    <span className="text-sm">from {visitor.country && countryNameFromCode(visitor.country)} on {visitor.browser && visitor.browser}</span>
-                                    <span className="text-xs">
-                                        Last activity {visitor.lastActivityAt && <Time value={visitor.lastActivityAt} />}
-                                        {/* Last activity { JSON.stringify(visitor.lastActivityAt)} */}
+                                    <span className="flex flex-wrap text-xs">
+                                        {visitor.lastActivityAt && <Time value={visitor.lastActivityAt} />}
                                     </span>
-                                    {/* {(visitor.visits && typeof visitor.visits === "object") && visitor.visits.join(" ")} */}
                                 </div>
                             );
                         })
