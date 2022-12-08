@@ -9,7 +9,7 @@ import {
 } from "@remix-run/react";
 import type { ShouldReloadFunction } from "@remix-run/react";
 import style from "./root.css";
-import { Tooltip } from "./components/tooltip";
+import { Tooltips } from "./components/tooltips";
 
 export const unstable_shouldReload: ShouldReloadFunction = () => false;
 
@@ -33,7 +33,7 @@ export default function App() {
       </head>
       <body>
         <Outlet />
-        <Tooltip/>
+        <Tooltips/>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
