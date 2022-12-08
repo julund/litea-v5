@@ -1,3 +1,4 @@
+import { format } from "numerable";
 import Bar from "../ui/bar";
 import Spinner from "../ui/spinner";
 // import Tooltip from "../ui/tooltip";
@@ -27,8 +28,8 @@ const HorizontalBarChart = ({ data }: { data: Array<any> }) => {
                         <div key={i} className="flex-grow bar group">
                             {item.pageViews > 0 || item.pageViews === 0 ?
                                 <div className="h-full cursor-pointer opacity-80 hover:opacity-100 transition duration-300">
-                                    <div className="flex justify-center text-xs p-1 h-6 rounded-sm bg-base-700 text-base-100 opacity-0 group-hover:opacity-100 transition duration-500 mb-2">
-                                        {item.pageViews}
+                                    <div className="flex justify-center text-xs p-1 h-6 rounded-sm text-base-700 opacity-0 group-hover:opacity-100 transition duration-500 mb-2">
+                                        {format(item.pageViews, "0a")}
                                     </div>
                                     <Bar value={item.percent} inPercent={true} horizontal={false} />
                                     <div className="flex justify-center py-2 text-xs font-semibold text-base-700">
@@ -36,11 +37,11 @@ const HorizontalBarChart = ({ data }: { data: Array<any> }) => {
                                     </div>
                                 </div> :
                                 <div className="h-full opacity-70 transition duration-300">
-                                    <div className="flex justify-center text-xs p-1 h-6 rounded-sm bg-base-700 text-base-100 opacity-0 group-hover:opacity-100 transition duration-500 mb-2">
+                                    <div className="flex justify-center text-xs p-1 h-6 rounded-sm text-base-700 opacity-0 group-hover:opacity-100 transition duration-500 mb-2">
                                         -
                                     </div>
                                     <Bar value={0} inPercent={true} horizontal={false} />
-                                    <div className="flex justify-center py-2 text-xs font-semibold text-base-700">
+                                    <div className="flex justify-center py-2 text-xs font-semibold text-base-800">
                                         {!hide && item.label}
                                     </div>
                                 </div>
