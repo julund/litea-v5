@@ -3,7 +3,7 @@ import { type ReactNode } from "react";
 import { IconExternalLink } from "./icons";
 import { classNames } from "~/utils/helpers";
 
-export const Link = ({ children, ...props }: { children: ReactNode; } & LinkProps) => {
+export const Link = ({ children, ...props }: { children: ReactNode; } & LinkProps ) => {
 
     return (
         <RemixLink {...props}>

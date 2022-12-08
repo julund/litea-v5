@@ -57,7 +57,7 @@ export default function PeriodSelect() {
                 </div>
                 <select
                     name="period"
-                    defaultValue={period}
+                    value={period}
                     className="select"
                     onChange={({ target: { value } }) => submit({ period: value, time: time || "" })}
                 >

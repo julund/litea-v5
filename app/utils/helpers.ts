@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { startOfMonth, startOfDay, endOfDay, startOfWeek, startOfYear, subDays, subMonths, subWeeks, subYears, endOfWeek, endOfMonth, eachHourOfInterval, isBefore, eachDayOfInterval, endOfYear, eachMonthOfInterval, eachYearOfInterval, subMinutes, eachMinuteOfInterval, addMilliseconds, addDays, parse, addWeeks, addMonths, isToday, isThisWeek, isThisMonth, addYears, isThisYear } from "date-fns";
+import { startOfMonth, startOfDay, endOfDay, startOfWeek, startOfYear, subDays, subMonths, subWeeks, subYears, endOfWeek, endOfMonth, eachHourOfInterval, isBefore, eachDayOfInterval, endOfYear, eachMonthOfInterval, eachYearOfInterval, subMinutes, eachMinuteOfInterval, addMilliseconds, addDays, parse, addWeeks, addMonths, isToday, isThisWeek, isThisMonth, addYears, isThisYear, parseISO } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { format, utcToZonedTime, zonedTimeToUtc, getTimezoneOffset, type OptionsWithTZ } from "date-fns-tz";
 
@@ -80,16 +80,16 @@ export function getPeriodByName(periodName: string, time?: string) {
                 get description() { return ""; },
                 get labelDates() { return eachMonthOfInterval({ start: this.from, end: this.to }); },
             });
-            case "all":
-                return ({
-                    get from() { return startOfYear(subYears(utcTime, 10)); },
-                    get to() { return endOfYear(utcTime); },
-                    get previous() { return undefined; },
-                    get next() { return undefined; },
-                    get title() { return `${format(this.from, "yyyy", options)} - ${format(this.to, "yyyy", options)}`; },
-                    get description() { return "all time"; },
-                    get labelDates() { return eachYearOfInterval({ start: this.from, end: this.to }); },
-                });
+        case "all":
+            return ({
+                get from() { return startOfYear(subYears(utcTime, 10)); },
+                get to() { return endOfYear(utcTime); },
+                get previous() { return undefined; },
+                get next() { return undefined; },
+                get title() { return `${format(this.from, "yyyy", options)} - ${format(this.to, "yyyy", options)}`; },
+                get description() { return "all time"; },
+                get labelDates() { return eachYearOfInterval({ start: this.from, end: this.to }); },
+            });
         default: // "realtime"
             return ({
                 get from() { return subMinutes(utcTime, 60); }, // should be 30 mins but need to fix realtime view
@@ -135,20 +135,30 @@ export const grouped = (arr: Array<any>, period: string, date?: string) => {
                             format(t, "yyyy", options);
     };
 
+    const linkPeriod = () => {
+        return period === "realtime" ? "realtime" :
+            period === "day" ? "realtime" :
+                period === "week" ? "day" :
+                    period === "month" ? "day" :
+                        period === "year" ? "month" :
+                            period === "all" ? "year" :
+                                null;
+    };
+
     const localizedFormatLabel = (d: string | number | Date) => {
         const time = utcToZonedTime(d, timeZone, options);
         const offset = getTimezoneOffset(timeZone);
         const localizedTime = addMilliseconds(time, offset);
-        return formatLabel(localizedTime);
+        return formatLabel(localizedTime) || localizedTime.toDateString();
     };
 
     const withLabel = arr.map(item => {
-        return { ...item, label: localizedFormatLabel(item.time) };
+        return { label: localizedFormatLabel(item.time), value: [...item.value, format(parseISO(item.time), "yyyy-MM-dd")] };
     });
-
+    // console.log(withLabel);
     const filtered: any = [];
     withLabel.forEach(doc => {
-        filtered[doc.label] = [(filtered[doc.label]?.[0] || 0) + doc.value[0] || 0, (filtered[doc.label]?.[1] || 0) + doc.value[1] || 0];
+        filtered[doc.label] = [(filtered[doc.label]?.[0] || 0) + doc.value[0] || 0, (filtered[doc.label]?.[1] || 0) + doc.value[1] || 0, doc.value[2]];
     });
     // console.log(filtered);
     const initial: any = [];
@@ -163,7 +173,7 @@ export const grouped = (arr: Array<any>, period: string, date?: string) => {
     // console.log(initial);
 
     const result = Object.entries(initial).map(([key, value]: [key: string, value: any]) => {
-        if (key && value) return { label: key, pageViews: value[0], uniqueVisits: value[1] };
+        if (key && value) return { label: key, pageViews: value[0], uniqueVisits: value[1], period: linkPeriod(), time: value[2] };
         return { label: key };
     });
     // console.log(result);
