@@ -17,18 +17,19 @@ export async function loader({ request, params }: { request: Request; params: an
     if (!(fileType === "csv" || fileType === "json")) throw new Response("Unknown file type requested", { status: 404 });
 
     const stats = site.data?.id ? await getSiteStats(request, site.data?.id, period, time, false) : { data: null, error: null };
-    if (stats?.error) throw new Response("Not Found", { status: 404 });
+    if (stats?.error || !stats?.data) throw new Response("Not Found", { status: 404 });
 
     // console.log(stats?.data);
-    const data = stats?.data.map((stat: any) => {
-        const arr: any = [];
-        arr["time"] = stat.time;
-        Object.entries(stat.aggregates).forEach(([key, value]: [key: string, value: any]) => {
-            arr[key] = value.count || 0;
-        });
-        // console.log(...stat.countries);
-        return { ...arr };
-    });
+    const data = stats?.data;
+    // const data = stats?.data.map((stat: any) => {
+    //     const arr: any = [];
+    //     arr["time"] = stat.time;
+    //     Object.entries(stat.aggregates).forEach(([key, value]: [key: string, value: any]) => {
+    //         arr[key] = value.count || 0;
+    //     });
+    //     // console.log(...stat.countries);
+    //     return { ...arr };
+    // });
     // console.log(data);
 
     const from = getPeriodByName(period, time).from;

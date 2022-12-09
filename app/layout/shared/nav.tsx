@@ -8,8 +8,9 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const Nav = ({ children,
     forceToggle = false, absolute = false, buttonContent,
-    className, // = "flex flex-col gap-2 md:flex-row", 
-}: { children?: React.ReactNode; forceToggle?: boolean; absolute?: boolean; buttonContent?: Function; className?: string; }) => {
+    className = "flex items-start w-full gap-2 shrink p-8", 
+    toggleClassName,
+}: { children?: React.ReactNode; forceToggle?: boolean; absolute?: boolean; buttonContent?: Function; className?: string; toggleClassName?: string; }) => {
 
     const [ref, { width }] = useMeasure<HTMLElement>();
     const navToggleRef = useRef<HTMLDivElement>(null);
@@ -30,9 +31,7 @@ const Nav = ({ children,
     if (!buttonContent) buttonContent = (expanded: boolean) => !expanded ? <IconMenu size={22} className="text-base-400" /> : <IconX size={22} className="text-base-400" />;
 
     return (
-        <nav ref={ref} className={classNames("flex items-start w-full gap-2 shrink p-8",
-            (!showToggle) ? "flex-row" : "flex-col"
-        )}>
+        <nav ref={ref} className={classNames(className,(!showToggle) ? "flex-row" : "flex-col")}>
             <div className={classNames("flex grow",
                 showToggle && "justify-between w-full ")}>
                 <Link to="/" className="inline-flex p-2 select-none">
@@ -48,7 +47,7 @@ const Nav = ({ children,
                 <AnimatePresence>
                     {(!(!expanded && showToggle) || !showToggle) &&
                         <motion.div aria-labelledby="nav-toggle" aria-expanded={expanded} className={classNames(
-                            "flex shrink gap-2 justify-end",
+                            "flex shrink gap-2 justify-end w-full",
                             absolute ? "absolute" : "relative",
                             (!expanded && showToggle) ? "flex-row" : showToggle && "flex-col"
                         )}
@@ -61,7 +60,7 @@ const Nav = ({ children,
                         >
                             <div
                                 ref={navToggleRef}
-                                className={className}
+                                className={toggleClassName}
                                 onClick={handleNavToggleClick}
                             >
                                 {children}

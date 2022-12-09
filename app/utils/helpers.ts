@@ -2,13 +2,13 @@ import { clsx } from "clsx";
 import { startOfMonth, startOfDay, endOfDay, startOfWeek, startOfYear, subDays, subMonths, subWeeks, subYears, endOfWeek, endOfMonth, eachHourOfInterval, isBefore, eachDayOfInterval, endOfYear, eachMonthOfInterval, eachYearOfInterval, subMinutes, eachMinuteOfInterval, addMilliseconds, addDays, parse, addWeeks, addMonths, isToday, isThisWeek, isThisMonth, addYears, isThisYear, parseISO } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { format, utcToZonedTime, zonedTimeToUtc, getTimezoneOffset, type OptionsWithTZ } from "date-fns-tz";
+// import { type Database } from "~/lib/supabase.d";
 
 export type ClassValue = ClassArray | ClassDictionary | string | number | null | boolean | undefined;
 export type ClassDictionary = Record<string, any>;
 export type ClassArray = ClassValue[];
 
 export const classNames = (...inputs: ClassValue[]) => [...new Set(clsx(...inputs).split(" "))].join(" ");
-
 
 const options: OptionsWithTZ = { timeZone: "Europe/Oslo", locale: enUS, weekStartsOn: 1 };
 const timeZone = options.timeZone as string;
@@ -104,27 +104,42 @@ export function getPeriodByName(periodName: string, time?: string) {
 
 export const average = (oldValue: number, newValue: number) => Number((newValue > 0 ? oldValue == 0 ? newValue : ((oldValue || 0) + newValue) / 2 : (oldValue || 0).toFixed(2)));
 
+export type NameCountData = { name: string, count: number } & Partial<Pick<any, "countryCode" | "domain">>;
+
 // Function to merge nested object and find 'count' or 'average' number and increment etc.
-export const merge = (arr: Array<any>) => {
+export const merge = (arr: Array<NameCountData>) => {
 
     // console.log(arr);
     if (arr.length === 1) return arr;
-    const merged: any = [];
+    const merged: { [s: string]: any; } = [];
     arr.forEach(item => {
-        if (item.name == "") item.name = "_"; // key cant be empty string, we will turn it back in result
-        merged[item.name] = (merged[item.name] || 0) + item?.count || 0;
+        if (item.name === "") item.name = "_"; // key cant be empty string, we will turn it back in result
+        merged[item.name] = Number((merged[item.name] || 0) + item.count || 0);
     });
+    // console.log(merged);
     const result = Object.entries(merged).map(([key, value]) => {
-        return key ? { name: (key == "_" ? "" : key), count: value } : null;
+        return key ? { name: (key == "_" ? "" : key), count: Number(value) } : null;
     });
+    // console.log(result);
     return result;
+
 };
 
+export type ValueTimeData = { value: [number, number], time: string };
+
+export type Aggregates = {
+    avgVisitDuration?: {count?: number};
+    bounceRate?: {count?: number};
+    pageViews?: {count?: number};
+    singlePageVisits?: {count?: number};
+    uniqueVisits?: {count?: number};
+}
+
 // Function to group objects
-export const grouped = (arr: Array<any>, period: string, date?: string) => {
+export const grouped = (arr: Array<ValueTimeData>, period: string, date?: string) => {
 
     if (typeof arr == "undefined") return [];
-
+    // console.log(arr);
     const formatLabel = (t: string | number | Date) => {
         if (!t) return null;
         return period == "realtime" ? format(t, "HH:mm", options) :
@@ -181,20 +196,40 @@ export const grouped = (arr: Array<any>, period: string, date?: string) => {
 
 };
 
-export const merged = (stats: any, period: string, date?: string) => {
+export type GraphData = {label: string, pageViews: number, uniqueVisits: number, period: string, time: string};
 
-    const merged = stats ? stats?.reduce((total: any, document: any) => {
+// export type StatsData = Database["public"]["Tables"]["stats"]["Row"];
+export type StatsData = {
+    aggregates: Aggregates;
+    browsers: NameCountData[];
+    time: string;
+    platforms: NameCountData[];
+    utms: { sources: NameCountData[], campaigns: NameCountData[], contents: NameCountData[], terms: NameCountData[] };
+    hashes: NameCountData[];
+    systems: NameCountData[];
+    engines: NameCountData[];
+    pages: { all: NameCountData[], entry: NameCountData[], exit: NameCountData[] };
+    queries: NameCountData[];
+    referrers: NameCountData[];
+    countries: NameCountData[];
+    graph?: GraphData[];
+};
+
+export const merged = (stats: Array<StatsData> | null, period: string, date?: string) => {
+    
+    if (!stats || !Array.isArray(stats)) return stats;
+
+    const merged = stats.reduce((total: any, document: StatsData) => {
 
         return {
             ...total,
             aggregates: {
                 pageViews: { count: (total?.aggregates?.pageViews?.count || 0) + (document?.aggregates?.pageViews?.count || 0) },
                 uniqueVisits: { count: (total?.aggregates?.uniqueVisits?.count || 0) + (document?.aggregates?.uniqueVisits?.count || 0) },
-                singlePageVisits: { count: total?.aggregates?.singlePageVisits?.count || 0 + document?.aggregates?.singlePageVisits?.count || 0 },
-                bounceRate: { count: average(total?.aggregates?.bounceRate?.count, document?.aggregates?.bounceRate?.count) },
-                avgVisitDuration: { count: average(total?.aggregates?.avgVisitDuration?.count, document?.aggregates?.avgVisitDuration?.count) },
+                singlePageVisits: { count: total?.aggregates?.singlePageVisits?.count || 0 + (document?.aggregates?.singlePageVisits?.count || 0) },
+                bounceRate: { count: average(total?.aggregates?.bounceRate?.count || 0, document?.aggregates?.bounceRate?.count || 0) },
+                avgVisitDuration: { count: average(total?.aggregates?.avgVisitDuration?.count || 0, document?.aggregates?.avgVisitDuration?.count || 0) },
             },
-            graph: [...total.graph, { value: [document?.aggregates?.pageViews?.count || 0, document?.aggregates?.uniqueVisits?.count || 0], time: document?.time }],
             browsers: merge([...total?.browsers, ...document?.browsers]),
             systems: merge([...total?.systems, ...document?.systems]),
             platforms: merge([...total?.platforms, ...document?.platforms]),
@@ -214,38 +249,43 @@ export const merged = (stats: any, period: string, date?: string) => {
             },
             referrers: merge([...total?.referrers, ...document?.referrers]),
             countries: merge([...total?.countries, ...document?.countries]),
+            graph: [...total.graph, { value: [document?.aggregates?.pageViews?.count || 0, document?.aggregates?.uniqueVisits?.count || 0], time: document?.time }],
         };
     }, {
         aggregates: { pageViews: { count: 0 }, uniqueVisits: { count: 0 }, singlePageVisits: { count: 0 }, bounceRate: { count: 0 }, avgVisitDuration: { count: 0 }, },
-        graph: [], browsers: [], systems: [], platforms: [], engines: [],
+        browsers: [],
+        systems: [],
+        platforms: [],
+        engines: [],
         pages: { all: [], entry: [], exit: [] },
         hashes: [],
         queries: [],
         utms: { sources: [], campaigns: [], contents: [], terms: [], },
-        referrers: [], countries: [],
+        referrers: [],
+        countries: [],
+        graph: [],
     }
-    ) : [];
+    );
 
     merged.graph = grouped(merged.graph, period, date);
 
-    return merged;
+    return merged as StatsData;
 };
 
-export const toCSV = (array: Array<any>) => {
+export const toCSV = (input: StatsData) => {
     try {
-        const input = array; // typeof json == "object" ? json : JSON.parse(json);
         const replacer = (key: any, value: any) => value === null ? "" : value;
-        const header = Object.keys(input[0]);
-        let csv = input.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(","));
+        const header = Object.keys(input);
+        let csv = Object.values(input).map((row : any) => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(",")); // todo: broken
         csv.unshift(header.join(","));
         return csv.join("\r\n");
 
     } catch (e) {
         if (e instanceof SyntaxError) {
             console.log(e);
-            return `${JSON.stringify(array)} is not valid json.`;
+            return `${JSON.stringify(input)} is not valid json.`;
         } else {
-            return `${JSON.stringify(array)}, ${e}.`;
+            return `${JSON.stringify(input)}, ${e}.`;
         }
     }
 };

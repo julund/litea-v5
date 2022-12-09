@@ -1,4 +1,4 @@
-import { lowerCase } from "~/utils/helpers";
+import { lowerCase, type NameCountData } from "~/utils/helpers";
 import Bar from "../ui/bar";
 import Icon from "../icon";
 import { Dialog } from "../dialog";
@@ -6,7 +6,7 @@ import Counter from "./../counter";
 import { format } from "numerable";
 import { motion } from "framer-motion";
 
-const BarChartItem = ({ className, item, unknownName, iconCategory }: { className?: string; item: any; unknownName: string | null; iconCategory: string; }) => {
+const BarChartItem = ({ className, item, unknownName, iconCategory }: { className?: string; item: NameCountData & { percent: number }; unknownName: string | null; iconCategory: string; }) => {
     return (
         <motion.div className={className}>
             <div className="flex flex-row items-center justify-between gap-2 mb-1 text-sm break-all">
@@ -24,9 +24,9 @@ const BarChartItem = ({ className, item, unknownName, iconCategory }: { classNam
     );
 };
 
-const VerticalBarChart = ({ title, unknownName = "unknown", emptyTitle = "none", data }: { title: string; unknownName?: string | null; emptyTitle?: string; data: Array<any> }) => {
+const VerticalBarChart = ({ title, unknownName = "unknown", emptyTitle = "none", data }: { title: string; unknownName?: string | null; emptyTitle?: string; data: Array<NameCountData> }) => {
 
-    if (!unknownName) data = data.filter((item: any) => item.name !== "");
+    if (!unknownName) data = data.filter((item) => item.name !== "");
 
     const sumAll = data && data?.reduce((total, item) => total + item.count, 0);
     const dataWithPercent = data && data?.map(item => {
@@ -47,7 +47,7 @@ const VerticalBarChart = ({ title, unknownName = "unknown", emptyTitle = "none",
             {/* <div className="text-sm font-bold">{title}</div> */}
             {emptyItem && <BarChartItem item={emptyItem} iconCategory={title} unknownName={unknownName} />}
             {modifiedData && modifiedData.map((item, i) => <BarChartItem key={i} item={item} iconCategory={title} unknownName={unknownName} className="transition-opacity duration-300 rounded-sm opacity-80 hover:opacity-100 group" />)}
-            {modifiedRest &&
+            {(modifiedRest && restItem) &&
                 <Dialog
                     title={title}
                     toggleButton={

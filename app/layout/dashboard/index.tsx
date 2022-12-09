@@ -16,7 +16,8 @@ const DashboardLayout = ({ children, session }: { children: ReactNode; session?:
                 <Nav
                     forceToggle
                     absolute
-                    className="flex flex-col items-start self-end gap-2 px-4 py-2 rounded-sm bg-base-100 max-w-min"
+                    className="flex items-start w-full gap-2 shrink px-4 pt-4 pb-2"
+                    toggleClassName="flex flex-col items-start self-end gap-2 px-4 py-2 rounded-sm bg-base-100 max-w-min"
                     buttonContent={ (e: any) => <div className="flex items-center gap-2 text-base-500">{session?.data?.handle}{e ? <IconChevronUp size={16} className="text-base-400"/> : <IconChevronDown size={16} className="text-base-400"/>}</div>}
                 >
                     <IndexNavLink to="/dashboard"><IconDashboard size={22} />Dashboard</IndexNavLink>

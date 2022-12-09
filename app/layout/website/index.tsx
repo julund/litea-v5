@@ -15,7 +15,7 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
             <Header>
                 <Nav
                     absolute
-                    className="flex flex-col gap-2 p-4 rounded-sm md:flex-row md:bg-transparent bg-base-100 md:p-0 "
+                    toggleClassName="flex flex-col gap-2 p-4 rounded-sm md:flex-row md:bg-transparent bg-base-100 md:p-0 "
                 >
                     <SiteNavLink to="/features">Features</SiteNavLink>
                     <SiteNavLink to="/pricing">Pricing</SiteNavLink>

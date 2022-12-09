@@ -1,5 +1,6 @@
 import { getSession } from "./auth.server";
 import { anonClient } from "./supabase";
+import type { StatsData} from "~/utils/helpers";
 import { getPeriodByName, merged, zonedTimeToUtcString } from "~/utils/helpers";
 
 async function initclient(request: Request) {
@@ -35,7 +36,9 @@ export async function getSiteStats(request: Request, siteId: string, period: str
     const from = zonedTimeToUtcString(getPeriodByName(period, time).from);
     const to = zonedTimeToUtcString(getPeriodByName(period, time).to);
     const { data, error } = await client.from("stats").select().eq("site_id", siteId).gte("time", from).lte("time", to);
-    return { data: mergeData === true ? merged(data, period, time) : data, error };
+    // console.log(data)
+    const statsData = data as unknown as StatsData[];
+    return { data: mergeData === true ? merged(statsData, period, time) : statsData[0], error };
 
 }
 

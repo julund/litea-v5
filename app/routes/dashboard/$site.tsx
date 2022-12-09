@@ -61,8 +61,8 @@ export default function SitePage() {
     return (
         <Container>
             <nav className="sticky flex items-center justify-end w-full gap-4 px-4 py-2 bg-base-50">
-                <Breadcrumbs current={site?.data?.title} />
-                <ExternalLink to={site.data.url} className="text-base-500" title="Open site in new tab">{site?.data?.url}</ExternalLink>
+                <Breadcrumbs current={site.data.title} />
+                <ExternalLink to={site.data.url} className="text-base-500" title="Open site in new tab">{site.data.url}</ExternalLink>
             </nav>
 
             {/* <BubbleChart title="Browsers" data={stats.data?.browsers.map( (d: any) => ({title: d.name, value: d.count}))} /> */}
@@ -71,7 +71,7 @@ export default function SitePage() {
                 {/* <h1>{site?.data?.title}</h1> */}
                 <PeriodSelect />
                 {site?.error && <Message message={{ type: "error", text: site?.error.message }} />}
-                <Panel title="" stats={stats.data.aggregates} />
+                <Panel title="" data={stats.data.aggregates} />
                 {/* { JSON.stringify(stats.data)} */}
 
                 {/* <HorizontalBarChart data={isRealtime ? stats.data?.graph && stats.data?.graph.slice(30, 60) : stats.data?.graph} /> */}
@@ -97,9 +97,9 @@ export default function SitePage() {
                         }
                     </div>
                     :
-                    <HorizontalBarChart data={stats.data?.graph} />
+                    stats.data?.graph ? <HorizontalBarChart data={stats.data?.graph} /> :
+                        <div>No data</div>
                 }
-
                 {/* <LineChart data={isRealtime ? stats?.graph && stats?.graph.slice(30, 60) : stats?.graph} /> */}
                 {/* <Map className="col-span-2 p-4" data={stats.data?.countries} /> */}
                 <div className="grid items-stretch justify-center grid-cols-1 gap-4 md:grid-cols-2">
@@ -107,7 +107,7 @@ export default function SitePage() {
                         <VerticalBarChart title="Countries" data={stats.data?.countries?.map((country: any) => ({ ...country, countryCode: country.name, name: countryNameFromCode(country.name) }))} />
                     </Tab>
                     <Tab chevronStyle={false} title="Referrers">
-                        <VerticalBarChart title="Referrers" unknownName="direct/none" data={stats.data?.referrers?.map((referrer: any) => ({ ...referrer, domain: referrer.name }))} />
+                        <VerticalBarChart title="Referrers" unknownName="direct/none" data={stats.data?.referrers?.map((referrer) => ({ ...referrer, domain: referrer.name }))} />
                     </Tab>
                 </div>
                 <div className="grid items-stretch justify-center grid-cols-1 gap-4 md:grid-cols-1">
