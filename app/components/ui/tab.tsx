@@ -1,10 +1,12 @@
 import { Children, cloneElement } from "react";
-import { useCounter } from "react-use";
-import { IconChevronLeft, IconChevronRight, IconChevronUp } from "~/components/icons";
+import { useCounter, useToggle } from "react-use";
+import { IconChevronDown, IconChevronLeft, IconChevronRight, IconChevronUp } from "~/components/icons";
 
 const Tab = ({ title, titles, children, chevronStyle = false, ...props }: { title?: string; titles?: string[], children: React.ReactNode, chevronStyle?: boolean, props?: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> }) => {
 
     const items = Children.toArray(children).filter(e => typeof e === "object") as React.ReactElement[];
+
+    const [collapsed, toggleCollapsed] = useToggle(true);
 
     const min = 1;
     const max = items.length;
@@ -12,12 +14,14 @@ const Tab = ({ title, titles, children, chevronStyle = false, ...props }: { titl
     const [current, { inc, dec, set }] = useCounter(min, max, min);
 
     return (
-            <div className="min-h-[150px] p-4 bg-white shadow-lg shadow-base-400/50" {...props}>
-                <div className="flex items-center gap-2">
-                    <h3 className="pb-2 text-base grow text-base-500">{title && title}</h3>
-                    <button className="shrink text-base-400"><IconChevronUp/></button>
-                </div>
-                <span className="flex flex-row items-center mb-2">
+        <div className="p-4 bg-white shadow-lg shadow-base-400/50" {...props}> 
+        {/* min-h-[150px]  */}
+            <button onClick={toggleCollapsed} className="flex text-left justify-center gap-2 w-full text-base-500 hover:text-base-700">
+                <h3 className="text-base grow">{title && title}</h3>
+                <div className="shrink text-base-400">{collapsed ? <IconChevronDown /> : <IconChevronUp />}</div>
+            </button>
+            <div className={ collapsed ? "" : "hidden"}>
+                <span className="flex flex-row items-center my-2">
                     {!chevronStyle ?
                         <span className="flex flex-row flex-wrap flex-shrink gap-1">
                             {titles && titles.map((title, index) =>
@@ -48,6 +52,7 @@ const Tab = ({ title, titles, children, chevronStyle = false, ...props }: { titl
                 {current && cloneElement(items[current - 1])}
                 {/* { items.map(i => i)} */}
             </div>
+        </div>
     );
 };
 
