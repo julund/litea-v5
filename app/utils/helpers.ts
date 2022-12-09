@@ -10,11 +10,11 @@ export type ClassArray = ClassValue[];
 
 export const classNames = (...inputs: ClassValue[]) => [...new Set(clsx(...inputs).split(" "))].join(" ");
 
-const options: OptionsWithTZ = { timeZone: "Europe/Oslo", locale: enUS, weekStartsOn: 1 };
-const timeZone = options.timeZone as string;
+export const tzOptions: OptionsWithTZ = { timeZone: "Europe/Oslo", locale: enUS, weekStartsOn: 1 };
+const timeZone = tzOptions.timeZone as string;
 
 export const zonedTimeToUtcString = (date: string | number | Date) => {
-    return zonedTimeToUtc(date, timeZone, options).toUTCString();
+    return zonedTimeToUtc(date, timeZone, tzOptions).toUTCString();
 };
 
 interface Period {
@@ -36,47 +36,47 @@ export function getPeriodByName(periodName: string, time?: string) {
     const period = periods.find(({ id }) => id === periodName);
     if (!period) throw new Error("unknown period");
     // console.log({ period });
-    const parsedTime = time ? parse(time, "yyyy-MM-dd", Date.now(), options) : Date.now();
-    const utcTime = utcToZonedTime(parsedTime, timeZone, options);
+    const parsedTime = time ? parse(time, "yyyy-MM-dd", Date.now(), tzOptions) : Date.now();
+    const utcTime = utcToZonedTime(parsedTime, timeZone, tzOptions);
 
     switch (period.id) {
         case "day":
             return ({
                 get from() { return startOfDay(utcTime); },
                 get to() { return endOfDay(utcTime); },
-                get previous() { return format(subDays(utcTime, 1), "yyyy-MM-dd", options); },
-                get next() { return isToday(utcTime) ? undefined : format(addDays(utcTime, 1), "yyyy-MM-dd", options); },
-                get title() { return format(this.from, "cccc", options); },
-                get description() { return format(this.from, "PPP", options); },
+                get previous() { return format(subDays(utcTime, 1), "yyyy-MM-dd", tzOptions); },
+                get next() { return isToday(utcTime) ? undefined : format(addDays(utcTime, 1), "yyyy-MM-dd", tzOptions); },
+                get title() { return format(this.from, "cccc", tzOptions); },
+                get description() { return format(this.from, "PPP", tzOptions); },
                 get labelDates() { return eachHourOfInterval({ start: this.from, end: this.to }); },
             });
         case "week":
             return ({
-                get from() { return startOfWeek(utcTime, options); },
-                get to() { return endOfWeek(utcTime, options); },
-                get previous() { return format(subWeeks(this.from, 1), "yyyy-MM-dd", options); },
-                get next() { return isThisWeek(utcTime, options) ? undefined : format(addWeeks(this.from, 1), "yyyy-MM-dd", options); },
-                get title() { return `Week ${format(this.from, "I", options)}`; },
-                get description() { return format(this.from, "yyyy", options); },
+                get from() { return startOfWeek(utcTime, tzOptions); },
+                get to() { return endOfWeek(utcTime, tzOptions); },
+                get previous() { return format(subWeeks(this.from, 1), "yyyy-MM-dd", tzOptions); },
+                get next() { return isThisWeek(utcTime, tzOptions) ? undefined : format(addWeeks(this.from, 1), "yyyy-MM-dd", tzOptions); },
+                get title() { return `Week ${format(this.from, "I", tzOptions)}`; },
+                get description() { return format(this.from, "yyyy", tzOptions); },
                 get labelDates() { return eachDayOfInterval({ start: this.from, end: this.to }); },
             });
         case "month":
             return ({
                 get from() { return startOfMonth(utcTime); },
                 get to() { return endOfMonth(utcTime); },
-                get previous() { return format(subMonths(this.from, 1), "yyyy-MM-dd", options); },
-                get next() { return isThisMonth(utcTime) ? undefined : format(addMonths(this.from, 1), "yyyy-MM-dd", options); },
-                get title() { return format(this.from, "LLLL", options); },
-                get description() { return format(this.from, "yyyy", options); },
+                get previous() { return format(subMonths(this.from, 1), "yyyy-MM-dd", tzOptions); },
+                get next() { return isThisMonth(utcTime) ? undefined : format(addMonths(this.from, 1), "yyyy-MM-dd", tzOptions); },
+                get title() { return format(this.from, "LLLL", tzOptions); },
+                get description() { return format(this.from, "yyyy", tzOptions); },
                 get labelDates() { return eachDayOfInterval({ start: this.from, end: this.to }); },
             });
         case "year":
             return ({
                 get from() { return startOfYear(utcTime); },
                 get to() { return endOfYear(utcTime); },
-                get previous() { return format(subYears(this.from, 1), "yyyy-MM-dd", options); },
-                get next() { return isThisYear(utcTime) ? undefined : format(addYears(this.from, 1), "yyyy-MM-dd", options); },
-                get title() { return format(this.from, "yyyy", options); },
+                get previous() { return format(subYears(this.from, 1), "yyyy-MM-dd", tzOptions); },
+                get next() { return isThisYear(utcTime) ? undefined : format(addYears(this.from, 1), "yyyy-MM-dd", tzOptions); },
+                get title() { return format(this.from, "yyyy", tzOptions); },
                 get description() { return ""; },
                 get labelDates() { return eachMonthOfInterval({ start: this.from, end: this.to }); },
             });
@@ -86,7 +86,7 @@ export function getPeriodByName(periodName: string, time?: string) {
                 get to() { return endOfYear(utcTime); },
                 get previous() { return undefined; },
                 get next() { return undefined; },
-                get title() { return `${format(this.from, "yyyy", options)} - ${format(this.to, "yyyy", options)}`; },
+                get title() { return `${format(this.from, "yyyy", tzOptions)} - ${format(this.to, "yyyy", tzOptions)}`; },
                 get description() { return "all time"; },
                 get labelDates() { return eachYearOfInterval({ start: this.from, end: this.to }); },
             });
@@ -94,8 +94,8 @@ export function getPeriodByName(periodName: string, time?: string) {
             return ({
                 get from() { return subMinutes(utcTime, 60); }, // should be 30 mins but need to fix realtime view
                 get to() { return utcTime; },  // startOfHour, endOfHour
-                get title() { return format(this.from, "HH:mm", options); },
-                get description() { return format(this.to, "HH:mm", options); },
+                get title() { return format(this.from, "HH:mm", tzOptions); },
+                get description() { return format(this.to, "HH:mm", tzOptions); },
                 get labelDates() { return eachMinuteOfInterval({ start: this.from, end: this.to }, { step: 1 }); },
             });
     }
@@ -142,12 +142,12 @@ export const grouped = (arr: Array<ValueTimeData>, period: string, date?: string
     // console.log(arr);
     const formatLabel = (t: string | number | Date) => {
         if (!t) return null;
-        return period == "realtime" ? format(t, "HH:mm", options) :
-            period == "day" ? format(t, "HH:mm", options) :
-                period == "week" ? format(t, "eee", options) :
-                    period == "month" ? format(t, "EEEEEE do", options) :
-                        period == "year" ? format(t, "MMM", options) :
-                            format(t, "yyyy", options);
+        return period == "realtime" ? format(t, "HH:mm", tzOptions) :
+            period == "day" ? format(t, "HH:mm", tzOptions) :
+                period == "week" ? format(t, "eee", tzOptions) :
+                    period == "month" ? format(t, "EEEEEE do", tzOptions) :
+                        period == "year" ? format(t, "MMM", tzOptions) :
+                            format(t, "yyyy", tzOptions);
     };
 
     const linkPeriod = () => {
@@ -161,7 +161,7 @@ export const grouped = (arr: Array<ValueTimeData>, period: string, date?: string
     };
 
     const localizedFormatLabel = (d: string | number | Date) => {
-        const time = utcToZonedTime(d, timeZone, options);
+        const time = utcToZonedTime(d, timeZone, tzOptions);
         const offset = getTimezoneOffset(timeZone);
         const localizedTime = addMilliseconds(time, offset);
         return formatLabel(localizedTime) || localizedTime.toDateString();
@@ -272,11 +272,12 @@ export const merged = (stats: Array<StatsData> | null, period: string, date?: st
     return merged as StatsData;
 };
 
-export const toCSV = (input: StatsData) => {
+export const toCSV = (input: StatsData[]) => {
     try {
+        // const input = array; // typeof json == "object" ? json : JSON.parse(json);
         const replacer = (key: any, value: any) => value === null ? "" : value;
-        const header = Object.keys(input);
-        let csv = Object.values(input).map((row : any) => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(",")); // todo: broken
+        const header = Object.keys(input[0]);
+        let csv = input.map((row: any) => header.map((fieldName: any) => JSON.stringify(row[fieldName], replacer)).join(","));
         csv.unshift(header.join(","));
         return csv.join("\r\n");
 

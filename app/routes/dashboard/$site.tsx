@@ -1,7 +1,7 @@
 import invariant from "tiny-invariant";
 import Container from "~/layout/shared/container";
 import { useLoaderData, useParams, useSearchParams } from "@remix-run/react";
-import { getSite, getSiteStats, getSiteVisitors } from "~/lib/db.server";
+import { getMergedSiteStats, getSite, getSiteVisitors } from "~/lib/db.server";
 import { json, type LoaderFunction } from "@remix-run/node";
 import { ExternalLink, Link } from "~/components/link";
 import PeriodSelect from "~/components/periodSelect";
@@ -22,7 +22,7 @@ export const handle = { title: "Site" };
 // this is a handy way to say: "x is whatever type y() resolves to"
 type LoaderData = {
     site: Awaited<ReturnType<typeof getSite>>;
-    stats: Awaited<ReturnType<typeof getSiteStats>>;
+    stats: Awaited<ReturnType<typeof getMergedSiteStats>>;
     visitors: Awaited<ReturnType<typeof getSiteVisitors>>;
 };
 
@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async ({ request, params }: { request: Req
     const period = url.searchParams.get("period") || "realtime";
     const time = period === "realtime" ? undefined : url.searchParams.get("time") || undefined;
 
-    const stats = site.data?.id ? await getSiteStats(request, site.data?.id, period, time) : { data: null, error: null };
+    const stats = site.data?.id ? await getMergedSiteStats(request, site.data?.id, period, time) : { data: null, error: null };
     const visitors = site.data?.id && period == "realtime" ? await getSiteVisitors(request, site.data?.id, period, time) : { data: null, error: null };
 
     return json<LoaderData>({ site, stats, visitors }, {

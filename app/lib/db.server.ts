@@ -30,15 +30,22 @@ export async function getSite(request: Request, url: string) {
 
 }
 
-export async function getSiteStats(request: Request, siteId: string, period: string, time?: string, mergeData = true) {
+export async function getSiteStats(request: Request, siteId: string, period: string, time?: string) {
 
     const client = await initclient(request);
     const from = zonedTimeToUtcString(getPeriodByName(period, time).from);
     const to = zonedTimeToUtcString(getPeriodByName(period, time).to);
     const { data, error } = await client.from("stats").select().eq("site_id", siteId).gte("time", from).lte("time", to);
-    // console.log(data)
     const statsData = data as unknown as StatsData[];
-    return { data: mergeData === true ? merged(statsData, period, time) : statsData[0], error };
+    return { data: statsData, error };
+
+}
+
+export async function getMergedSiteStats(request: Request, siteId: string, period: string, time?: string) {
+
+    const { data, error } = await getSiteStats(request, siteId, period, time);
+    const statsData = data as unknown as StatsData[];
+    return { data: merged(statsData, period, time), error };
 
 }
 
