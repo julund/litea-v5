@@ -11,7 +11,7 @@ const BarChartItem = ({ className, item, unknownName, iconCategory }: { classNam
         <motion.div className={className}>
             <div className="flex flex-row items-center justify-between gap-2 mb-1 text-sm break-all">
                 <div className="flex items-center gap-1">
-                    <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} className="text-base-500" />
+                    {!item.name.includes(" other ") && <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} className="text-base-500" />}
                     <span className="max-w-sm line-clamp-1">{item.name || unknownName}</span>
                 </div>
                 <div className="flex items-end gap-2">
@@ -39,7 +39,7 @@ const VerticalBarChart = ({ title, unknownName = "unknown", emptyTitle = "none",
     const sumRest = rest && rest?.reduce((total, item) => total + item.count, 0);
     const modifiedData = sumRest > 1 ? top && [...top] : top && [...top, ...rest];
     const modifiedRest = sumRest > 1 ? [...rest] : null;
-    const restItem = sumRest > 1 ? { name: `${rest?.length} other ${lowerCase(title)}`, count: sumRest, percent: (sumRest / sumAll) } : null;
+    const restItem = sumRest > 1 ? { name: `› ${rest?.length} other ${lowerCase(title)}`, count: sumRest, percent: (sumRest / sumAll) } : null;
     const emptyItem = modifiedData?.length == 0 ? { name: emptyTitle, count: 0, percent: 0 } : null;
 
     return (
