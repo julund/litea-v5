@@ -96,7 +96,7 @@ export const Tooltips = ({ delay = 250, defaultPosition = "top-center" }: { dela
         } else {
             setElements(validElements);
         }
-        console.log(...elements);
+        // console.log(...elements);
     };
 
     useEvent("mouseover", handleMouseOver);

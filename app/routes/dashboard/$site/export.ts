@@ -19,7 +19,7 @@ export async function loader({ request, params }: { request: Request; params: an
     const stats = site.data?.id ? await getSiteStats(request, site.data?.id, period, time) : { data: null, error: null };
     if (stats?.error) throw new Response("Not Found", { status: 404 });
     if (!stats?.data || stats?.data?.length === 0) throw new Response("No data", { status: 200 });
-    console.log(stats?.data);
+    // console.log(stats?.data);
     // const data = stats?.data;
     const data = stats?.data.map((stat: any) => {
         const arr: any = [];
@@ -30,7 +30,7 @@ export async function loader({ request, params }: { request: Request; params: an
         // console.log(...stat.countries);
         return { ...arr };
     });
-    console.log(data);
+    // console.log(data);
 
     const from = getPeriodByName(period, time).from;
     const to = getPeriodByName(period, time).to;
