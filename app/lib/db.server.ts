@@ -32,10 +32,11 @@ export async function getSite(request: Request, url: string) {
 
 export async function getSiteStats(request: Request, siteId: string, period: string, time?: string) {
 
+    const {from, to } = getPeriodByName(period, time);
     const client = await initclient(request);
-    const from = zonedTimeToUtcString(getPeriodByName(period, time).from);
-    const to = zonedTimeToUtcString(getPeriodByName(period, time).to);
-    const { data, error } = await client.from("stats").select().eq("site_id", siteId).gte("time", from).lte("time", to);
+    const fromTime = zonedTimeToUtcString(from);
+    const toTime = zonedTimeToUtcString(to);
+    const { data, error } = await client.from("stats").select().eq("site_id", siteId).gte("time", fromTime).lte("time", toTime);
     const statsData = data as unknown as StatsData[];
     return { data: statsData, error };
 
@@ -46,6 +47,21 @@ export async function getMergedSiteStats(request: Request, siteId: string, perio
     const { data, error } = await getSiteStats(request, siteId, period, time);
     const statsData = data as unknown as StatsData[];
     return { data: merged(statsData, period, time), error };
+
+}
+
+export async function getMergedSiteStatsWithChange(request: Request, siteId: string, period: string, time?: string) {
+
+    const { data: currentData, error: currentError } = await getMergedSiteStats(request, siteId, period, time);
+    const currentStatsData = currentData as unknown as StatsData[];
+
+    const { previous } = getPeriodByName(period, time);
+    const { data: previousData, error: previousError } = await getMergedSiteStats(request, siteId, period, previous);
+    const previousStatsData = previousData as unknown as StatsData[];
+
+    console.log(currentStatsData)
+    console.log(previousStatsData)
+    return { data: merged(currentStatsData, period, time), error: currentError || previousError };
 
 }
 

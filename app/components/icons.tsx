@@ -16,6 +16,11 @@ const defaultIconProps: IconProps = {
 };
 
 export const IconArrowBack = ({ ...props }: IconProps) => icon.TbArrowBack({ ...defaultIconProps, ...props });
+
+export const IconArrowDownRight = ({ ...props }: IconProps) => icon.TbArrowDownRight({ ...defaultIconProps, ...props });
+export const IconArrowUpRight = ({ ...props }: IconProps) => icon.TbArrowUpRight({ ...defaultIconProps, ...props });
+export const IconArrowsDownUp = ({ ...props }: IconProps) => icon.TbArrowsDownUp({ ...defaultIconProps, ...props });
+
 export const IconX = ({ ...props }: IconProps) => icon.TbX({ ...defaultIconProps, ...props });
 export const IconCheck = ({ ...props }: IconProps) => icon.TbCheck({ ...defaultIconProps, ...props });
 export const IconDashboard = ({ ...props }: IconProps) => icon.TbDashboard({ ...defaultIconProps, ...props });

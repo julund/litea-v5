@@ -28,7 +28,7 @@ const HorizontalBarChart = ({ data }: { data: Array<any> }) => {
                     return (
                         <div key={i} className="flex-grow bar group">
                             {item.pageViews > 0 || item.pageViews === 0 ?
-                            <Link to={item.period ? `?period=${item.period}&time=${item.time}` : "?period=realtime"} prefetch="intent" className="h-full opacity-80 hover:opacity-100 transition duration-300">
+                            <Link to={item.period && `?period=${item.period}&time=${item.time}`} prefetch="intent" className="h-full opacity-80 hover:opacity-100 transition duration-300">
                                 {/* <div className="h-full cursor-pointer opacity-80 hover:opacity-100 transition duration-300"> */}
                                     <div className="flex justify-center text-sm font-semibold p-1 h-6 rounded-sm text-base-700 opacity-0 group-hover:opacity-100 transition duration-500 mb-2">
                                         {format(item.pageViews, "0a")}

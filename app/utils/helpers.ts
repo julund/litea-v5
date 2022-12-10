@@ -151,8 +151,8 @@ export const grouped = (arr: Array<ValueTimeData>, period: string, date?: string
     };
 
     const linkPeriod = () => {
-        return period === "realtime" ? "realtime" :
-            period === "day" ? "realtime" :
+        return period === "realtime" ? null :
+            period === "day" ? null :
                 period === "week" ? "day" :
                     period === "month" ? "day" :
                         period === "year" ? "month" :
@@ -183,8 +183,9 @@ export const grouped = (arr: Array<ValueTimeData>, period: string, date?: string
     // console.log(periodLabels);
     periodLabels.forEach(d => {
         const label = formatLabel(d); // localizedFormatLabel(d);
-        if (label) initial[label] = filtered[label] ? filtered[label] : isBefore(d, Date.now()) ? [0, 0] : undefined;
-    });
+        if (label) initial[label] = filtered[label] ? filtered[label] : isBefore(d, Date.now()) ? [0, 0, format(d, "yyyy-MM-dd")] : undefined;
+    }); 
+    // console.log(periodLabels);
     // console.log(initial);
 
     const result = Object.entries(initial).map(([key, value]: [key: string, value: any]) => {

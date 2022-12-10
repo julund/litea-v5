@@ -4,7 +4,7 @@ import { IconExternalLink } from "./icons";
 import { classNames } from "~/utils/helpers";
 
 export const Link = ({ children, ...props }: { children: ReactNode; } & LinkProps ) => {
-
+    if(!props.to) return <span className={props.className}>{children}</span>;
     return (
         <RemixLink {...props}>
             {children}

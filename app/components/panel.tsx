@@ -2,6 +2,7 @@
 import { format } from "numerable";
 import type { Aggregates } from "~/utils/helpers";
 import Counter from "./counter";
+import { IconArrowUpRight } from "./icons";
 
 // const short: Locale = {
 //     formatDistance: (token, count) => {
@@ -19,9 +20,12 @@ import Counter from "./counter";
 
 const PanelItem = ({ counterValue, counterCallback, counterConfig, title }: { counterValue: number; counterCallback: Function; counterConfig?: { duration?: number | undefined; }; title: string }) => {
     return (
-        <div className="flex flex-col items-center justify-center px-4 py-2 bg-white bg-opacity-50">
-            <Counter value={counterValue} callback={(value: number) => counterCallback(value)} config={counterConfig} className="text-4xl font-black tracking-wider tabular-nums font-title grow" />
-            <span className="text-sm text-gray-500 shrink">{title}</span>
+        <div className="flex flex-col items-center justify-center px-3 py-4 bg-white bg-opacity-50">
+            <span className="flex flex-col gap-2 justify-center items-center">
+                <span className="flex justify-center items-end text-base-600"><IconArrowUpRight className="text-green-500" size={16}/>12%</span>
+                <Counter value={counterValue} callback={(value: number) => counterCallback(value)} config={counterConfig} className="text-3xl font-black tracking-wider tabular-nums font-title grow" />
+            </span>
+            <span className="text-sm text-gray-500 shrink">{title}</span> 
         </div>
     );
 };
@@ -38,7 +42,7 @@ const Panel = ({ title, data }: { title: string; data: Aggregates }) => {
                 <PanelItem title="Avg. visit duration" counterValue={data?.avgVisitDuration?.count || 0} counterCallback={
                     // (n: number) => duration(n, short)
                     (n: number) => format(n / 1000, "00:00:00")
-                    } />
+                } />
             </div>
         </div>
     );

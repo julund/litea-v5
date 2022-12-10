@@ -1,7 +1,7 @@
 import invariant from "tiny-invariant";
 import Container from "~/layout/shared/container";
 import { useLoaderData, useParams, useSearchParams } from "@remix-run/react";
-import { getMergedSiteStats, getSite, getSiteVisitors } from "~/lib/db.server";
+import { getMergedSiteStats, getMergedSiteStatsWithChange, getSite, getSiteVisitors } from "~/lib/db.server";
 import { json, type LoaderFunction } from "@remix-run/node";
 import { ExternalLink, Link } from "~/components/link";
 import PeriodSelect from "~/components/periodSelect";
@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async ({ request, params }: { request: Req
     const period = url.searchParams.get("period") || "realtime";
     const time = period === "realtime" ? undefined : url.searchParams.get("time") || undefined;
 
-    const stats = site.data?.id ? await getMergedSiteStats(request, site.data?.id, period, time) : { data: null, error: null };
+    const stats = site.data?.id ? await getMergedSiteStatsWithChange(request, site.data?.id, period, time) : { data: null, error: null };
     const visitors = site.data?.id && period == "realtime" ? await getSiteVisitors(request, site.data?.id, period, time) : { data: null, error: null };
 
     return json<LoaderData>({ site, stats, visitors }, {
