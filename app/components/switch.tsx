@@ -4,7 +4,7 @@ import { classNames } from "~/utils/helpers";
 
 const loadFeatures = () => import("~/lib/motion.js").then(feature => feature.domAnimation);
 
-export default function Switch({ title, defaultState = false, size = 22, className, onChange }: { title?: string | Function; defaultState?: boolean; size?: number, className?: string; onChange?: Function }) {
+export default function Switch({ title, defaultState = false, size = 22, className, onChange }: { title?: string | ((checked: boolean) => string) ; defaultState?: boolean; size?: number, className?: string; onChange?: Function }) {
 
     const [checked, toggle] = useToggle(defaultState);
 

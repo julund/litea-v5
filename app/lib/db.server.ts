@@ -1,12 +1,13 @@
 import { getSession } from "./auth.server";
 import { anonClient } from "./supabase";
-import type { StatsData} from "~/utils/helpers";
+import { mergedStatsDataWithChange, type StatsData} from "~/utils/helpers";
 import { getPeriodByName, merged, zonedTimeToUtcString } from "~/utils/helpers";
 
 async function initclient(request: Request) {
     const { data: session } = await getSession(request);
     // if (!session?.token) return { data: null, error: { code: "403", details: "", hint: "", message: "Missing authentication token"} };
     const client = anonClient(session?.token);
+    console.log("client init");
     // console.log(client);
     return client;
 }
@@ -59,9 +60,14 @@ export async function getMergedSiteStatsWithChange(request: Request, siteId: str
     const { data: previousData, error: previousError } = await getMergedSiteStats(request, siteId, period, previous);
     const previousStatsData = previousData as unknown as StatsData[];
 
-    console.log(currentStatsData)
-    console.log(previousStatsData)
-    return { data: merged(currentStatsData, period, time), error: currentError || previousError };
+    const  mergedCurrent = merged(currentStatsData, period, time);
+    const  mergedPrevious = merged(previousStatsData, period, time);
+
+    // console.log(mergedCurrent);
+    // console.log(mergedPrevious);
+    const data = mergedStatsDataWithChange(mergedCurrent, mergedPrevious);
+
+    return { data, error: currentError || previousError };
 
 }
 

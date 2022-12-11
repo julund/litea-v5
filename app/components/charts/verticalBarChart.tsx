@@ -11,7 +11,7 @@ const BarChartItem = ({ className, item, unknownName, iconCategory }: { classNam
         <motion.div className={className}>
             <div className="flex flex-row items-center justify-between gap-2 mb-1 text-sm break-all">
                 <div className="flex items-center gap-1">
-                    {!item.name.includes(" other ") && <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} className="text-base-500" />}
+                    {!item?.name?.includes(" other ") && <Icon title={item?.countryCode ? item?.countryCode : item?.domain ? item?.domain : item.name} category={iconCategory} className="text-base-500" />}
                     <span className="max-w-sm line-clamp-1">{item.name || unknownName}</span>
                 </div>
                 <div className="flex items-end gap-2">

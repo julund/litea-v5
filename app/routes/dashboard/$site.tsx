@@ -1,7 +1,7 @@
 import invariant from "tiny-invariant";
 import Container from "~/layout/shared/container";
 import { useLoaderData, useParams, useSearchParams } from "@remix-run/react";
-import { getMergedSiteStats, getMergedSiteStatsWithChange, getSite, getSiteVisitors } from "~/lib/db.server";
+import { getMergedSiteStatsWithChange, getSite, getSiteVisitors } from "~/lib/db.server";
 import { json, type LoaderFunction } from "@remix-run/node";
 import { ExternalLink, Link } from "~/components/link";
 import PeriodSelect from "~/components/periodSelect";
@@ -22,7 +22,7 @@ export const handle = { title: "Site" };
 // this is a handy way to say: "x is whatever type y() resolves to"
 type LoaderData = {
     site: Awaited<ReturnType<typeof getSite>>;
-    stats: Awaited<ReturnType<typeof getMergedSiteStats>>;
+    stats: Awaited<ReturnType<typeof getMergedSiteStatsWithChange>>;
     visitors: Awaited<ReturnType<typeof getSiteVisitors>>;
 };
 

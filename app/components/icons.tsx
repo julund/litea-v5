@@ -19,7 +19,12 @@ export const IconArrowBack = ({ ...props }: IconProps) => icon.TbArrowBack({ ...
 
 export const IconArrowDownRight = ({ ...props }: IconProps) => icon.TbArrowDownRight({ ...defaultIconProps, ...props });
 export const IconArrowUpRight = ({ ...props }: IconProps) => icon.TbArrowUpRight({ ...defaultIconProps, ...props });
-export const IconArrowsDownUp = ({ ...props }: IconProps) => icon.TbArrowsDownUp({ ...defaultIconProps, ...props });
+export const IconArrowsDoubleSwNe = ({ ...props }: IconProps) => icon.TbArrowsDoubleSwNe({ ...defaultIconProps, ...props });
+
+export const IconArrowsChange = ({ value, ...props }: { value: number;} & IconProps) => value > 0.009 ? 
+<IconArrowUpRight color="green" {...props}/> : value < -0.009 ? 
+<IconArrowDownRight color="red" {...props}/> : 
+<IconArrowsDoubleSwNe color="gray" {...props}/>;
 
 export const IconX = ({ ...props }: IconProps) => icon.TbX({ ...defaultIconProps, ...props });
 export const IconCheck = ({ ...props }: IconProps) => icon.TbCheck({ ...defaultIconProps, ...props });

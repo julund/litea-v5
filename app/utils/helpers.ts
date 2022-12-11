@@ -127,12 +127,14 @@ export const merge = (arr: Array<NameCountData>) => {
 
 export type ValueTimeData = { value: [number, number], time: string };
 
+export type CountData = { count: number, change?: number; };
+
 export type Aggregates = {
-    avgVisitDuration?: {count?: number};
-    bounceRate?: {count?: number};
-    pageViews?: {count?: number};
-    singlePageVisits?: {count?: number};
-    uniqueVisits?: {count?: number};
+    avgVisitDuration: CountData;
+    bounceRate: CountData;
+    pageViews: CountData;
+    singlePageVisits: CountData;
+    uniqueVisits: CountData;
 }
 
 // Function to group objects
@@ -145,7 +147,7 @@ export const grouped = (arr: Array<ValueTimeData>, period: string, date?: string
         return period == "realtime" ? format(t, "HH:mm", tzOptions) :
             period == "day" ? format(t, "HH:mm", tzOptions) :
                 period == "week" ? format(t, "eee", tzOptions) :
-                    period == "month" ? format(t, "EEEEEE do", tzOptions) :
+                    period == "month" ? format(t, "eee do", tzOptions) :
                         period == "year" ? format(t, "MMM", tzOptions) :
                             format(t, "yyyy", tzOptions);
     };
@@ -184,7 +186,7 @@ export const grouped = (arr: Array<ValueTimeData>, period: string, date?: string
     periodLabels.forEach(d => {
         const label = formatLabel(d); // localizedFormatLabel(d);
         if (label) initial[label] = filtered[label] ? filtered[label] : isBefore(d, Date.now()) ? [0, 0, format(d, "yyyy-MM-dd")] : undefined;
-    }); 
+    });
     // console.log(periodLabels);
     // console.log(initial);
 
@@ -197,7 +199,7 @@ export const grouped = (arr: Array<ValueTimeData>, period: string, date?: string
 
 };
 
-export type GraphData = {label: string, pageViews: number, uniqueVisits: number, period: string, time: string};
+export type GraphData = { label: string, pageViews: number, uniqueVisits: number, period: string, time: string };
 
 // export type StatsData = Database["public"]["Tables"]["stats"]["Row"];
 export type StatsData = {
@@ -217,7 +219,7 @@ export type StatsData = {
 };
 
 export const merged = (stats: Array<StatsData> | null, period: string, date?: string) => {
-    
+
     if (!stats || !Array.isArray(stats)) return stats;
 
     const merged = stats.reduce((total: any, document: StatsData) => {
@@ -271,6 +273,22 @@ export const merged = (stats: Array<StatsData> | null, period: string, date?: st
     merged.graph = grouped(merged.graph, period, date);
 
     return merged as StatsData;
+};
+
+export const mergedStatsDataWithChange = (current: StatsData | null, previous: StatsData | null) => {
+
+    if (!current || !previous) return current;
+
+    for (const [key, value] of Object.entries(current.aggregates)) {
+        const previousCount = previous.aggregates[key as keyof Aggregates].count;
+        const change = (((value.count - previousCount) / previousCount)) || 0;
+        let values = { count: value.count, change: change };
+        current.aggregates[key as keyof Aggregates] = values;
+    }
+    // console.log(current.aggregates);
+
+    return current;
+
 };
 
 export const toCSV = (input: StatsData[]) => {
