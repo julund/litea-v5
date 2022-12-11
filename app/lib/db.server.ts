@@ -7,7 +7,6 @@ async function initclient(request: Request) {
     const { data: session } = await getSession(request);
     // if (!session?.token) return { data: null, error: { code: "403", details: "", hint: "", message: "Missing authentication token"} };
     const client = anonClient(session?.token);
-    console.log("client init");
     // console.log(client);
     return client;
 }
