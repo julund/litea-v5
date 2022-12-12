@@ -104,19 +104,17 @@ export function getPeriodByName(periodName: string, time?: string) {
 
 export const average = (oldValue: number, newValue: number) => Number((newValue > 0 ? oldValue == 0 ? newValue : ((oldValue || 0) + newValue) / 2 : (oldValue || 0).toFixed(2)));
 
-export type NameCountData = { name: string, count: number } & Partial<Pick<any, "countryCode" | "domain">>;
+export type NameCountData = { name?: string, count: number } & Partial<Pick<any, "countryCode" | "domain">>;
 
 // Function to merge nested object and find 'count' or 'average' number and increment etc.
 export const merge = (arr: Array<NameCountData>) => {
 
-    // console.log(arr);
     if (arr.length === 1) return arr;
     const merged: { [s: string]: any; } = [];
     arr.forEach(item => {
-        if (item.name === "") item.name = "_"; // key cant be empty string, we will turn it back in result
-        merged[item.name] = Number((merged[item.name] || 0) + item.count || 0);
+        const key = (item.name || "_") as keyof NameCountData;
+        merged[key] = Number((merged[key] || 0) + item.count || 0);
     });
-    // console.log(merged);
     const result = Object.entries(merged).map(([key, value]) => {
         return key ? { name: (key == "_" ? "" : key), count: Number(value) } : null;
     });
