@@ -25,18 +25,6 @@
   b {
     @apply font-semibold;
   }
-  details {
-    @apply flex;
-    /* display: initial; */
-  }
-  details > summary {
-    /* display: initial; */
-    /* @apply list-none; */
-    @apply select-none;
-  }
-  details[open] > summary {
-    @apply bg-base-300;
-  }
 }
 
 @layer components {
