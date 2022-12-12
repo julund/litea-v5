@@ -141,24 +141,43 @@ export const grouped = (arr: Array<ValueTimeData>, period: string, date?: string
     if (typeof arr == "undefined") return [];
     // console.log(arr);
     const formatLabel = (t: string | number | Date) => {
-        if (!t) return null;
-        return period == "realtime" ? format(t, "HH:mm", tzOptions) :
-            period == "day" ? format(t, "HH:mm", tzOptions) :
-                period == "week" ? format(t, "eee", tzOptions) :
-                    period == "month" ? format(t, "eee do", tzOptions) :
-                        period == "year" ? format(t, "MMM", tzOptions) :
-                            format(t, "yyyy", tzOptions);
-    };
 
-    const linkPeriod = () => {
-        return period === "realtime" ? null :
-            period === "day" ? null :
-                period === "week" ? "day" :
-                    period === "month" ? "day" :
-                        period === "year" ? "month" :
-                            period === "all" ? "year" :
-                                null;
-    };
+        if (!t) return null;
+        switch (period) {
+          case "realtime":
+          case "day":
+            return format(t, "HH:mm", tzOptions);
+          case "week":
+            return format(t, "eee", tzOptions);
+          case "month":
+            return format(t, "eee do", tzOptions);
+          case "year":
+            return format(t, "MMM", tzOptions);
+          default:
+            return format(t, "yyyy", tzOptions);
+        }
+
+      };
+      
+      const linkPeriod = () => {
+        
+        switch (period) {
+          case "realtime":
+          case "day":
+            return null;
+          case "week":
+            return "day";
+          case "month":
+            return "day";
+          case "year":
+            return "month";
+          case "all":
+            return "year";
+          default:
+            return null;
+        }
+        
+      };
 
     const localizedFormatLabel = (d: string | number | Date) => {
         const time = utcToZonedTime(d, timeZone, tzOptions);
