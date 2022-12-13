@@ -17,7 +17,7 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
                 <Nav>
                     <SiteNavLink to="/features">Features</SiteNavLink>
                     <SiteNavLink to="/pricing">Pricing</SiteNavLink>
-                    <DropDown title="Resources">
+                    <DropDown title="Resources" config={ { toggleOnHover: true, toggleClassName: "flex gap-1 items-center px-4 py-2 text-xl font-medium transition-all duration-300 font-title focus:text-base-800 focus-hover:text-base-600 text-base-600 hover:text-primary-600"}}>
                         <SiteNavLink to="/blog">Our blog</SiteNavLink>
                         <SiteNavLink to="/docs">Documentation</SiteNavLink>
                     </DropDown>

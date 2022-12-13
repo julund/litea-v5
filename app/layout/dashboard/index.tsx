@@ -15,7 +15,7 @@ const DashboardLayout = ({ children, session }: { children: ReactNode; session?:
         <Root>
             <Header className="bg-white">
                 <Nav>
-                    <DropDown title={session?.data?.handle}>
+                    <DropDown title={session?.data?.handle} config={ { toggleOnHover: true}}>
                         <IndexNavLink to="/dashboard"><IconDashboard size={22} />Dashboard</IndexNavLink>
                         <NavLink to="/dashboard/account"><IconSettings size={22} />Account</NavLink>
                         <NavLink to="/logout"><IconLogout />Log out</NavLink>

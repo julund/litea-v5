@@ -3,8 +3,8 @@ import { type ReactNode } from "react";
 import { IconExternalLink } from "./icons";
 import { classNames } from "~/utils/helpers";
 
-export const Link = ({ children, ...props }: { children: ReactNode; } & LinkProps ) => {
-    if(!props.to) return <span className={props.className}>{children}</span>;
+export const Link = ({ children, ...props }: { children: ReactNode; } & LinkProps) => {
+    if (!props.to) return <span className={props.className}>{children}</span>;
     return (
         <RemixLink {...props}>
             {children}
@@ -41,10 +41,11 @@ export const IndexNavLink = ({ children, ...props }: { children: ReactNode } & N
 
 export const SiteNavLink = ({ children, ...props }: { children: ReactNode } & NavLinkProps) => {
 
-    const activeClassName = "px-4 py-2 text-xl font-medium transition-all duration-300 font-title text-base-800 hover:text-base-600";
-    const inactiveClassName = "px-4 py-2 text-xl font-medium transition-all duration-300 font-title text-base-600 hover:text-primary-600";
     return (
-        <RemixNavLink {...props} prefetch="intent" className={({ isActive }) => isActive ? activeClassName : inactiveClassName}>
+        <RemixNavLink {...props} prefetch="intent" className={({ isActive }) => classNames(
+            "px-4 py-2 text-xl font-medium transition-all duration-300 font-title",
+            isActive ? "text-base-800 hover:text-base-600" : "text-base-600 hover:text-primary-600")}
+        >
             {children}
         </RemixNavLink>
     );

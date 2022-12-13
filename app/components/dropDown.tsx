@@ -8,10 +8,12 @@ type DropDownConfig = {
     align?: "left" | "right", 
     toggleOnHover?: boolean; 
     toggleStyle?: "chevron" | "menu";
+    toggleClassName?: string;
+    innerClassName?: string;
 }
 const DropDown = ({ title, config, children }: { title?: string | null; config?: DropDownConfig; children: React.ReactNode }) => {
 
-    config = { align: "right", toggleOnHover: false, toggleStyle: "chevron", ...config, } as DropDownConfig;
+    config = { align: "right", toggleOnHover: false, toggleStyle: "chevron", toggleClassName: "px-4 py-2 flex gap-1 items-center text-base-600", innerClassName: "", ...config } as DropDownConfig; // TODO: use innerClassName
 
     const ref = useRef<HTMLDivElement>(null);
     const [expanded, toggle] = useToggle(false);
@@ -31,7 +33,7 @@ const DropDown = ({ title, config, children }: { title?: string | null; config?:
 
     return (
         <div ref={ref} className="relative" onMouseEnter={() => handleHover(true)} onMouseLeave={() => handleHover(false)}>
-            <button onClick={() => !config?.toggleOnHover && toggle() } aria-label="toggle" className="button button-ghost focus:bg-base-50 focus:text-primary-700 text-base-700">
+            <button onClick={() => !config?.toggleOnHover && toggle() } aria-label="toggle" className={config.toggleClassName}>
                 {title}
                 { config.toggleStyle === "chevron" && (expanded ? <IconChevronUp size={16} className="text-base-400" /> : <IconChevronDown size={16} className="text-base-400" />)}
                 { config.toggleStyle === "menu" && (expanded ? <IconX size={16} className="text-base-400" /> : <IconMenu size={16} className="text-base-400" />)}
