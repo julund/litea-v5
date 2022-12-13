@@ -7,19 +7,20 @@ import Nav from "../shared/nav";
 import { IconDashboard } from "~/components/icons";
 import { Link, SiteNavLink } from "~/components/link";
 import { Message } from "~/components/message";
+import DropDown from "~/components/dropDown";
 
 const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: ISession | null }) => {
     return (
         <Root>
 
             <Header>
-                <Nav
-                    absolute
-                    toggleClassName="flex flex-col gap-2 p-4 rounded-sm md:flex-row md:bg-transparent bg-base-100 md:p-0 "
-                >
+                <Nav>
                     <SiteNavLink to="/features">Features</SiteNavLink>
                     <SiteNavLink to="/pricing">Pricing</SiteNavLink>
-                    <SiteNavLink to="/docs">Docs</SiteNavLink>
+                    <DropDown title="Resources">
+                        <SiteNavLink to="/blog">Our blog</SiteNavLink>
+                        <SiteNavLink to="/docs">Documentation</SiteNavLink>
+                    </DropDown>
                     {session?.data ?
                         <Link to="/dashboard" className="button button-ghost"><IconDashboard className="text-base-400" />Dashboard</Link> :
                         <>
