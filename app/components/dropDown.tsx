@@ -28,7 +28,8 @@ const DropDown = ({ title, config, children }: { title?: string | null; config?:
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent> & { target: HTMLDivElement }) => {
         const isHrefClick = !!(event.target.tagName === "A" && event.target.getAttribute("href"));
-        if ((event.target !== ref.current) && isHrefClick) toggle();
+        const isHrefParentClick = event.target.parentElement && !!(event.target.parentElement.tagName === "A" && event.target.parentElement.getAttribute("href"));
+        if ((event.target !== ref.current) && (isHrefClick || isHrefParentClick)) toggle();
     };
 
     return (
@@ -36,7 +37,7 @@ const DropDown = ({ title, config, children }: { title?: string | null; config?:
             <button onClick={() => !config?.toggleOnHover && toggle() } aria-label="toggle" className={config.toggleClassName}>
                 {title}
                 { config.toggleStyle === "chevron" && (expanded ? <IconChevronUp size={16} className="text-base-400" /> : <IconChevronDown size={16} className="text-base-400" />)}
-                { config.toggleStyle === "menu" && (expanded ? <IconX size={16} className="text-base-400" /> : <IconMenu size={16} className="text-base-400" />)}
+                { config.toggleStyle === "menu" && (expanded ? <IconX size={20} className="text-base-500" /> : <IconMenu size={20} className="text-base-500" />)}
             </button>
             <motion.div
                 onClick={ handleClick }
@@ -45,10 +46,10 @@ const DropDown = ({ title, config, children }: { title?: string | null; config?:
                 initial={false}
                 animate={{
                     opacity: expanded ? 1 : 0,
-                    y: expanded ? 0 : -25,
-                    scale: expanded ? 1 : 0
+                    y: expanded ? 0 : -50,
+                    scale: expanded ? 1 : 0,
                 }}
-                className={classNames(config.align === "left" ? "left-0" : "right-0", "absolute z-50 min-w-max bg-base-100 rounded-sm px-4 py-2 flex flex-col gap-2")}
+                className={classNames( config.align === "left" ? "left-0" : "right-0", "absolute z-50 min-w-max shadow-lg shadow-base-500/50 bg-base-100 rounded-sm px-4 py-2 flex flex-col gap-2")}
             >
                 {children}
             </motion.div>
