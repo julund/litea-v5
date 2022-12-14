@@ -9,6 +9,7 @@ import { Link, SiteNavLink } from "~/components/link";
 import { Message } from "~/components/message";
 import DropDown from "~/components/dropDown";
 import Footer from "../shared/footer";
+import CTA from "./cta";
 
 const DescriptiveLink = ({ to, title, description }: { to: string, title: string, description: string }) => {
     return (
@@ -45,6 +46,7 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
             <Main>
                 {children}
             </Main>
+            <CTA/>
             <Footer>
                 <div className="container mx-auto px-6 max-w-5xl">
                     <p className="text-sm py-1 text-gray-600">Copyright © 2021 Litea. All rights reserved.</p>

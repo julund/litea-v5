@@ -70,9 +70,6 @@
     background-size: cover;
     background-attachment: fixed;
   }
-  /* .bg-map > div {
-    backdrop-filter: blur(5px) brightness(1.05);
-  } */
   .backdrop-saturate-4 {
     backdrop-filter: saturate(4);
   }
