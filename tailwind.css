@@ -34,6 +34,9 @@
   .button-primary {
     @apply bg-primary-600 hover:bg-primary-700 text-primary-50;
   }
+  .button-primary-ghost {
+    @apply bg-transparent hover:bg-primary-700/50 text-primary-700 hover:text-primary-50;
+  }
   .button-base {
     @apply bg-base-600 hover:bg-base-700 text-base-50;
   }
@@ -61,12 +64,17 @@
   .bg-map {
     background-color: white;
     background-image: url("/map.svg");
-    background-position: center;
+    /* background-position: center; */
+    background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
   }
-  .bg-map > div {
+  /* .bg-map > div {
     backdrop-filter: blur(5px) brightness(1.05);
+  } */
+  .backdrop-saturate-4 {
+    backdrop-filter: saturate(4);
   }
   .slider {
     @apply w-full h-4 p-0 m-0 rounded-sm outline-none appearance-none opacity-80 bg-base-300 hover:opacity-100;

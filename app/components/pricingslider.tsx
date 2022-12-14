@@ -34,12 +34,11 @@ const Pricingslider = () => {
     }, [value, isYearly]);
 
     return (
-        <div className="flex flex-col gap-4 p-8 rounded-sm bg-base-100">
-            {/* <span className="text-3xl font-semibold">{format(value, "0,0")}</span> */}
+        <div className="flex flex-col gap-4">
             <Counter className="text-3xl font-semibold" value={value} defaultValue={min} callback={(n: number) => format(n, "0,0")} />
             <span className="text-base-700">monthly pageviews</span>
             <input type="range" min={min} max={max} value={inputValue} step={1} onChange={(e) => set(Number(e.target.value))} className="slider" id="pricing"></input>
-            <div className="flex flex-col gap-2 p-4 rounded-sm bg-base-200">
+            <div className="flex flex-col gap-2">
                 <div className="flex flex-col gap-2 justify-items-stretch">
                     <div className="text-sm grow text-base-500">Base price</div>
                     <Counter className="px-4 py-2 text-lg font-medium text-right rounded-sm shrink font-title text-base-600 bg-base-100" value={result.price} callback={(n: number) => format(n, "$ 0.00", { currency: "USD" })} />
