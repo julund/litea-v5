@@ -15,11 +15,16 @@ const DashboardLayout = ({ children, session }: { children: ReactNode; session?:
         <Root>
             <Header className="bg-white">
                 <Nav>
-                    <DropDown title={session?.data?.handle} config={ { toggleOnHover: true}}>
+                    {/* <DropDown title={session?.data?.handle} config={ { toggleOnHover: true}}>
                         <IndexNavLink to="/dashboard"><IconDashboard size={22} />Dashboard</IndexNavLink>
                         <NavLink to="/dashboard/account"><IconSettings size={22} />Account</NavLink>
                         <NavLink to="/logout"><IconLogout />Log out</NavLink>
-                    </DropDown>
+                    </DropDown> */}
+                    <div className="items-end shrink flex gap-2">
+                        <IndexNavLink data-tooltip="Dashboard" to="/dashboard"><IconDashboard size={22} /></IndexNavLink>
+                        <NavLink data-tooltip="Account" to="/dashboard/account"><IconSettings size={22} /></NavLink>
+                        <NavLink data-tooltip="Log out" to="/logout"><IconLogout /></NavLink>
+                    </div>
                 </Nav>
                 {/* <Message message={{ type: "info", text: "Message on DashboardLayout." }} /> */}
                 <Message message={session?.message} duration={5000} />

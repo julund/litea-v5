@@ -8,6 +8,16 @@ import { IconDashboard } from "~/components/icons";
 import { Link, SiteNavLink } from "~/components/link";
 import { Message } from "~/components/message";
 import DropDown from "~/components/dropDown";
+import Footer from "../shared/footer";
+
+const DescriptiveLink = ({ to, title, description }: { to: string, title: string, description: string }) => {
+    return (
+        <Link to={to} className="flex flex-col opacity-90 hover:opacity-100 group">
+            <span className="font-title font-medium text-lg group-hover:text-primary-700 text-base-800">{title}</span>
+            <span className="text-sm group-hover:text-primary-700 text-base-600">{description}</span>
+        </Link>
+    );
+};
 
 const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: ISession | null }) => {
     return (
@@ -18,14 +28,8 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
                     <SiteNavLink to="/pricing">Pricing</SiteNavLink>
                     <DropDown title="Resources" config={{ toggleClassName: "flex gap-1 items-center px-4 py-2 text-xl font-medium transition-all duration-300 font-title focus:text-base-800 focus-hover:text-base-600 text-base-600 hover:text-primary-600" }}>
                         <span className="flex flex-col gap-2 p-2">
-                            <Link to="/blog" className="flex flex-col opacity-90 hover:opacity-100">
-                                <span className="font-title font-medium text-lg text-base-800">Our blog</span>
-                                <span className="text-sm text-base-600">Read our latest news & articles related to analytics</span>
-                            </Link>
-                            <Link to="/documentation" className="flex flex-col opacity-90 hover:opacity-100">
-                                <span className="font-title font-medium text-lg text-base-800">Documentation</span>
-                                <span className="text-sm text-base-600">Learn how to use Litea analytics</span>
-                            </Link>
+                            <DescriptiveLink to="/blog" title="Our blog" description="Read our latest news & articles related to analytics" />
+                            <DescriptiveLink to="/documentation" title="Documentation" description="Learn how to use Litea analytics" />
                         </span>
                     </DropDown>
                     {session?.data ?
@@ -41,6 +45,12 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
             <Main>
                 {children}
             </Main>
+            <Footer>
+                <div className="container mx-auto px-6 max-w-5xl">
+                    <p className="text-sm py-1 text-gray-600">Copyright © 2021 Litea. All rights reserved.</p>
+                    <p className="text-xs py-1 text-gray-500">— Quia beatae aliquid dolores soluta ullam praesentium. Qui voluptatem occaecati facere quae aut.</p>
+                </div>
+            </Footer>
         </Root>
     );
 };
