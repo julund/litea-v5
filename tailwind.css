@@ -25,6 +25,9 @@
   b {
     @apply font-semibold;
   }
+  abbr {
+    @apply underline-offset-4 underline decoration-dotted decoration-base-400;
+  }
 }
 
 @layer components {
@@ -101,8 +104,5 @@
   }
   .select:focus-visible {
     @apply outline-none text-base-600;
-  }
-  .tooltip {
-    @apply absolute top-0 left-0 z-50 px-3 py-2 text-sm font-light rounded-sm pointer-events-none bg-opacity-90 bg-base-800 text-base-100 w-fit;
   }
 }

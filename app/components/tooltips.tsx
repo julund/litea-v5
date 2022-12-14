@@ -1,6 +1,11 @@
 import { type ForwardedRef, forwardRef, useState } from "react";
-import { useEvent, useMeasure } from "react-use";
+import {
+    useEvent,
+    // useMeasure
+} from "react-use";
 import { AnimatePresence, motion } from "framer-motion";
+
+// TODO: Rework everything
 
 type TooltipElement = { ts: number; content: string | null; x: number; y: number; position: Position }
 
@@ -12,10 +17,10 @@ const Tooltip = forwardRef(({ element, delay, ...props }: { element: TooltipElem
     return (
         <motion.div
             ref={ref}
-            className="tooltip z-50"
-            initial={{ opacity: 0, x, y, scale: 0 }}
+            className="absolute top-0 left-0 z-50 px-3 py-2 text-xs font-light rounded-sm pointer-events-none bg-opacity-90 bg-base-800 text-base-100 max-w-xs"
+            initial={{ opacity: 0, x, y, scale: 0.85 }}
             animate={{ opacity: 1, x, y, scale: 1 }}
-            exit={{ opacity: 0, x, y, scale: 0, transition: { delay: 0 } }}
+            exit={{ opacity: 0, x, y, scale: 0.75, transition: { delay: 0 } }}
             transition={{ delay: delay }}
         >
             <span data-id="tooltip" dangerouslySetInnerHTML={{ __html: content || " " }} />
@@ -55,43 +60,46 @@ const positions = (position: Position, target: HTMLElement, width: number, heigh
     }
 };
 
-function coordsFromOffset({ target, width, height, position }: {
-    target: HTMLElement;
-    width: number;
-    height: number;
-    position: Position;
-}) {
-    // const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = target;
-    // console.log({offsetHeight, offsetTop});
-    // console.log({offsetWidth, offsetLeft});
-    // console.log({width, height});
+// function coordsFromOffset({ target, width, height, position }: {
+//     target: HTMLElement;
+//     width: number;
+//     height: number;
+//     position: Position;
+// }) {
+//     // const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = target;
+//     // console.log({offsetHeight, offsetTop});
+//     // console.log({offsetWidth, offsetLeft});
+//     // console.log({width, height});
 
-    // const padding = 10;
+//     // const padding = 10;
 
-    // const leftX = offsetLeft - width;
-    // const rightX = offsetLeft + offsetWidth;
-    // const centerX = offsetLeft + (offsetWidth / 2) - (width / 2);
-    // const centerY = offsetTop + (offsetHeight / 2) - (height);
-    // const topY = offsetTop - (height * 2);
-    // const bottomY = offsetTop + offsetHeight;
+//     // const leftX = offsetLeft - width;
+//     // const rightX = offsetLeft + offsetWidth;
+//     // const centerX = offsetLeft + (offsetWidth / 2) - (width / 2);
+//     // const centerY = offsetTop + (offsetHeight / 2) - (height);
+//     // const topY = offsetTop - (height * 2);
+//     // const bottomY = offsetTop + offsetHeight;
 
-    const { x, y } = positions(position, target, width, height);
+//     const { x, y } = positions(position, target, width, height);
 
-    return { x, y };
-}
+//     return { x, y };
+// }
 
 export const Tooltips = ({ delay = 250, defaultPosition = "top-center" }: { delay?: number; defaultPosition?: Position }) => {
 
-    const [ref, { width, height }] = useMeasure<HTMLDivElement>();
+    // const [ref, { x, y, width, height, top, right, bottom, left }] = useMeasure<HTMLDivElement>();
     const [elements, setElements] = useState<TooltipElement[]>([]);
 
     const handleMouseOver = (e: Event & { target: HTMLElement }) => {
+
         const content = e.target?.getAttribute("data-tooltip");
         const position = e.target?.getAttribute("data-tooltip-position") as Position;
+        const { x, y, width, height, top, right, bottom, left } = e.target.getBoundingClientRect();
+
         const validElements = elements.filter(element => element.ts > Date.now() + delay);
         if (content) {
-            const { x, y } = coordsFromOffset({ target: e.target, width, height, position: defaultPosition });
-            const element = { ts: Date.now(), content, x, y, position: position || defaultPosition };
+            // const { x, y } = coordsFromOffset({ target: e.target, width, height, position: defaultPosition });
+            const element = { ts: Date.now(), content, x, y: y + height, position: position || defaultPosition };
             setElements([...validElements, element]);
         } else {
             setElements(validElements);
@@ -103,7 +111,7 @@ export const Tooltips = ({ delay = 250, defaultPosition = "top-center" }: { dela
 
     return (
         <AnimatePresence mode="wait">
-            {elements && elements.map(element => <Tooltip ref={ref} key={element.ts} element={element} delay={delay / 1000} />)}
+            {elements && elements.map(element => <Tooltip key={element.ts} element={element} delay={delay / 1000} />)}
         </AnimatePresence>
     );
 
