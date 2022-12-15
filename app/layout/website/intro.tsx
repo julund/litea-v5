@@ -3,15 +3,14 @@ import { motion } from "framer-motion";
 const Intro = () => {
 
     const container = {
-        hidden: { opacity: 1, x: 0 },
         show: {
-            transition: { staggerChildren: 0.25, }
+            transition: { staggerChildren: 0.2, }
         }
     };
 
     const item = {
-        hidden: { opacity: 0, scale: 0.5, x: -150 },
-        show: { opacity: 1, scale: 1, x: 0, transition: { type: "spring", duration: 0.5 } },
+        hidden: { opacity: 0, scale: 0.5, x: -50 },
+        show: { opacity: 1, scale: 1, x: 0, transition: { type: "spring", duration: 0.4 } },
     };
 
     return (
@@ -41,8 +40,8 @@ const Intro = () => {
                     Litea is a lightweight website analytics tool free from cookies and fully compliant with <abbr data-tooltip="The General Data Protection Regulation 2016/679 (GDPR) is a regulation in EU law on data protection and privacy in the European Union and the European Economic Area. It also addresses the transfer of personal data outside the EU and EEA areas.">GDPR</abbr>, <abbr data-tooltip="The California Consumer Privacy Act is a state statute intended to enhance privacy rights and consumer protection for residents of California, United States.">CCPA</abbr> and <abbr data-tooltip="The Privacy and Electronic Communications Regulations (PECR) sit alongside the Data Protection Act and the UK GDPR. They give people specific privacy rights in relation to electronic communications.">PECR</abbr>. Stop scrolling through pages of reports and collecting useless personal data about your visitors. Our responsive dashboard will help you make business decisions quickly.
                 </motion.div>
                 <div className="flex justify-center gap-4 my-4 text-xl md:justify-start">
-                    <a className="button button-primary" href={"/"}>Learn more</a>
-                    <a className="button button-ghost" href={"/"}>Live demo</a>
+                    <motion.a className="button button-primary" href={"/"} variants={item}>Learn more</motion.a>
+                    <motion.a className="button button-ghost" href={"/"} variants={item}>Live demo</motion.a>
                 </div>
             </motion.div>
         </div>

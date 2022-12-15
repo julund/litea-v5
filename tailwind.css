@@ -32,7 +32,8 @@
 
 @layer components {
   .button {
-    @apply inline-flex items-center gap-2 px-4 py-2 text-lg font-medium transition-all duration-300 rounded-sm font-title min-w-max;
+    @apply inline-flex items-center gap-2 px-4 py-2 text-lg font-medium rounded-sm font-title min-w-max; 
+    /* transition-all duration-300  */
   }
   .button-primary {
     @apply bg-primary-600 hover:bg-primary-700 text-primary-50;
