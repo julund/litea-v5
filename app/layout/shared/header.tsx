@@ -6,7 +6,7 @@ const Header = ({ children, className = "", bgColor ="249 250 251" }: { children
 
     const [ref, { bottom }] = useMeasure<HTMLHeadElement>();
     const { y } = useWindowScroll();
-    const opacity = Math.min(y / (bottom * 2), 1) || 0;
+    const opacity = Math.min(y / (bottom * 3), 1) || 0;
 
     return (
         <motion.header
