@@ -25,7 +25,6 @@ const Tooltip = () => {
         } else {
             toggle(false);
         };
-
     };
 
     useEvent("mouseover", handleMouseOver);
@@ -36,9 +35,13 @@ const Tooltip = () => {
                 layout="position"
                 key="tooltip"
                 className="absolute top-0 left-0 z-50 px-3 py-2 text-xs font-light rounded-sm pointer-events-none bg-opacity-90 bg-base-800 text-base-100 max-w-xs"
-                // style={{ x: element.x, y: element.y }}
-                initial={{ x: element.x, y: element.y, opacity: 0, scale: 0.75 }}
-                animate={{ x: element.x, y: element.y, opacity: show ? 1 : 0, scale: show ? 1 : 0.75 }}
+                
+                style={{ x: element.x, y: element.y }}
+                initial={false}
+                animate={{ opacity: show ? 1 : 0, scale: show ? 1 : 0.75 }}
+                // initial={{ x: element.x, y: element.y, opacity: 0, scale: 0.75 }}
+                // animate={{ x: element.x, y: element.y, opacity: show ? 1 : 0, scale: show ? 1 : 0.75 }}
+                
                 transition={{ type: "spring", duration: 0.35, delay: element.delay }}
             >
                 {/* <span data-id="tooltip" dangerouslySetInnerHTML={{ __html: element.content || " " }} /> */}
