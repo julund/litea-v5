@@ -10,6 +10,7 @@ import { Message } from "~/components/message";
 import DropDown from "~/components/dropDown";
 import Footer from "../shared/footer";
 import CTA from "./cta";
+import { getYear } from "date-fns";
 
 const DescriptiveLink = ({ to, title, description }: { to: string, title: string, description: string }) => {
     return (
@@ -49,8 +50,8 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
             <CTA/>
             <Footer>
                 <div className="container mx-auto px-6 max-w-5xl">
-                    <p className="text-sm py-1 text-gray-600">Copyright © 2021 Litea. All rights reserved.</p>
-                    <p className="text-xs py-1 text-gray-500">— Quia beatae aliquid dolores soluta ullam praesentium. Qui voluptatem occaecati facere quae aut.</p>
+                    <p className="text-sm py-1 text-gray-600">Copyright © 2021 - {getYear(Date.now())} Litea. All rights reserved.</p>
+                    <p className="text-xs py-1 text-gray-500">— Effortlessly track website performance with Litea - the lightweight, privacy-first analytics solution</p>
                 </div>
             </Footer>
         </Root>
