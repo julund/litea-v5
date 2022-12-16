@@ -12,7 +12,6 @@ const Tooltip = () => {
 
     const [tooltip, setTooltip] = useState<TooltipElement | null>(null);
     const [show, toggle] = useToggle(false);
-    const padding = 8;
 
     const handleMouseOver = (e: Event & { target: HTMLElement }) => {
 
@@ -22,7 +21,7 @@ const Tooltip = () => {
 
         const el = e.target?.getBoundingClientRect();
         const body = document.body.getBoundingClientRect();
-        const { x, y } = el ? { x: el.x - body.x, y: el.y - body.y } : { x: 0, y: 0 };
+        const { x, y } = el ? { x: el.x - body.x, y: (el.y - body.y) + el.height } : { x: 0, y: 0 };
         const { h, w } = el ? { h: el.height, w: el.width } : { h: 0, w: 0 };
 
 
@@ -42,27 +41,22 @@ const Tooltip = () => {
 
     useEvent("mouseover", handleMouseOver);
 
+            // className="flex flex-col items-end justify-center bg-red-400/10 absolute pointer-events-none overflow-visible"
     return (
-        <div
-            key="tooltip-container"
-            className="flex flex-col items-end justify-center bg-red-400/10 absolute pointer-events-none overflow-visible"
-            style={{left: tooltip?.x, top: tooltip?.y, height: tooltip?.h, width: tooltip?.w }}
-        >
+        <>
             {tooltip && <motion.div
                 layout="preserve-aspect"
                 key="tooltip"
-                style={{ margin: `${tooltip?.h + padding}px ${tooltip?.w + padding}px` }}
-                className="absolute px-3 py-2 text-xs font-light rounded-sm pointer-events-none bg-opacity-90 bg-base-800 text-base-100 min-w-[250px] max-w-xs"
-                // initial={{ opacity: 0, x: tooltip?.x, y: tooltip?.y, scale: 0.5 }}
-                initial={false}
-                animate={{ opacity: show ? 1 : 0, scale: show ? 1 : 0.5 }}
+                className="absolute left-0 top-0 px-3 py-2 text-xs font-light rounded-sm pointer-events-none bg-opacity-90 bg-base-800 text-base-100 max-w-xs"
+                initial={{ opacity: 0, x: tooltip?.x, y: tooltip?.y, scale: 0.5 }}
+                // initial={false}
+                animate={{ opacity: show ? 1 : 0, x: tooltip?.x, y: tooltip?.y, scale: show ? 1 : 0.5 }}
                 transition={{ duration: 0.3, delay: show ? tooltip.delay : 0 }}
             >
                 {/* <span data-id="tooltip" dangerouslySetInnerHTML={{ __html: element.content || " " }} /> */}
                 {tooltip.content}
             </motion.div>}
-
-        </div>
+            </>
     );
 };
 
