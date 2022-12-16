@@ -1,17 +1,18 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-    // useEffect, 
+    // useEffect,
     useState
 } from "react";
 import { useEvent, useToggle } from "react-use";
 
 // type TooltipPosition = "top-center" | "bottom-center" | "center-left" | "center-right";
-type TooltipElement = { content?: string | null; x: number; y: number; delay: number }
+type TooltipElement = { content?: string | null; x: number; y: number; h: number; w: number; delay: number }
 
 const Tooltip = () => {
 
-    const [element, setElement] = useState<TooltipElement | null>(null);
+    const [tooltip, setTooltip] = useState<TooltipElement | null>(null);
     const [show, toggle] = useToggle(false);
+    const padding = 8;
 
     const handleMouseOver = (e: Event & { target: HTMLElement }) => {
 
@@ -19,16 +20,21 @@ const Tooltip = () => {
         // const position = (e.target?.getAttribute("data-tooltip-position") || "top-center") as TooltipPosition;
         const delay = (Number(e.target?.getAttribute("data-tooltip-delay")) || 250) / 1000;
 
-        const { x, y, bottom } = e.target?.getBoundingClientRect() || { x: 0, y: 0 };
+        const el = e.target?.getBoundingClientRect();
+        const body = document.body.getBoundingClientRect();
+        const { x, y } = el ? { x: el.x - body.x, y: el.y - body.y } : { x: 0, y: 0 };
+        const { h, w } = el ? { h: el.height, w: el.width } : { h: 0, w: 0 };
+
 
         if (content) {
             toggle(true);
-            setElement({ content, x, y: bottom, delay });
+            setTooltip({ content, x, y, h, w, delay });
         } else {
             toggle(false);
+            setTooltip({ content: null, x, y, h, w, delay });
         };
         // toggle(!!(content));
-        // setElement({ content, x, y, delay });
+        // setTooltip({ content, x, y, h, w, delay });
 
     };
 
@@ -37,19 +43,26 @@ const Tooltip = () => {
     useEvent("mouseover", handleMouseOver);
 
     return (
-        <AnimatePresence mode="wait">
-            {element && <motion.div
+        <div
+            key="tooltip-container"
+            className="flex flex-col items-end justify-center bg-red-400/10 absolute pointer-events-none overflow-visible"
+            style={{left: tooltip?.x, top: tooltip?.y, height: tooltip?.h, width: tooltip?.w }}
+        >
+            {tooltip && <motion.div
                 layout="preserve-aspect"
                 key="tooltip"
-                className="absolute top-0 left-0 z-50 px-3 py-2 text-xs font-light rounded-sm pointer-events-none bg-opacity-90 bg-base-800 text-base-100 max-w-xs"
-                initial={{ opacity: 0, x: element.x, y: element.y, scale: 0 }}
-                animate={{ opacity: 1, x: element.x, y: element.y, scale: show ? 1 : 0 }}
-                transition={{ duration: 0.3, delay: show ? element.delay : 0 }}
+                style={{ margin: `${tooltip?.h + padding}px ${tooltip?.w + padding}px` }}
+                className="absolute px-3 py-2 text-xs font-light rounded-sm pointer-events-none bg-opacity-90 bg-base-800 text-base-100 min-w-[250px] max-w-xs"
+                // initial={{ opacity: 0, x: tooltip?.x, y: tooltip?.y, scale: 0.5 }}
+                initial={false}
+                animate={{ opacity: show ? 1 : 0, scale: show ? 1 : 0.5 }}
+                transition={{ duration: 0.3, delay: show ? tooltip.delay : 0 }}
             >
                 {/* <span data-id="tooltip" dangerouslySetInnerHTML={{ __html: element.content || " " }} /> */}
-                {element.content}
+                {tooltip.content}
             </motion.div>}
-        </AnimatePresence>
+
+        </div>
     );
 };
 
