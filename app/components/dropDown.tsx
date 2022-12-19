@@ -46,20 +46,21 @@ const DropDown = ({ title, config, children }: { title?: string | null; config?:
                 {config.toggleStyle === "chevron" && (expanded ? <IconChevronUp size={16} className="text-base-400" /> : <IconChevronDown size={16} className="text-base-400" />)}
                 {config.toggleStyle === "menu" && (expanded ? <IconX size={20} className="text-base-500" /> : <IconMenu size={20} className="text-base-500" />)}
             </button>
-            <motion.div
-                onClick={handleClick}
-                aria-labelledby="toggle"
-                aria-expanded={expanded}
-                initial={false}
-                animate={{
-                    opacity: expanded ? 1 : 0,
-                    y: expanded ? 0 : -50,
-                    scale: expanded ? 1 : 0,
-                }}
-                className={classNames(config.innerClassName, config.align === "left" ? "left-0" : "right-0", "absolute z-50 min-w-max")}
-            >
-                {children}
-            </motion.div>
+                <motion.div
+                    onClick={handleClick}
+                    aria-labelledby="toggle"
+                    aria-expanded={expanded}
+                    initial={false}
+                    animate={{
+                        opacity: expanded ? 1 : 0,
+                        y: expanded ? 0 : -50,
+                        scale: expanded ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.5, type: "spring" }}
+                    className={classNames(config.innerClassName, config.align === "left" ? "left-0" : "right-0", "absolute z-50 min-w-max")}
+                >
+                    {children}
+                </motion.div>
         </div>
     );
 };
