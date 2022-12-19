@@ -6,17 +6,12 @@ const CTA = () => {
     return (
         <section id="cta" className="bg-primary-100/50 text-primary-800 p-8 backdrop-saturate-4">
             <Container>
-                <div className="flex gap-2">
-                    <span className="grow">
-                        <p className="text-xl">Choose the best website analytics alternative</p>
-                        <p className="text-lg text-primary-600">
-                            Start a 30-day free trial of Litea Analytics today
-                        </p>
-                    </span>
-                    <span className="shrink flex gap-2 flex-nowrap">
-                            <Link to="/demo" className="button button-primary-ghost">Live demo</Link>
-                            <Link to="/register" className="button button-primary">Get started for free</Link>
-                    </span>
+                <div className="flex flex-col items-center text-center md:text-left md:items-start md:flex-row gap-4">
+                    <p className="text-lg">
+                        Choose the best website analytics alternative - <br />Start your 30-day free trial of Litea Analytics today
+                    </p>
+                    <Link to="/demo" className="button button-primary-ghost">Live demo</Link>
+                    <Link to="/register" className="button button-primary">Get started for free</Link>
                 </div>
 
             </Container>
