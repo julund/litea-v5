@@ -49,7 +49,7 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
             </Main>
             <CTA/>
             <Footer>
-                <div className="container mx-auto px-6 max-w-5xl">
+                <div className="mx-auto px-6 max-w-4xl">
                     <p className="text-sm py-1 text-gray-600">Copyright © 2021 - {getYear(Date.now())} Litea. All rights reserved.</p>
                     <p className="text-xs py-1 text-gray-500">— Effortlessly track website performance with Litea - the lightweight, privacy-first analytics solution</p>
                 </div>

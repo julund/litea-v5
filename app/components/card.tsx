@@ -10,7 +10,7 @@ export const Card = ({ title, graphic, children }: { title: string; graphic?: JS
     const transition = { type: "tween", duration: 0.5 };
 
     return (
-        <div ref={ref} className="flex gap-4 items-center p-4 mb-8">
+        <div ref={ref} className="flex gap-4 items-center py-4 my-8">
             <motion.div animate={animate} transition={transition} className="shrink text-primary-600">
                 {graphic}
             </motion.div>
