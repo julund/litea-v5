@@ -9,18 +9,6 @@ export default function FeaturesPage() {
             <p className="text-base-600">Autem esse quia quis et quia. Qui est facilis consequuntur dolorem.</p>
             <p>Velit libero accusantium aspernatur nobis. Repudiandae ut consequuntur vel rerum ab illo dignissimos. Dolorem quo neque itaque quo temporibus. Et rerum quasi officia. Quod quis ut repellat delectus ipsam sint.</p>
             <p>Distinctio totam eveniet quia omnis. Itaque ea ab et quod doloremque sequi rerum cupiditate. Ab cumque est et molestias sunt. Pariatur deleniti ratione quo sint non laboriosam dolorem dolore.</p>
-            <div className="prose">
-                <ul>
-                    <li>Accurate tracking and reporting of website traffic, including the number of visitors and pageviews over a specified period of time.</li>
-                    <li>The ability to segment and filter website traffic data to better understand the behavior of different types of visitors.</li>
-                    <li>Integration with other tools and platforms, such as Google Analytics, to provide a comprehensive view of website performance.</li>
-                    <li>Real-time reporting and alerts to quickly identify any issues or opportunities with website performance.</li>
-                    <li>Detailed analysis of referral traffic and search engine performance, including keyword rankings and organic search traffic.</li>
-                    <li>Support for multiple websites and the ability to track and compare performance across multiple domains.</li>
-                    <li>Customizable reports and dashboards to easily share and track key performance metrics with stakeholders.</li>
-                    <li>Support for mobile and web-based applications to track performance across all platforms and devices.</li>
-                </ul>
-            </div>
             <Card title="Accurate Traffic Tracking and Reporting" graphic={<IconReport size={128} strokeWidth={0.5} />}>
                 Accurate tracking and reporting of website traffic is essential for any website analytics application. This includes the ability to see the number of visitors and pageviews over a specified period of time, providing valuable insights into the performance of a website.
             </Card>
