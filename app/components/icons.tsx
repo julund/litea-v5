@@ -67,3 +67,10 @@ export const IconFileHorizontal = ({ ...props }: IconProps) => icon.TbFileHorizo
 export const IconMarquee = ({ ...props }: IconProps) => icon.TbMarquee2({ ...defaultIconProps, ...props });
 export const IconQuestionMark = ({ ...props }: IconProps) => icon.TbQuestionMark({ ...defaultIconProps, ...props });
 export const IconMenu = ({ ...props }: IconProps) => icon.TbMenu({ ...defaultIconProps, ...props });
+
+export const IconFilter = ({ ...props }: IconProps) => icon.TbFilter({ ...defaultIconProps, ...props });
+export const IconReport = ({ ...props }: IconProps) => icon.TbReport({ ...defaultIconProps, ...props });
+export const IconTool = ({ ...props }: IconProps) => icon.TbTool({ ...defaultIconProps, ...props });
+export const IconClock = ({ ...props }: IconProps) => icon.TbClock2({ ...defaultIconProps, ...props });
+export const IconSearch = ({ ...props }: IconProps) => icon.TbSearch({ ...defaultIconProps, ...props });
+export const IconStack = ({ ...props }: IconProps) => icon.TbStack3({ ...defaultIconProps, ...props });

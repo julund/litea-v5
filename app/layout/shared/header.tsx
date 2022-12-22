@@ -6,17 +6,20 @@ const Header = ({ children, className = "", bgColor ="249 250 251" }: { children
 
     const [ref, { bottom }] = useMeasure<HTMLHeadElement>();
     const { y } = useWindowScroll();
-    const opacity = Math.min(y / (bottom * 3), 1) || 0;
+    const scrollY = Math.min(y / (bottom * 2), 1) || 0;
+    const bgOpacity = scrollY;
+    const shadowOpacity = scrollY / 10;
+    const paddingY = scrollY > 0.5 ? 0: 30;
 
     return (
         <motion.header
             ref={ref}
-            className={classNames("sticky top-0 z-50 flex-grow-0 w-full", className)}
+            className={classNames("fixed top-0 z-50 flex-grow-0 w-full", className)}
             animate={{ 
-                backgroundColor: `rgb(${bgColor} / ${opacity})`,
-                padding: 1
+                backgroundColor: `rgb(${bgColor} / ${bgOpacity})`,
+                boxShadow: `0 10px 15px -3px rgb(0 0 0 / ${shadowOpacity}), 0 4px 6px -4px rgb(0 0 0 / ${shadowOpacity})`,
+                padding: `${paddingY}px 0px`
              }}
-            transition= {{ duration: 0.1 }}
         >
             {children}
         </motion.header>
