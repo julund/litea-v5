@@ -31,7 +31,7 @@ const WebsiteLayout = ({ children, session }: { children: ReactNode; session?: I
                     <DropDown title="Resources" config={{ toggleClassName: "flex gap-1 items-center px-4 py-2 text-xl font-medium transition-all duration-300 font-title focus:text-base-800 focus-hover:text-base-600 text-base-600 hover:text-primary-600" }}>
                         <span className="flex flex-col gap-2 p-2">
                             <DescriptiveLink to="/blog" title="Our blog" description="Read our latest news & articles related to analytics" />
-                            <DescriptiveLink to="/documentation" title="Documentation" description="Learn how to use Litea analytics" />
+                            <DescriptiveLink to="/docs" title="Documentation" description="Learn how to use Litea analytics" />
                         </span>
                     </DropDown>
                     {session?.data ?

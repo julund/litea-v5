@@ -1,4 +1,5 @@
-import Container from "~/layout/shared/container";
+import { Link } from "~/components/link";
+import Container from "../shared/container";
 
 const questionsAndAnswers = [
     { question: "What is Litea?", answer: "Litea is a website analytics application that helps website owners and administrators understand how their site is being used and accessed by visitors." },
@@ -16,7 +17,7 @@ const questionsAndAnswers = [
     { question: "What is the infrastructure like for Litea?", answer: "Litea is built on enterprise-grade infrastructure, ensuring that it is reliable and can handle large amounts of data." },
 ];
 
-const QAitem = ({ question, answer } : { question: string; answer: string }) => (
+const QAitem = ({ question, answer }: { question: string; answer: string }) => (
     <details className="flex gap-2 rounded-sm px-4 py-2 open:bg-base-100 text-base-800 group transition-all duration-500">
         <summary className="py-2 select-none cursor-pointer flex justify-center items-center">
             <span className="font-semibold grow">{question}</span>
@@ -27,21 +28,19 @@ const QAitem = ({ question, answer } : { question: string; answer: string }) => 
     </details>
 );
 
-export default function DocsPage() {
+const FAQ = () => {
+
     return (
-        <Container>
-            <h1>Docs</h1>
-            <p className="py-4">
-                Autem esse quia quis et quia. Qui est facilis consequuntur
-                dolorem. Ipsam et magnam est quia ut et beatae. Cum dolores veritatis
-                ut quaerat ut quo eligendi voluptas.
-            </p>
-            <div className="divide-y">
-                <h2>Frequently asked questions</h2>
-                {questionsAndAnswers.map((qa) => (
-                    <QAitem key={qa.question} {...qa} />
-                ))}
-            </div>
-        </Container>
+        <section id="cta" className="bg-primary-100/50 text-primary-800 p-8 backdrop-saturate-4">
+            <Container>
+                <div className="divide-y">
+                    <h2>Frequently asked questions</h2>
+                    {questionsAndAnswers.map((qa) => (
+                        <QAitem key={qa.question} {...qa} />
+                    ))}
+                </div>
+            </Container>
+        </section>
     );
 };
+export default FAQ;
