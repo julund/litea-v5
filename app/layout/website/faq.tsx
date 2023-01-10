@@ -1,4 +1,3 @@
-import { Link } from "~/components/link";
 import Container from "../shared/container";
 
 const questionsAndAnswers = [
